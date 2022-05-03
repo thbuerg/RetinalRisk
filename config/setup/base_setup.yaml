@@ -1,0 +1,14 @@
+entity: cardiors
+project: Retina
+group: null
+name: null
+root:
+  charite-hpc: /sc-projects/sc-proj-ukb-cvd
+  eils-hpc: /data/analysis/ag-reils/ag-reils-shared/cardioRS
+data_path: data/2_datasets_pre/211110_anewbeginning/artifacts
+output_path: results/models
+use_data_artifact_if_available: False
+data:
+  drop_shortcut_edges: True
+  drop_individuals_without_gp: False
+  min_record_counts: 0

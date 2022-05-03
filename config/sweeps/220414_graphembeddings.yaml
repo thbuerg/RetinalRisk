@@ -1,0 +1,59 @@
+program: train_recordgraphs.py
+name: 220414_graphembeddings
+method: bayes
+project: RecordGraphs
+
+metric:
+  goal: maximize
+  name: "valid/mean_CIndex_max"
+
+parameters:
+  datamodule.batch_size:
+    values: [512, 1024, 2048, 4096, 8192]
+  training.binarize_records:
+    values: [False, True]
+  head.dropout:
+    min: 0.0
+    max: 0.9
+  head.kwargs.initial_dropout:
+    min: 0.0
+    max: 0.9
+  head.kwargs.num_hidden:
+    values: [32, 64, 128, 256, 512, 1024, 2048, 4096]
+  head.kwargs.num_layers:
+    values: [0, 1, 2, 3, 4]
+  training.optimizer_kwargs.weight_decay:
+    min: 0.0
+    max: 1.0
+  training.optimizer_kwargs.lr:
+    min: 0.0001
+    max: 0.001
+  training.normalize_node_embeddings:
+    values: [False, True]
+  training.use_endpoint_embeddings:
+    values: [False, True]
+  setup.data.min_record_counts:
+    values: [0, 10, 25, 50, 100, 1000]
+
+command:
+  - ${env}
+  - srun
+  - "-N"
+  - "1-1"
+  - "--cpus-per-gpu=32"
+  - "-T"
+  - "32"
+  - "-p"
+  - "gpu,pgpu"
+  - "--gres=gpu:1"
+  - "--mem=128G"
+  - "--time"
+  - "48:00:0"
+  - ${program}
+  - "training.gradient_checkpointing=False"
+  - "datamodule.t0_mode=recruitment"
+  - "datamodule/covariates='no_covariates'"
+  - "model=graph_embeddings"
+  - "setup.use_data_artifact_if_available=False"
+  - "datamodule.use_top_n_phecodes=1683"
+  - ${args_no_hyphens}

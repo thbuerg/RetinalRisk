@@ -1,0 +1,4 @@
+_target_: retinalrisk.schedulers.alpha_schedulers.SteppingAlpha
+steps: [0.5]
+alphas: [1.0, 0.0]
+units: steps

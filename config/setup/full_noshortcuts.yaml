@@ -1,0 +1,6 @@
+defaults:
+  - base_setup
+  - _self_
+
+data_identifier: "WandBGraphDataNoShortcuts256:latest"
+tags: ['full_data']

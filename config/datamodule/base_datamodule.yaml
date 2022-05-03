@@ -1,0 +1,16 @@
+defaults:
+  - covariates: agesex
+  - sampler: dummy_sampler
+  - _self_
+
+batch_size: 8192
+partition: 0
+num_workers: 4
+
+label_definition:
+  all_cause_death: True
+  phecodes: True
+  custom: []
+use_top_n_phecodes: 1000
+filter_input_origins: []
+use_loss_weights: False

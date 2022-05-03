@@ -1,3 +1,9 @@
+# Debugging:
+notebooks/
+
+# PyCharm and IdeaVim:
+.idea/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -127,3 +133,8 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+
+# macOS tings
+.DS_Store
+__pycache__/

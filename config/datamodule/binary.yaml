@@ -1,0 +1,7 @@
+defaults:
+  - base_datamodule
+  - _self_
+
+task: "binary"
+task_kwargs:
+  delta_years: 10

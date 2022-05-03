@@ -1,0 +1,3 @@
+model_type: 'ResMLP'
+dropout: 0.2
+kwargs: {num_hidden: 256, num_blocks: 2, detach_clf: False}

@@ -1,0 +1,6 @@
+defaults:
+  - base_setup
+  - _self_
+
+data_identifier: "WandBGraphTestData:latest"
+tags: ['test_data']
