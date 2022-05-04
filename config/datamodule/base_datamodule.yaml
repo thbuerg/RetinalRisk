@@ -1,6 +1,5 @@
 defaults:
   - covariates: agesex
-  - sampler: dummy_sampler
   - _self_
 
 batch_size: 8192

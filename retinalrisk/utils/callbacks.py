@@ -18,8 +18,8 @@ def annotate_df(df, trainer, module, split=None):
     if split:
         df["split"] = split
     df["module"] = type(module).__name__
-    if trainer.model.graph_encoder:
-        df["encoder"] = trainer.model.graph_encoder._get_name()
+    if trainer.model.encoder:
+        df["encoder"] = trainer.model.encoder._get_name()
     else:
         df["encoder"] = "None"
     df["head"] = trainer.model.head._get_name()

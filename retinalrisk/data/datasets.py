@@ -8,8 +8,12 @@ import pandas as pd
 import scipy
 import scipy.sparse
 import torch
+import PIL
 
-from PIL import Image
+from torchvision import transforms
+
+from retinalrisk.transforms.transforms import AdaptiveRandomCropTransform
+
 
 class RecordsDataset(torch.utils.data.Dataset):
     def __init__(
@@ -62,16 +66,10 @@ class RecordsDataset(torch.utils.data.Dataset):
         return data_tuple, labels_tuple
 
 
-# TODO:
-'''
-[ ] add riskiano retina dataset -> be minimal in transfer and keep only the parts that have the img loading functions.
-[ ] research on efficient pytorch img loading pipelines (with augmentations??)
-[ ] 
-'''
 class RetinalFundusDataset(torch.utils.data.Dataset):
     def __init__(
             self,
-            retina_map: pd.DataFrame,
+            img_map: pd.DataFrame,
             exclusions: scipy.sparse.csr_matrix,
             labels_events: scipy.sparse.csr_matrix,
             labels_times: scipy.sparse.csr_matrix,
@@ -79,10 +77,14 @@ class RetinalFundusDataset(torch.utils.data.Dataset):
             censorings: Optional[np.array] = None,
             eids: Optional[np.array] = None,
             visit=0,
+            crop_ratio: Optional[float] = 0.3,
+            img_size_to_gpu: Optional[int] = 299,
             extension='.png',
     ):
         super().__init__()
-        self.retina_map = retina_map
+        self.retina_map = img_map
+        self.crop_ratio = crop_ratio
+        self.img_size_to_gpu = img_size_to_gpu
 
         self.exclusions = exclusions
         self.covariates = covariates
@@ -95,14 +97,29 @@ class RetinalFundusDataset(torch.utils.data.Dataset):
         self.visit = visit
         self.extension = extension
 
-    def _png_loader(self, path):
+        # build idx matching table to be faster in get_item:
+        self.retina_map = self.retina_map.merge(censorings.reset_index()[['eid']].reset_index(), how='left', on='eid') \
+            .rename({'index': 'unique_eid_idx'}, axis=1)
+
+        # set up transforms
+        self.transforms = transforms.Compose([
+                AdaptiveRandomCropTransform(crop_ratio=self.crop_ratio,
+                                            out_size=self.img_size_to_gpu,
+                                            interpolation=PIL.Image.BICUBIC),
+                transforms.ToTensor()
+            ])
+
+    def loader(self, path):
         return self._RGBA_png_loader(path)
 
     @staticmethod
     def _RGBA_png_loader(path):
         with open(path, 'rb') as f:
-            img = Image.open(f)
+            img = PIL.Image.open(f)
             return img.convert('RGBA')
+
+    def _transforms_dummy(self, img):
+        return img
 
     def __getitem__(self, idx):
         # todo: check if this could work from multiple paths...
@@ -110,25 +127,23 @@ class RetinalFundusDataset(torch.utils.data.Dataset):
             idx = idx.tolist()
 
         path = self.retina_map['file_path'].values[idx]
+        eid_idx = self.retina_map['unique_eid_idx'].values[idx]
         img = self.loader(path)
+        img = self.transforms(img)
 
-        exclusions = torch.Tensor(self.exclusions[idx].todense())
-        labels_events = torch.Tensor(self.labels_events[idx].todense())
-        labels_times = torch.Tensor(self.labels_times[idx].todense())
+        exclusions = torch.Tensor(self.exclusions.values[eid_idx])
+        labels_events = torch.Tensor(self.labels_events.values[eid_idx])
+        labels_times = torch.Tensor(self.labels_times.values[eid_idx])
 
-        eids = torch.LongTensor([self.eids[idx]])
+        eids = torch.LongTensor([self.eids[eid_idx]])
 
         covariates = None
         if self.covariates is not None:
-            if not isinstance(idx, list):
-                idx = [idx]
-            covariates = torch.Tensor(self.covariates[idx])
+            covariates = torch.Tensor(self.covariates[eid_idx])
 
         censorings = None
         if self.censorings is not None:
-            if not isinstance(idx, list):
-                idx = [idx]
-            censorings = torch.Tensor(self.censorings[idx])
+            censorings = torch.Tensor(self.censorings.values[eid_idx])
 
         data_tuple = (img, covariates)
         labels_tuple = (labels_events, labels_times, exclusions, censorings, eids)

@@ -36,18 +36,13 @@ def get_path_from_wandb(reference: str, data_root: Optional[str] = None):
     assert path.exists(), f"Path not found: {path}"
     return path
 
-# TODO:
-'''
-[x] remove graph parts
-[x] edit to support baseline file
-[ ] test
-'''
-class WandBData:
+
+class WandBBaselineData:
     def __init__(
         self,
         eid_dict_name: str = "eids:latest",
         covariates_name: str = "baseline_covariates:latest",
-        outcomes_name: str = "outcomes:latest",
+        outcomes_name: str = "baseline_outcomes:latest",
         phecode_definitions_name: str = "phecode_definitions:latest",
         data_root: Optional[str] = None,
         wandb_run: Optional[wandb.sdk.wandb_run.Run] = None,
@@ -148,11 +143,11 @@ class WandBData:
 
 
 def get_or_load_wandbdataobj(
-    data_root, identifier="WandBGraphData:latest", run=None, project=None, entity=None, **kwargs
+    data_root, identifier="WandBBaselineData:latest", run=None, project=None, entity=None, **kwargs
 ):
     # log this as artifact:
     artifact = load_wandb_artifact(identifier, run=run, project=project, entity=entity)
-    ref = artifact.manifest.entries["WandBGraphData"].ref
+    ref = artifact.manifest.entries["WandBBaselineData"].ref
     stub = pathlib.Path(ref.split("file://")[1]).name
     artifact_path = pathlib.Path(data_root, stub)
     print(artifact_path)
@@ -164,7 +159,7 @@ def get_or_load_wandbdataobj(
                 data = pickle.loads(decompressor.read())
     except Exception as err:
         print(err)
-        data = WandBGraphData(
+        data = WandBBaselineData(
             data_root=data_root, wandb_run=run, wandb_entity=entity, wandb_project=project, **kwargs
         )
         # then pickle it:

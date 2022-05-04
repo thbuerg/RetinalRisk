@@ -16,15 +16,15 @@ from retinalrisk.modules.head import AlphaHead
 from retinalrisk.schedulers.alpha_schedulers import AlphaScheduler
 
 
-class RecordsTraining(LightningModule):
+class SupervisedTraining(LightningModule):
     def __init__(
         self,
-        graph_encoder: torch.nn.Module,
+        encoder: torch.nn.Module,
         head: torch.nn.Module,
         losses: Iterable[LossWrapper],
         label_mapping: Dict,
         incidence_mapping: Dict,
-        projector: Optional[torch.nn.Module],
+        # projector: Optional[torch.nn.Module],
         optimizer: Optional[torch.optim.Optimizer] = FusedAdam,
         optimizer_kwargs: Optional[Dict] = {"weight_decay": 5e-4},
         metrics_list: Optional[List[torchmetrics.Metric]] = [torchmetrics.AUROC],
@@ -39,11 +39,11 @@ class RecordsTraining(LightningModule):
     ):
         super().__init__()
 
-        self.save_hyperparameters(ignore=["graph_encoder", "head", "projector"])
+        self.save_hyperparameters(ignore=["encoder", "head", "projector"])
 
-        self.graph_encoder = graph_encoder
+        self.encoder = encoder
         self.head = head
-        self.projector = projector
+        # self.projector = projector
 
         self.losses = losses
 
@@ -92,7 +92,7 @@ class RecordsTraining(LightningModule):
             )
         return metrics
 
-    def update_metrics(self, metrics: Iterable, batch: Batch, outputs: Dict, loss_dict: Dict):
+    def update_metrics(self, metrics: Iterable, batch: GraphBatch, outputs: Dict, loss_dict: Dict):
         """
         Calculate the validation metrics. Stepwise!
         :return:
@@ -216,34 +216,17 @@ class RecordsTraining(LightningModule):
 
         return features
 
-    def get_projection(self, head_outputs: torch.Tensor):
-        if self.projector is not None:
-            return self.projector(head_outputs["pre_logits"])
-        else:
-            return None
-
     def forward(self, batch: Batch) -> Dict:
-        record_node_embeddings, label_node_embeddings = self.get_record_node_embeddings(batch)
+        embeddings = self.get_data_embeddings(batch)
 
-        individual_features, future_features = self.get_individual_features(
-            batch, record_node_embeddings
-        )
-        individual_features = self.maybe_concat_covariates(batch, individual_features)
+        individual_features = self.maybe_concat_covariates(batch, embeddings)
 
         head_outputs = self.head(individual_features)
-        head_projection = self.get_projection(head_outputs)
-
-        if self.use_endpoint_embeddings:
-            head_outputs["logits"] = torch.einsum(
-                "lg,bg->bl", label_node_embeddings, head_outputs["logits"]
-            )
 
         return dict(
-            record_node_embeddings=record_node_embeddings,
+            latents=embeddings,
             individual_features=individual_features,
-            future_features=future_features,
             head_outputs=head_outputs,
-            head_projection=head_projection,
         )
 
     def loss(self, batch: Batch, outputs: Dict) -> Dict:
@@ -266,143 +249,17 @@ class RecordsTraining(LightningModule):
         return optimizer
 
 
-class GraphEncoderMixin:
-    def get_record_node_embeddings(self, batch: Batch):
-        full_node_embeddings = self.graph_encoder(batch.graph.x_dict, batch.graph.adj_t_dict)
-        record_node_embeddings = full_node_embeddings[batch.record_indices]
+class ImageEncoderMixin:
+    def get_data_embeddings(self, batch: Batch):
+        embeddings = self.encoder(batch.data)
 
-        if self.normalize_node_embeddings:
-            record_node_embeddings = torch.nn.functional.normalize(record_node_embeddings)
+        if self.normalize_embeddings:
+            img_embeddings = torch.nn.functional.normalize(embeddings)
 
-        return record_node_embeddings, None
-
-
-class ShuffledGraphEncoderMixin:
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-        # hardcoded for now, could be passed from datamodule.record_node_indices
-        self.record_cols_idxer = np.arange(16201)
-        np.random.shuffle(self.record_cols_idxer)
-
-    def get_record_node_embeddings(self, batch: Batch):
-        full_node_embeddings = self.graph_encoder(batch.graph.x_dict, batch.graph.adj_t_dict)
-        record_node_embeddings = full_node_embeddings[batch.record_indices[self.record_cols_idxer]]
-
-        if self.normalize_node_embeddings:
-            record_node_embeddings = torch.nn.functional.normalize(record_node_embeddings)
-
-        return record_node_embeddings, None
+        return embeddings, None
 
 
-class LearnedEmbeddingsMixin:
-    def __init__(self, embedder, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-        self.embedder = embedder
-
-    def get_record_node_embeddings(self, batch: Batch):
-        record_indices = torch.arange(batch.records.shape[1], device=batch.records.device)
-        record_node_embeddings = self.embedder(record_indices)
-        if self.normalize_node_embeddings:
-            record_node_embeddings = torch.nn.functional.normalize(record_node_embeddings)
-
-        return record_node_embeddings, None
-
-
-class PretrainedEmbeddingsMixin:
-    def get_record_node_embeddings(self, batch: Batch):
-        full_node_embeddings = batch.graph.x_dict["0"]
-        record_node_embeddings = full_node_embeddings[batch.record_indices]
-        label_node_embeddings = full_node_embeddings[batch.label_indices]
-
-        if self.normalize_node_embeddings:
-            record_node_embeddings = torch.nn.functional.normalize(record_node_embeddings)
-            label_node_embeddings = torch.nn.functional.normalize(label_node_embeddings)
-
-        return record_node_embeddings, label_node_embeddings
-
-
-class RecordNodeFeaturesMixin:
-    def get_individual_features(self, batch: Batch, record_node_embeddings: torch.Tensor):
-        def get_features(records):
-            with torch.autocast(dtype=torch.float32, device_type="cuda"):
-                if self.binarize_records:
-                    records = (records > 0).float()
-
-                if self.node_dropout is not None:
-                    random_mask = (
-                        (torch.rand(*records.shape) > self.node_dropout).to(records.device).float()
-                    )
-                    features = torch.einsum(
-                        "bn,bn,nr->br", records, random_mask, record_node_embeddings
-                    )
-                else:
-                    features = records @ record_node_embeddings
-                features = torch.sign(features) * torch.log1p(torch.abs(features))
-            return features
-
-        records_features = get_features(batch.records)
-
-        future_features = None
-        if self.projector is not None:
-            future_features = get_features(batch.future_records)
-
-        return records_features, future_features
-
-
-class RecordsGraphTraining(GraphEncoderMixin, RecordNodeFeaturesMixin, RecordsTraining):
-    pass
-
-
-class RecordsShuffledGraphTraining(
-    ShuffledGraphEncoderMixin, RecordNodeFeaturesMixin, RecordsTraining
-):
-    pass
-
-
-class RecordsLearnedEmbeddingsTraining(
-    LearnedEmbeddingsMixin, RecordNodeFeaturesMixin, RecordsTraining
-):
-    pass
-
-
-class RecordsPretrainedEmbeddingsTraining(
-    PretrainedEmbeddingsMixin, RecordNodeFeaturesMixin, RecordsTraining
-):
-    pass
-
-
-class IdentityMixin:
-    def get_record_node_embeddings(self, batch: Batch):
-        full_node_embeddings = batch.graph.x_dict["0"]
-        label_node_embeddings = full_node_embeddings[batch.label_indices]
-
-        if self.normalize_node_embeddings:
-            label_node_embeddings = torch.nn.functional.normalize(label_node_embeddings)
-
-        return None, label_node_embeddings
-
-    def get_individual_features(self, batch: Batch, record_node_embeddings: torch.Tensor):
-        def get_features(records):
-            if self.binarize_records:
-                records = (records > 0).float()
-
-            with torch.autocast(dtype=torch.float32, device_type="cuda"):
-                features = records
-                features = torch.sign(features) * torch.log1p(torch.abs(features))
-            return features
-
-        records_features = get_features(batch.records)
-
-        future_features = None
-        if self.projector is not None:
-            future_features = get_features(batch.future_records)
-
-        return records_features, future_features
-
-
-class RecordsIdentityTraining(IdentityMixin, RecordsTraining):
+class ImageTraining(ImageEncoderMixin, SupervisedTraining):
     pass
 
 
@@ -410,9 +267,6 @@ class CovariatesOnlyMixin:
     def get_record_node_embeddings(self, batch: Batch):
         return None, None
 
-    def get_individual_features(self, batch: Batch, record_node_embeddings: torch.Tensor):
-        return (None, None)
 
-
-class CovariatesOnlyTraining(CovariatesOnlyMixin, RecordsTraining):
+class CovariatesOnlyTraining(CovariatesOnlyMixin, SupervisedTraining):
     pass

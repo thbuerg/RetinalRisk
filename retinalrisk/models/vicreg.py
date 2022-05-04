@@ -3,10 +3,10 @@ from typing import Dict
 import torch
 import torch_geometric
 
-from retinalrisk.data.collate import Batch
+from retinalrisk.data.collate import GraphBatch
 from retinalrisk.layers.augmentations import HeteroEdgeRemoving, HeteroFeatureMasking
 from retinalrisk.loss.vicreg import vicreg_loss_func
-from retinalrisk.models.supervised import LossWrapper, RecordNodeFeaturesMixin, RecordsTraining
+from retinalrisk.models.supervised import LossWrapper, RecordNodeFeaturesMixin, SupervisedTraining
 
 
 class VICRegLoss(LossWrapper):
@@ -16,7 +16,7 @@ class VICRegLoss(LossWrapper):
         self.loss_fn = vicreg_loss_func
         self.cov_batch_size = cov_batch_size
 
-    def compute(self, batch: Batch, outputs: Dict) -> Dict:
+    def compute(self, batch: GraphBatch, outputs: Dict) -> Dict:
         z1 = outputs["full_node_embeddings"]
         z2 = outputs["full_node_embeddings_hat"]
 
@@ -26,7 +26,7 @@ class VICRegLoss(LossWrapper):
         return loss * self.scale, loss
 
 
-class VICRegRecordsTraining(RecordsTraining):
+class VICRegRecordsTraining(SupervisedTraining):
     def __init__(self, vicreg_loss_scale, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -40,7 +40,7 @@ class VICRegRecordsTraining(RecordsTraining):
             data = aug.augment(data)
         return data
 
-    def forward(self, batch: Batch) -> Dict:
+    def forward(self, batch: GraphBatch) -> Dict:
         graph_aug1 = self.augment(self.augmentations, batch.graph)
         graph_aug2 = self.augment(self.augmentations, batch.graph)
 
@@ -69,7 +69,7 @@ class VICRegRecordsTraining(RecordsTraining):
 
 
 class AugmentedGraphEncoderMixin:
-    def get_node_embeddings(self, batch: Batch, augmented_graph: torch_geometric.data.HeteroData):
+    def get_node_embeddings(self, batch: GraphBatch, augmented_graph: torch_geometric.data.HeteroData):
         full_node_embeddings = self.graph_encoder(
             augmented_graph.x_dict, augmented_graph.adj_t_dict
         )

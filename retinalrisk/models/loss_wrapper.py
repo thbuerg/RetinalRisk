@@ -3,7 +3,7 @@ from typing import Dict, Optional
 import numpy as np
 import torch
 
-from retinalrisk.data.collate import Batch
+from retinalrisk.data.collate import GraphBatch
 from retinalrisk.loss.contrastive import nt_xent_loss
 
 
@@ -29,7 +29,7 @@ class EndpointClassificationLoss(LossWrapper):
         self.use_exclusion_mask = use_exclusion_mask
         self.loss_fn = loss_fn(**loss_fn_kwargs)
 
-    def compute(self, batch: Batch, outputs: Dict) -> Dict:
+    def compute(self, batch: GraphBatch, outputs: Dict) -> Dict:
         loss = self.loss_fn(outputs["head_outputs"]["logits"], batch.events)
 
         with torch.autocast(dtype=torch.float32, device_type="cuda"):
@@ -61,7 +61,7 @@ class EndpointTTELoss(LossWrapper):
             loss_weights = torch.from_numpy(loss_weights)[0]
         self.loss_weights = loss_weights
 
-    def compute(self, batch: Batch, outputs: Dict) -> Dict:
+    def compute(self, batch: GraphBatch, outputs: Dict) -> Dict:
         logits = outputs["head_outputs"]["logits"]
 
         # set time for 0 events to censoring time. TODO: might not be the best place to do this
@@ -98,7 +98,7 @@ class EndpointContrastiveLoss(LossWrapper):
     def __init__(self, scale: float = 1.0):
         super().__init__("CPC", scale)
 
-    def compute(self, batch: Batch, outputs: Dict) -> Dict:
+    def compute(self, batch: GraphBatch, outputs: Dict) -> Dict:
         future_records = torch.nn.functional.normalize(outputs["future_features"], p=2, dim=-1)
         head_projection = torch.nn.functional.normalize(outputs["head_projection"], p=2, dim=-1)
         predictions_to = torch.einsum("ac,bc->ab", future_records, head_projection)

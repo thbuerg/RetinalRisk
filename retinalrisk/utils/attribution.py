@@ -1,6 +1,6 @@
 import torch.nn as nn
 
-from retinalrisk.data.collate import Batch
+from retinalrisk.data.collate import GraphBatch
 
 
 class ShapWrapper(nn.Module):
@@ -26,7 +26,7 @@ class ShapWrapper(nn.Module):
             records = batch_data[:, : self.n_records]
             covariates = batch_data[:, self.n_records :]
 
-        batch = Batch(
+        batch = GraphBatch(
             graph=None,
             record_indices=None,
             records=records,

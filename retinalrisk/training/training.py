@@ -8,7 +8,7 @@ import torch
 import torchmetrics
 from omegaconf import DictConfig
 
-from retinalrisk.data.data import WandBData, get_or_load_wandbdataobj
+from retinalrisk.data.data import WandBBaselineData, get_or_load_wandbdataobj
 from retinalrisk.data.datamodules import RetinaDataModule
 from retinalrisk.loss.focal import FocalBCEWithLogitsLoss
 from retinalrisk.loss.tte import CIndex, CoxPHLoss
@@ -46,7 +46,7 @@ def setup_training(args: DictConfig):
             **args.setup.data,
         )
     else:
-        data = WandBData(
+        data = WandBBaselineData(
                     data_root=data_root,
                     wandb_entity="cardiors",
                     wandb_project="Retina",
@@ -229,34 +229,15 @@ def setup_training(args: DictConfig):
         )
 
     # TODO: expand on the identity training
-    elif args.model.model_type == "Identity":
-        tags.append("identity")
+    elif args.model.model_type == "raw_image":
+        tags.append("raw_image")
 
-        num_record_nodes = len(datamodule.record_node_indices)
-        num_head_features = num_record_nodes + num_covariates
-        head = get_head(args.head, num_head_features)
+
+        latent_size = 10
+
+        head = get_head(args.head, latent_size)
 
         model = RecordsIdentityTraining(graph_encoder=None, head=head, **training_kwargs)
-    elif args.model.model_type == "GraphEmbeddings":
-        tags.append("graph_embeddings")
-
-        num_head_features = datamodule.num_features + num_covariates
-        head = get_head(args.head, num_head_features)
-
-        model = RecordsPretrainedEmbeddingsTraining(
-            graph_encoder=None, head=head, **training_kwargs
-        )
-    elif args.model.model_type == "LearnedEmbeddings":
-        tags.append("learned_embeddings")
-
-        num_record_nodes = len(datamodule.record_node_indices)
-        num_head_features = args.model.num_outputs + num_covariates
-        head = get_head(args.head, num_head_features)
-        embedder = torch.nn.Embedding(num_record_nodes, args.model.num_outputs)
-
-        model = RecordsLearnedEmbeddingsTraining(
-            embedder, graph_encoder=None, head=head, **training_kwargs
-        )
     elif args.model.model_type == "Covariates":
         # TODO: keep the covariates only training
         tags.append("covariates_baseline")
