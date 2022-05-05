@@ -42,16 +42,6 @@ def main(args: DictConfig):
     )
     wandb_logger.watch(model, log_graph=True)
 
-    records, covariates, endpoints = extract_metadata(datamodule)
-    wandb_logger.experiment.config.update({
-        "feature_metadata": {
-            "features": {"n": len(records)+len(covariates),"names": records+covariates},
-            "records": {"n": len(records),"names": records},
-            "covariates": {"n": len(covariates),"names": covariates}
-        },
-        "endpoint_metadata": {"n": len(endpoints),"names": endpoints}
-    })
-
     callbacks = [
         ModelCheckpoint(mode="min", monitor="valid/loss", save_top_k=1, save_last=True),
         EarlyStopping(

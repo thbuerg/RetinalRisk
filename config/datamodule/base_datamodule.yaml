@@ -1,10 +1,11 @@
 defaults:
-  - covariates: agesex
+  - covariates: no_covariates
   - _self_
 
-batch_size: 8192
+batch_size: 128
 partition: 0
 num_workers: 4
+img_root: '/sc-projects/sc-proj-ukb-cvd/data/retina/preprocessed/preprocessed'
 
 label_definition:
   all_cause_death: True

@@ -1,8 +1,8 @@
 defaults:
-  - setup: full_noshortcuts
+  - setup: basic
   - head: mlp
   - datamodule: tte
-  - model: gnn
+  - model: image
   - training: default
   - _self_
 

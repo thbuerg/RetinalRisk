@@ -1,0 +1,2 @@
+model_type: 'image'
+embedding_dim: 256

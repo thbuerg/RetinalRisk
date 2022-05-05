@@ -15,7 +15,7 @@ write_embeddings: False
 write_attributions: False
 attribution_baseline_mode: 'zeros'
 use_endpoint_embeddings: False
-patience: 5
+patience: 30
 optimizer_kwargs:
-  weight_decay: 5e-4
-  lr: 0.001
+  weight_decay: 0.0
+  lr: 0.0001

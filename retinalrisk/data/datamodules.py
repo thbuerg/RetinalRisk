@@ -18,16 +18,10 @@ from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from torch.utils.data import DataLoader
 
 from retinalrisk.data.data import WandBBaselineData
+from retinalrisk.data.collate import ImgCollator
 from retinalrisk.data.datasets import RetinalFundusDataset
 
-# TODO:
-'''
-[x] remove the GNN/embedding parts
-[ ] make sure to retain functions such as eid lists etc
-[ ] define interface for img batches
-[ ] read targets as files??
-[ ] assess how to best do record encodings // how much of that we really need since its only phecode outputs.
-'''
+
 class RetinaDataModule(LightningDataModule):
     def __init__(
         self,
@@ -46,15 +40,13 @@ class RetinaDataModule(LightningDataModule):
 
         use_top_n_phecodes: int = 200,
         covariates: List[str] = [],
-        filter_phecode_categories: Iterable[str] = ("Cong", "Dev", "Neonate"),
-        filter_phecode_strings: Iterable[str] = ("history of",),
-        filter_input_origins: Iterable[str] = [], #todo: need this??
         **kwargs,
     ):
         super().__init__()
         self.img_root = img_root
         self.img_file_extension = img_file_extension
         self.img_visit = img_visit
+        self.collator = None
 
         self.partition = partition
         self.batch_size = batch_size
@@ -156,6 +148,7 @@ class RetinaDataModule(LightningDataModule):
             idxs = np.where(np.in1d(self.eids[split].astype('int32')[idxs],
                                     img_eid_map.eid.unique(), assume_unique = True))[0]
             split_eids = self.eids[split][idxs]
+            self.eids[split] = split_eids
             subsplit_img_eid_map = img_eid_map.query('eid in @split_eids')
             self.img_map_by_split[split] = subsplit_img_eid_map
 
@@ -169,27 +162,7 @@ class RetinaDataModule(LightningDataModule):
         print("Generating valid dataset...")
         self.valid_dataset = self.get_retina_dataset(set="valid")
 
-    def get_records_data(self, t0, split):
-        """
-        Generate a records dataset with t0
-        :param t0:  ['recruitment', 'random_age', 'random_censoring']
-        :return:
-        """
-        covariates_df = self.data.covariates
-        covariates = self.covariate_preprocessor.transform(covariates_df[self.covariate_cols])
-
-        eid_df = self.data.eid_df.copy()
-        eid_df.sort_values("eid", ascending=True, inplace=True)
-        eid_df["t0_date"] = eid_df["recruitment_date"]
-        censorings = ((eid_df.exit_date - eid_df.t0_date) / np.timedelta64(1, "Y")).to_frame(
-            name="cens_time"
-        )
-
-        # TODO: get records from wandb baseline file
-        records_events = None
-        records_times = None
-
-        return covariates, records_events, records_times, censorings
+        self.collator = ImgCollator()
 
     def get_retina_dataset(self, set="train"):
         # todo: get this information from baseline file
@@ -218,10 +191,6 @@ class RetinaDataModule(LightningDataModule):
 
     # trainer_flag: reload_dataloaders_every_epoch=True
     def train_dataloader(self, shuffle=True, drop_last=True):
-        if self.t0_mode != "recruitment":
-            self.train_dataset = None
-            gc.collect()
-            self.train_dataset = self.get_retina_dataset(set="train")
         return DataLoader(
             self.train_dataset,
             num_workers=self.num_workers,
@@ -229,7 +198,7 @@ class RetinaDataModule(LightningDataModule):
             batch_size=self.batch_size,
             drop_last=drop_last,
             shuffle=shuffle,
-            collate_fn=self.graph_collator,
+            collate_fn=self.collator,
             persistent_workers=self.num_workers > 0,
         )
 
@@ -241,7 +210,7 @@ class RetinaDataModule(LightningDataModule):
             batch_size=self.batch_size,
             drop_last=False,
             shuffle=False,
-            collate_fn=self.graph_collator,
+            collate_fn=self.collator,
             persistent_workers=self.num_workers > 0,
         )
 
@@ -256,6 +225,6 @@ class RetinaDataModule(LightningDataModule):
             batch_size=self.batch_size,
             drop_last=False,
             shuffle=False,
-            collate_fn=self.graph_collator,
+            collate_fn=self.collator,
             persistent_workers=self.num_workers > 0,
         )

@@ -30,11 +30,9 @@ class SupervisedTraining(LightningModule):
         metrics_list: Optional[List[torchmetrics.Metric]] = [torchmetrics.AUROC],
         metrics_kwargs: Optional[List[Dict]] = None,
         exclusions_on_metrics: Optional[bool] = True,
-        normalize_node_embeddings: bool = True,
         alpha_scheduler: Optional[AlphaScheduler] = None,
         node_dropout: Optional[float] = None,
         binarize_records: bool = False,
-        use_endpoint_embeddings: bool = False,
         **kwargs,
     ):
         super().__init__()
@@ -62,14 +60,11 @@ class SupervisedTraining(LightningModule):
         self.max_mean_metrics = defaultdict(float)
         self.exclusions_on_metrics = exclusions_on_metrics
 
-        self.normalize_node_embeddings = normalize_node_embeddings
-
         self.executor = ThreadPoolExecutor(max_workers=32)
         self.alpha_scheduler = alpha_scheduler
 
         self.node_dropout = node_dropout
         self.binarize_records = binarize_records
-        self.use_endpoint_embeddings = use_endpoint_embeddings
 
     def initialize_metrics(
         self,
@@ -92,14 +87,14 @@ class SupervisedTraining(LightningModule):
             )
         return metrics
 
-    def update_metrics(self, metrics: Iterable, batch: GraphBatch, outputs: Dict, loss_dict: Dict):
+    def update_metrics(self, metrics: Iterable, batch: Batch, outputs: Dict, loss_dict: Dict):
         """
         Calculate the validation metrics. Stepwise!
         :return:
         """
         times = batch.times.clone()
         no_event_idxs = times == 0
-        times[no_event_idxs] = batch.censorings[:, None].repeat(1, times.shape[1])[no_event_idxs]
+        times[no_event_idxs] = batch.censorings.repeat(1, times.shape[1])[no_event_idxs]
 
         for idx, (_, m_list) in enumerate(metrics.items()):
             p_i = outputs["head_outputs"]["logits"][:, idx].detach().float()
@@ -253,10 +248,7 @@ class ImageEncoderMixin:
     def get_data_embeddings(self, batch: Batch):
         embeddings = self.encoder(batch.data)
 
-        if self.normalize_embeddings:
-            img_embeddings = torch.nn.functional.normalize(embeddings)
-
-        return embeddings, None
+        return embeddings
 
 
 class ImageTraining(ImageEncoderMixin, SupervisedTraining):

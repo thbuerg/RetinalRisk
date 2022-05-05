@@ -1,0 +1,6 @@
+defaults:
+  - base_setup
+  - _self_
+
+data_identifier: "WandBBaselineData:latest"
+tags: ['baseline_data']

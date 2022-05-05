@@ -78,35 +78,41 @@ class RetinalFundusDataset(torch.utils.data.Dataset):
             eids: Optional[np.array] = None,
             visit=0,
             crop_ratio: Optional[float] = 0.3,
-            img_size_to_gpu: Optional[int] = 299,
+            img_size_to_gpu: Optional[int] = 512,
             extension='.png',
     ):
         super().__init__()
         self.retina_map = img_map
         self.crop_ratio = crop_ratio
         self.img_size_to_gpu = img_size_to_gpu
-
-        self.exclusions = exclusions
-        self.covariates = covariates
-        self.labels_events = labels_events
-        self.labels_times = labels_times
-        self.censorings = censorings
-
         self.eids = eids
+
+        # build idx matching table to be faster in get_item:
+        self.retina_map = self.retina_map.merge(censorings.loc[self.eids].reset_index()[['eid']].reset_index(),
+                                                how='left', on='eid') \
+            .rename({'index': 'unique_eid_idx'}, axis=1)
+
+        # filter all data:
+        eid_idx = self.retina_map['unique_eid_idx'].unique()
+        self.exclusions = exclusions.iloc[eid_idx]
+        self.covariates = covariates[eid_idx]
+        self.labels_events = labels_events.iloc[eid_idx]
+        self.labels_times = labels_times.iloc[eid_idx]
+        self.censorings = censorings.iloc[eid_idx]
 
         self.visit = visit
         self.extension = extension
 
-        # build idx matching table to be faster in get_item:
-        self.retina_map = self.retina_map.merge(censorings.reset_index()[['eid']].reset_index(), how='left', on='eid') \
-            .rename({'index': 'unique_eid_idx'}, axis=1)
-
         # set up transforms
         self.transforms = transforms.Compose([
-                AdaptiveRandomCropTransform(crop_ratio=self.crop_ratio,
-                                            out_size=self.img_size_to_gpu,
-                                            interpolation=PIL.Image.BICUBIC),
-                transforms.ToTensor()
+                # AdaptiveRandomCropTransform(crop_ratio=self.crop_ratio,
+                #                             out_size=self.img_size_to_gpu,
+                #                             interpolation=PIL.Image.BICUBIC),
+                transforms.Resize(self.img_size_to_gpu*1.1),
+                transforms.CenterCrop(self.img_size_to_gpu),
+                transforms.ToTensor(),
+                transforms.Normalize(mean=[0.485, 0.456, 0.406],
+                                     std=[0.229, 0.224, 0.225]),
             ])
 
     def loader(self, path):
@@ -116,7 +122,7 @@ class RetinalFundusDataset(torch.utils.data.Dataset):
     def _RGBA_png_loader(path):
         with open(path, 'rb') as f:
             img = PIL.Image.open(f)
-            return img.convert('RGBA')
+            return img.convert('RGB')
 
     def _transforms_dummy(self, img):
         return img

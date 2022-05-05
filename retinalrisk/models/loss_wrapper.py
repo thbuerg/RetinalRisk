@@ -69,7 +69,7 @@ class EndpointTTELoss(LossWrapper):
         # TODO: hack - epsilon s.t. censoring_time != death_time
         times = batch.times.clone()
         no_event_idxs = times == 0
-        times[no_event_idxs] = batch.censorings[:, None].repeat(1, times.shape[1])[no_event_idxs]
+        times[no_event_idxs] = batch.censorings.repeat(1, times.shape[1])[no_event_idxs]
 
         losses = []
         for i in range(logits.shape[1]):
@@ -92,16 +92,3 @@ class EndpointTTELoss(LossWrapper):
             loss = loss[torch.isfinite(loss)].mean()
 
         return loss * self.scale, loss
-
-
-class EndpointContrastiveLoss(LossWrapper):
-    def __init__(self, scale: float = 1.0):
-        super().__init__("CPC", scale)
-
-    def compute(self, batch: GraphBatch, outputs: Dict) -> Dict:
-        future_records = torch.nn.functional.normalize(outputs["future_features"], p=2, dim=-1)
-        head_projection = torch.nn.functional.normalize(outputs["head_projection"], p=2, dim=-1)
-        predictions_to = torch.einsum("ac,bc->ab", future_records, head_projection)
-        contrastive_loss = nt_xent_loss(predictions_to).mean()
-
-        return contrastive_loss * self.scale, contrastive_loss

@@ -5,6 +5,7 @@ from socket import gethostname
 import hydra
 import numpy as np
 import torch
+import torchvision as tv
 import torchmetrics
 from omegaconf import DictConfig
 
@@ -14,19 +15,12 @@ from retinalrisk.loss.focal import FocalBCEWithLogitsLoss
 from retinalrisk.loss.tte import CIndex, CoxPHLoss
 from retinalrisk.models.loss_wrapper import (
     EndpointClassificationLoss,
-    EndpointContrastiveLoss,
     EndpointTTELoss,
 )
 from retinalrisk.models.supervised import (
     CovariatesOnlyTraining,
-    RecordsGraphTraining,
-    RecordsIdentityTraining,
-    RecordsLearnedEmbeddingsTraining,
-    RecordsPretrainedEmbeddingsTraining,
-    RecordsShuffledGraphTraining,
+    ImageTraining
 )
-from retinalrisk.models.vicreg import VICRegRecordsGraphTraining
-from retinalrisk.modules.gnn import HeteroGNN
 from retinalrisk.modules.head import AlphaHead, IndependentMLPHeads, LinearHead, MLPHead, ResMLPHead
 
 
@@ -50,7 +44,6 @@ def setup_training(args: DictConfig):
                     data_root=data_root,
                     wandb_entity="cardiors",
                     wandb_project="Retina",
-                **args.setup.data,
             )
 
     datamodule = RetinaDataModule(
@@ -119,7 +112,8 @@ def setup_training(args: DictConfig):
     incidence = datamodule.train_dataset.labels_events.mean(axis=0)
     incidence_mapping = {}
     fix_str = lambda s: s.replace(".", "-").replace("/", "-")
-    for l, i in zip(datamodule.labels, np.array(incidence)[0]):
+
+    for l, i in zip(datamodule.labels, incidence.values):
         l = fix_str(l)
         if i > 0.1:
             incidence_mapping[l] = ">1:10"
@@ -158,86 +152,33 @@ def setup_training(args: DictConfig):
         )
         metrics.append(CIndex)
 
-    projector = None
-    if args.training.contrastive_loss_factor > 0:
-        losses.append(EndpointContrastiveLoss(scale=args.training.contrastive_loss_factor))
-        projector = torch.nn.Linear(args.head.kwargs["num_hidden"], args.model.num_outputs)
-
     training_kwargs = dict(
         label_mapping=datamodule.label_mapping,
         incidence_mapping=incidence_mapping,
         exclusions_on_metrics=args.training.exclusions_on_metrics,
         losses=losses,
         metrics_list=metrics,
-        projector=projector,
         alpha_scheduler=alpha_scheduler,
-        node_dropout=args.training.node_dropout,
-        normalize_node_embeddings=args.training.normalize_node_embeddings,
         optimizer_kwargs=args.training.optimizer_kwargs,
         binarize_records=args.training.binarize_records,
-        use_endpoint_embeddings=args.training.use_endpoint_embeddings,
     )
 
-    # TODO  restrict choices of model types here!
-    if args.model.model_type == "GNN":
-        tags.append("gnn")
-
-        gnn = HeteroGNN(
-            datamodule.graph.num_features,
-            args.model.num_hidden,
-            args.model.num_outputs,
-            args.model.num_blocks,
-            metadata=datamodule.graph.metadata(),
-            gradient_checkpointing=args.training.gradient_checkpointing,
-            weight_norm=args.model.weight_norm,
-            dropout=args.model.dropout,
-        )
-
-        num_head_features = gnn.num_outputs + num_covariates
-        head = get_head(args.head, num_head_features)
-
-        cls = RecordsShuffledGraphTraining if args.model.shuffled else RecordsGraphTraining
-
-        model = cls(
-            graph_encoder=gnn,
-            head=head,
-            **training_kwargs,
-        )
-    elif args.model.model_type == "VICReg":
-        tags.append("gnn")
-        tags.append("vicreg")
-
-        gnn = HeteroGNN(
-            datamodule.graph.num_features,
-            args.model.num_hidden,
-            args.model.num_outputs,
-            args.model.num_blocks,
-            metadata=datamodule.graph.metadata(),
-            gradient_checkpointing=args.training.gradient_checkpointing,
-            weight_norm=args.model.weight_norm,
-            dropout=args.model.dropout,
-        )
-
-        num_head_features = gnn.num_outputs + num_covariates
-        head = get_head(args.head, num_head_features)
-
-        model = VICRegRecordsGraphTraining(
-            vicreg_loss_scale=args.training.vicreg_loss_factor,
-            graph_encoder=gnn,
-            head=head,
-            **training_kwargs,
-        )
-
     # TODO: expand on the identity training
-    elif args.model.model_type == "raw_image":
-        tags.append("raw_image")
+    if args.model.model_type == "image":
+        tags.append("image")
 
+        # encoder = tv.models.convnext_small(pretrained=True)
+        encoder = tv.models.resnet18(pretrained=True)
+        for param in encoder.parameters():
+            param.requires_grad = False
 
-        latent_size = 10
+        encoder.fc = torch.nn.Linear(encoder.fc.weight.shape[1],
+                               args.model.embedding_dim)
 
-        head = get_head(args.head, latent_size)
+        head = get_head(args.head, args.model.embedding_dim+len(args.datamodule.covariates))
 
-        model = RecordsIdentityTraining(graph_encoder=None, head=head, **training_kwargs)
+        model = ImageTraining(encoder=encoder, head=head, **training_kwargs)
+
     elif args.model.model_type == "Covariates":
         # TODO: keep the covariates only training
         tags.append("covariates_baseline")

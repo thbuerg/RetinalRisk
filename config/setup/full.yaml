@@ -1,6 +1,0 @@
-defaults:
-  - base_setup
-  - _self_
-
-data_identifier: "WandBGraphData:latest"
-tags: ['full_data']
