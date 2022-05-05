@@ -38,7 +38,6 @@ class RetinaDataModule(LightningDataModule):
         img_file_extension: Optional[str] = '.png',
         img_visit: Optional[int] = 0,
 
-        use_top_n_phecodes: int = 200,
         covariates: List[str] = [],
         **kwargs,
     ):
@@ -54,7 +53,6 @@ class RetinaDataModule(LightningDataModule):
         self.task = task
         self.task_kwargs = task_kwargs
         self.label_definition = label_definition
-        self.use_top_n_phecodes = use_top_n_phecodes
         self.covariate_cols = covariates
 
         self.data = wandb_data
@@ -105,8 +103,22 @@ class RetinaDataModule(LightningDataModule):
     def prepare_labels(self):
         # This is a minimal and naive version of prepare_labels that
         # assumes all cols provided in the outcome file should be used.
-        self.labels = ['_'.join(c.split('_')[:-1])
-                       for c in self.data.outcomes.columns if 'event' in c]
+
+        self.labels = []
+        if self.label_definition is None:
+            self.labels += ['_'.join(c.split('_')[:-1])
+                           for c in self.data.outcomes.columns if 'event' in c]
+        else:
+            if len(self.label_definition["custom"]) > 0:
+                if isinstance(self.label_definition["custom"], list):
+                    self.labels += self.label_definition["custom"]
+                elif isinstance(self.label_definition["custom"], str):
+                    custom_label_df = pd.read_csv(self.label_definition["custom"])
+                    self.labels += custom_label_df.endpoint.apply(
+                        lambda s: s.replace("-", ".").replace("/", "-")
+                    ).values.tolist()
+                else:
+                    assert False
 
         phecode_lookup = self.data.phecode_definitions.assign(
             phecode=self.data.phecode_definitions.phecode.apply(lambda s: s.replace(".", "-").replace("/", "-"))
