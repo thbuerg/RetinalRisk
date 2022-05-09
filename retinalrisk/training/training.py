@@ -76,8 +76,6 @@ def setup_training(args: DictConfig):
             assert False
 
         num_endpoints = len(datamodule.labels)
-        if args.training.use_endpoint_embeddings:
-            num_endpoints = datamodule.graph.num_features
 
         return cls(
             num_head_features,
@@ -167,20 +165,34 @@ def setup_training(args: DictConfig):
     if args.model.model_type == "image":
         tags.append("image")
 
-        # encoder = tv.models.convnext_small(pretrained=True)
-        encoder = tv.models.resnet18(pretrained=True)
-        for param in encoder.parameters():
-            param.requires_grad = False
+        # todo: run w/o pretraining
+        if args.model.encoder == 'convnext_tiny':
+            encoder = tv.models.convnext_tiny(pretrained=args.model.pretrained)
+            outshape = 768
+            setattr(encoder.classifier, '2', torch.nn.Identity())
 
-        encoder.fc = torch.nn.Linear(encoder.fc.weight.shape[1],
-                               args.model.embedding_dim)
+        elif args.model.encoder == 'resnet18':
+            encoder = tv.models.resnet18(pretrained=args.model.pretrained)
+            outshape = encoder.fc.weight.shape[1]
+            encoder.fc = torch.nn.Identity()
 
-        head = get_head(args.head, args.model.embedding_dim+len(args.datamodule.covariates))
+            # todo: add inception resnet -> to test different input size
+
+        else:
+            raise NotImplementedError()
+
+        if args.model.freeze_encoder:
+            assert isinstance(args.model.freeze_encoder, bool)
+            print(args.model.freeze_encoder)
+            for name, param in encoder.named_parameters():
+                if param.requires_grad:
+                    param.requires_grad = False
+
+        head = get_head(args.head, outshape+len(args.datamodule.covariates))
 
         model = ImageTraining(encoder=encoder, head=head, **training_kwargs)
 
     elif args.model.model_type == "Covariates":
-        # TODO: keep the covariates only training
         tags.append("covariates_baseline")
 
         num_head_features = num_covariates

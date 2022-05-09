@@ -6,11 +6,11 @@ import pandas as pd
 import ray
 import torch
 import zstandard
-from captum.attr import DeepLiftShap
+# from captum.attr import DeepLiftShap
 from pytorch_lightning.callbacks.base import Callback
 from tqdm import tqdm
 
-from retinalrisk.utils.attribution import ShapWrapper
+# from retinalrisk.utils.attribution import ShapWrapper
 
 
 def annotate_df(df, trainer, module, split=None):
@@ -277,6 +277,7 @@ class WriteFeatureAttributions(Callback):
         task = ShapWrapper(module.head, record_node_embeddings, len(records), gpu, module)
 
         task = task.to(gpu)
+        raise NotImplementedError()
         explainer = DeepLiftShap(task)
 
         # attribute

@@ -118,17 +118,24 @@ class SupervisedTraining(LightningModule):
             averages = defaultdict(list)
             incidence_averages = defaultdict(list)
 
-            def compute_and_log(args):
+            def compute(args):
                 l, m_list = args
+                rs = []
 
                 for m in m_list:
                     r = m.compute()
+                    rs.append(r)
+
+                return rs
+
+            results = list(self.executor.map(compute, metrics.items()))
+
+            for (l, m_list), rs in zip(metrics.items(), results):
+                for m, r in zip(m_list, rs):
                     self.log(f"{kind}/{self.label_mapping[l]}_{m.__class__.__name__}", r)
                     averages[m.__class__.__name__].append(r)
                     incidence_averages[self.incidence_mapping[l]].append(r)
                     m.reset()
-
-            _ = list(self.executor.map(compute_and_log, metrics.items()))
 
             for m, v in averages.items():
                 v = torch.stack(v)

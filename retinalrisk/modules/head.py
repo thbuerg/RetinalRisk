@@ -1,7 +1,7 @@
 import numpy as np
 import torch
 
-from retinalrisk.layers.activations import GEGLU
+GEGLU = None # recover activations should this be needed!
 
 
 class LinearHead(torch.nn.Module):

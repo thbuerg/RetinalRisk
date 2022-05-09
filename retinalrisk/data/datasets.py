@@ -8,7 +8,7 @@ import pandas as pd
 import scipy
 import scipy.sparse
 import torch
-import PIL
+import PIL # todo check of makes sense to replace by OpenCV loader, remember channels might be inverted
 
 from torchvision import transforms
 
@@ -76,14 +76,13 @@ class RetinalFundusDataset(torch.utils.data.Dataset):
             covariates: Optional[scipy.sparse.csr_matrix] = None,
             censorings: Optional[np.array] = None,
             eids: Optional[np.array] = None,
-            visit=0,
-            crop_ratio: Optional[float] = 0.3,
-            img_size_to_gpu: Optional[int] = 512,
+            img_crop_ratio: Optional[float] = 0.9,
+            img_size_to_gpu: Optional[int] = 324,
             extension='.png',
     ):
         super().__init__()
         self.retina_map = img_map
-        self.crop_ratio = crop_ratio
+        self.img_crop_ratio = img_crop_ratio
         self.img_size_to_gpu = img_size_to_gpu
         self.eids = eids
 
@@ -100,26 +99,23 @@ class RetinalFundusDataset(torch.utils.data.Dataset):
         self.labels_times = labels_times.iloc[eid_idx]
         self.censorings = censorings.iloc[eid_idx]
 
-        self.visit = visit
         self.extension = extension
 
         # set up transforms
         self.transforms = transforms.Compose([
-                # AdaptiveRandomCropTransform(crop_ratio=self.crop_ratio,
-                #                             out_size=self.img_size_to_gpu,
-                #                             interpolation=PIL.Image.BICUBIC),
-                transforms.Resize(self.img_size_to_gpu*1.1),
-                transforms.CenterCrop(self.img_size_to_gpu),
+                AdaptiveRandomCropTransform(crop_ratio=self.img_crop_ratio,
+                                            out_size=self.img_size_to_gpu,
+                                            interpolation=PIL.Image.BICUBIC),
                 transforms.ToTensor(),
                 transforms.Normalize(mean=[0.485, 0.456, 0.406],
                                      std=[0.229, 0.224, 0.225]),
             ])
 
     def loader(self, path):
-        return self._RGBA_png_loader(path)
+        return self._RGB_png_loader(path)
 
     @staticmethod
-    def _RGBA_png_loader(path):
+    def _RGB_png_loader(path):
         with open(path, 'rb') as f:
             img = PIL.Image.open(f)
             return img.convert('RGB')
@@ -151,10 +147,12 @@ class RetinalFundusDataset(torch.utils.data.Dataset):
         if self.censorings is not None:
             censorings = torch.Tensor(self.censorings.values[eid_idx])
 
-        data_tuple = (img, covariates)
-        labels_tuple = (labels_events, labels_times, exclusions, censorings, eids)
+        # data_tuple = (img, covariates)
+        # labels_tuple = (labels_events, labels_times, exclusions, censorings, eids)
+        # return data_tuple, labels_tuple
 
-        return data_tuple, labels_tuple
+        # todo: add file path to batch object and assert that they match.
+        return (img, covariates, labels_events, labels_times, exclusions, censorings, eids)
 
     def __len__(self):
         return self.retina_map.shape[0]

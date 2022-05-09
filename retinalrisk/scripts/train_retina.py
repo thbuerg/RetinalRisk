@@ -6,10 +6,9 @@ from socket import gethostname
 
 import hydra
 from omegaconf import DictConfig, OmegaConf
-from pytorch_lightning import Trainer
+from pytorch_lightning import Trainer, seed_everything
 from pytorch_lightning.callbacks import EarlyStopping, ModelCheckpoint
 from pytorch_lightning.loggers import WandbLogger
-from torch_geometric import seed_everything
 
 from retinalrisk.training import setup_training
 from retinalrisk.utils.callbacks import (

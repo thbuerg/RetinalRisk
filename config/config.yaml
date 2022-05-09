@@ -14,4 +14,5 @@ trainer:
   detect_anomaly: False
   amp_backend: native
   accumulate_grad_batches: 1
-# gradient_clip_val: 100
+  #gradient_clip_val: 100
+  #overfit_batches: 10

@@ -1,2 +1,4 @@
 model_type: 'image'
-embedding_dim: 256
+encoder: 'resnet18'
+freeze_encoder: False
+pretrained: False
