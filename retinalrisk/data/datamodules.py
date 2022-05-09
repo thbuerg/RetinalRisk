@@ -185,13 +185,13 @@ class RetinaDataModule(LightningDataModule):
 
     def get_retina_dataset(self, set="train"):
         # todo: get this information from baseline file
-        exclusions = self.data.outcomes[[c for c in self.data.outcomes.columns if 'prev' in c]]
+        exclusions = self.data.outcomes[[c for c in self.data.outcomes.columns if c.replace('_prev', '') in self.labels]].loc[self.eids[set]]
 
-        covariates_df = self.data.covariates
+        covariates_df = self.data.covariates.loc[self.eids[set]]
         covariates = self.covariate_preprocessor.transform(covariates_df[self.covariate_cols])
 
-        labels_events = self.data.outcomes[[c for c in self.data.outcomes.columns if 'event' in c]]
-        labels_times = self.data.outcomes[[c for c in self.data.outcomes.columns if 'time' in c]]
+        labels_events = self.data.outcomes[[c for c in self.data.outcomes.columns if 'event' in c]].loc[self.eids[set]]
+        labels_times = self.data.outcomes[[c for c in self.data.outcomes.columns if 'time' in c]].loc[self.eids[set]]
 
         # select correct labels:
         labels_events = labels_events[[c for c in labels_events.columns if c.replace('_event', '') in self.labels]]
@@ -200,7 +200,10 @@ class RetinaDataModule(LightningDataModule):
         labels_times = labels_times.where(labels_events.values != 0, 0)
 
         censorings = self.data.outcomes[[c for c in self.data.outcomes.columns if 'time' in c]].max(axis=1).to_frame(
-            name='cens_time')
+            name='cens_time').loc[self.eids[set]]
+
+
+
 
         dataset = RetinalFundusDataset(
             img_map=self.img_map_by_split[set],

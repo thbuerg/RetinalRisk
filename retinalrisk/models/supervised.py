@@ -222,6 +222,7 @@ class SupervisedTraining(LightningModule):
         embeddings = self.get_data_embeddings(batch)
 
         individual_features = self.maybe_concat_covariates(batch, embeddings)
+        individual_features = batch.covariates
 
         head_outputs = self.head(individual_features)
 

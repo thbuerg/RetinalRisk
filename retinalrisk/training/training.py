@@ -188,9 +188,11 @@ def setup_training(args: DictConfig):
                 if param.requires_grad:
                     param.requires_grad = False
 
-        head = get_head(args.head, outshape+len(args.datamodule.covariates))
+        # todo test linear head
+        # head = get_head(args.head, outshape+len(args.datamodule.covariates))
+        head = get_head(args.head, len(args.datamodule.covariates))
 
-        model = ImageTraining(encoder=encoder, head=head, **training_kwargs)
+        model = ImageTraining(encoder=torch.nn.Identity(), head=head, **training_kwargs)
 
     elif args.model.model_type == "Covariates":
         tags.append("covariates_baseline")
