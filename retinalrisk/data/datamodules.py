@@ -74,8 +74,6 @@ class RetinaDataModule(LightningDataModule):
     def num_classes(self) -> int:
         return self.labels[0].shape[1]
 
-    # TODO: a) adapt to receive input from baseline file directly
-    # TODO: b) need this?
     def setup_covariates_preprocessor(self):
         covariates_df = self.data.covariates[self.covariate_cols]
 
@@ -184,11 +182,14 @@ class RetinaDataModule(LightningDataModule):
         self.collator = ImgCollator()
 
     def get_retina_dataset(self, set="train"):
-        # todo: get this information from baseline file
         exclusions = self.data.outcomes[[c for c in self.data.outcomes.columns if c.replace('_prev', '') in self.labels]].loc[self.eids[set]]
 
-        covariates_df = self.data.covariates.loc[self.eids[set]]
-        covariates = self.covariate_preprocessor.transform(covariates_df[self.covariate_cols])
+        covariates = self.data.covariates.loc[self.eids[set]]
+        print(covariates.head())
+        fts = self.covariate_preprocessor.transform(covariates[self.covariate_cols])
+        covariates = pd.DataFrame(fts,
+                                  columns=[f'ft_{i}' for i in range(fts.shape[1])],
+                                  index = covariates.index)
 
         labels_events = self.data.outcomes[[c for c in self.data.outcomes.columns if 'event' in c]].loc[self.eids[set]]
         labels_times = self.data.outcomes[[c for c in self.data.outcomes.columns if 'time' in c]].loc[self.eids[set]]
@@ -201,9 +202,6 @@ class RetinaDataModule(LightningDataModule):
 
         censorings = self.data.outcomes[[c for c in self.data.outcomes.columns if 'time' in c]].max(axis=1).to_frame(
             name='cens_time').loc[self.eids[set]]
-
-
-
 
         dataset = RetinalFundusDataset(
             img_map=self.img_map_by_split[set],

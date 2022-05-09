@@ -86,18 +86,11 @@ class RetinalFundusDataset(torch.utils.data.Dataset):
         self.img_size_to_gpu = img_size_to_gpu
         self.eids = eids
 
-        # build idx matching table to be faster in get_item:
-        self.retina_map = self.retina_map.merge(censorings.loc[self.eids].reset_index()[['eid']].reset_index(),
-                                                how='left', on='eid') \
-            .rename({'index': 'unique_eid_idx'}, axis=1)
-
-        # filter all data:
-        eid_idx = self.retina_map['unique_eid_idx'].unique()
-        self.exclusions = exclusions.iloc[eid_idx]
-        self.covariates = covariates[eid_idx]
-        self.labels_events = labels_events.iloc[eid_idx]
-        self.labels_times = labels_times.iloc[eid_idx]
-        self.censorings = censorings.iloc[eid_idx]
+        self.exclusions = exclusions#.iloc[eid_idx]
+        self.covariates = covariates#[eid_idx]
+        self.labels_events = labels_events#.iloc[eid_idx]
+        self.labels_times = labels_times#.iloc[eid_idx]
+        self.censorings = censorings#.iloc[eid_idx]
 
         self.extension = extension
 
@@ -124,35 +117,29 @@ class RetinalFundusDataset(torch.utils.data.Dataset):
         return img
 
     def __getitem__(self, idx):
-        # todo: check if this could work from multiple paths...
         if torch.is_tensor(idx):
             idx = idx.tolist()
 
         path = self.retina_map['file_path'].values[idx]
-        eid_idx = self.retina_map['unique_eid_idx'].values[idx]
+        eid = self.retina_map['eid'].values[idx]
         img = self.loader(path)
         img = self.transforms(img)
 
-        exclusions = torch.Tensor(self.exclusions.values[eid_idx])
-        labels_events = torch.Tensor(self.labels_events.values[eid_idx])
-        labels_times = torch.Tensor(self.labels_times.values[eid_idx])
+        exclusions = torch.Tensor(self.exclusions.loc[eid].values)
+        labels_events = torch.Tensor(self.labels_events.loc[eid].values)
+        labels_times = torch.Tensor(self.labels_times.loc[eid].values)
 
-        eids = torch.LongTensor([self.eids[eid_idx]])
+        # eids = torch.LongTensor([self.eids[eid]])
 
         covariates = None
         if self.covariates is not None:
-            covariates = torch.Tensor(self.covariates[eid_idx])
+            covariates = torch.Tensor(self.covariates.loc[eid].values)
 
         censorings = None
         if self.censorings is not None:
-            censorings = torch.Tensor(self.censorings.values[eid_idx])
+            censorings = torch.Tensor(self.censorings.loc[eid].values)
 
-        # data_tuple = (img, covariates)
-        # labels_tuple = (labels_events, labels_times, exclusions, censorings, eids)
-        # return data_tuple, labels_tuple
-
-        # todo: add file path to batch object and assert that they match.
-        return (img, covariates, labels_events, labels_times, exclusions, censorings, eids)
+        return (img, covariates, labels_events, labels_times, exclusions, censorings, eid)
 
     def __len__(self):
         return self.retina_map.shape[0]

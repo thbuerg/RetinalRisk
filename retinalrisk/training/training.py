@@ -161,7 +161,6 @@ def setup_training(args: DictConfig):
         binarize_records=args.training.binarize_records,
     )
 
-    # TODO: expand on the identity training
     if args.model.model_type == "image":
         tags.append("image")
 
@@ -188,11 +187,9 @@ def setup_training(args: DictConfig):
                 if param.requires_grad:
                     param.requires_grad = False
 
-        # todo test linear head
-        # head = get_head(args.head, outshape+len(args.datamodule.covariates))
-        head = get_head(args.head, len(args.datamodule.covariates))
+        head = get_head(args.head, outshape+len(args.datamodule.covariates))
 
-        model = ImageTraining(encoder=torch.nn.Identity(), head=head, **training_kwargs)
+        model = ImageTraining(encoder=encoder, head=head, **training_kwargs)
 
     elif args.model.model_type == "Covariates":
         tags.append("covariates_baseline")

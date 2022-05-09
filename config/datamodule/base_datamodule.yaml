@@ -1,6 +1,5 @@
 defaults:
-#  - covariates: no_covariates
-  - covariates: agesex
+  - covariates: no_covariates
   - _self_
 
 batch_size: 420
@@ -9,7 +8,6 @@ num_workers: 4
 img_root: '/sc-projects/sc-proj-ukb-cvd/data/retina/preprocessed/preprocessed'
 img_visit: 0
 img_size_to_gpu: 400
-#img_crop_ratio: [0.4, 0.5, 0.6]
 img_crop_ratio: 0.8
 
 label_definition:
