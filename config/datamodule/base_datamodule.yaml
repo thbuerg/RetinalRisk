@@ -1,5 +1,6 @@
 defaults:
   - covariates: no_covariates
+  - augmentation: none
   - _self_
 
 batch_size: 420

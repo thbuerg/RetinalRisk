@@ -8,7 +8,7 @@ import pandas as pd
 import scipy
 import scipy.sparse
 import torch
-import PIL # todo check of makes sense to replace by OpenCV loader, remember channels might be inverted
+import PIL
 
 from torchvision import transforms
 
@@ -73,6 +73,7 @@ class RetinalFundusDataset(torch.utils.data.Dataset):
             exclusions: scipy.sparse.csr_matrix,
             labels_events: scipy.sparse.csr_matrix,
             labels_times: scipy.sparse.csr_matrix,
+            augmentations: Optional[list] = [],
             covariates: Optional[scipy.sparse.csr_matrix] = None,
             censorings: Optional[np.array] = None,
             eids: Optional[np.array] = None,
@@ -99,6 +100,7 @@ class RetinalFundusDataset(torch.utils.data.Dataset):
                 AdaptiveRandomCropTransform(crop_ratio=self.img_crop_ratio,
                                             out_size=self.img_size_to_gpu,
                                             interpolation=PIL.Image.BICUBIC),
+                                             ] + augmentations + [
                 transforms.ToTensor(),
                 transforms.Normalize(mean=[0.485, 0.456, 0.406],
                                      std=[0.229, 0.224, 0.225]),

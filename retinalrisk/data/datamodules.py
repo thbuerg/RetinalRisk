@@ -9,6 +9,8 @@ import numpy as np
 import pandas as pd
 import scipy
 import torch
+import torchvision.transforms as transforms
+
 from pytorch_lightning import LightningDataModule
 from scipy.sparse import coo_matrix
 from sklearn.compose import ColumnTransformer
@@ -35,6 +37,7 @@ class RetinaDataModule(LightningDataModule):
 
         label_definition: dict,
 
+        augmentation: Optional[dict] = {},
         img_size_to_gpu: Optional[int] = 299,
         img_crop_ratio: Optional[float] = 0.7,
         img_file_extension: Optional[str] = '.png',
@@ -50,6 +53,9 @@ class RetinaDataModule(LightningDataModule):
         self.img_size_to_gpu = img_size_to_gpu
         self.img_crop_ratio = img_crop_ratio
         self.collator = None
+        self.augmentation_pipeline = None
+
+        self.prepare_augmentation_pipeline(augmentation)
 
         self.partition = partition
         self.batch_size = batch_size
@@ -181,6 +187,20 @@ class RetinaDataModule(LightningDataModule):
 
         self.collator = ImgCollator()
 
+    def prepare_augmentation_pipeline(self, augmentation_pipeline):
+        """
+        Prepare the augmentations
+        :return:
+        """
+        # instantiate the list of augmentations
+        self.augmentation_pipeline = dict()
+
+        if augmentation_pipeline:
+            for split, pipeline in augmentation_pipeline.items():
+                self.augmentation_pipeline[split] = []
+                for aug_str, kwargs in pipeline.items():
+                    self.augmentation_pipeline[split].append(transforms.__dict__[aug_str](**kwargs))
+
     def get_retina_dataset(self, set="train"):
         exclusions = self.data.outcomes[[c for c in self.data.outcomes.columns if c.replace('_prev', '') in self.labels]].loc[self.eids[set]]
 
@@ -205,6 +225,7 @@ class RetinaDataModule(LightningDataModule):
 
         dataset = RetinalFundusDataset(
             img_map=self.img_map_by_split[set],
+            augmentations=self.augmentation_pipeline[set],
             exclusions=exclusions,
             labels_events=labels_events,
             labels_times=labels_times,
