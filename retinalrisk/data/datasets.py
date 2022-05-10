@@ -1,11 +1,7 @@
-import os
-import glob
-
 from typing import Optional
 
 import numpy as np
 import pandas as pd
-import scipy
 import scipy.sparse
 import torch
 import PIL
@@ -87,11 +83,11 @@ class RetinalFundusDataset(torch.utils.data.Dataset):
         self.img_size_to_gpu = img_size_to_gpu
         self.eids = eids
 
-        self.exclusions = exclusions#.iloc[eid_idx]
-        self.covariates = covariates#[eid_idx]
-        self.labels_events = labels_events#.iloc[eid_idx]
-        self.labels_times = labels_times#.iloc[eid_idx]
-        self.censorings = censorings#.iloc[eid_idx]
+        self.exclusions = exclusions
+        self.covariates = covariates
+        self.labels_events = labels_events
+        self.labels_times = labels_times
+        self.censorings = censorings
 
         self.extension = extension
 
@@ -130,8 +126,6 @@ class RetinalFundusDataset(torch.utils.data.Dataset):
         exclusions = torch.Tensor(self.exclusions.loc[eid].values)
         labels_events = torch.Tensor(self.labels_events.loc[eid].values)
         labels_times = torch.Tensor(self.labels_times.loc[eid].values)
-
-        # eids = torch.LongTensor([self.eids[eid]])
 
         covariates = None
         if self.covariates is not None:

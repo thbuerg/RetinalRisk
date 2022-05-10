@@ -1,18 +1,12 @@
-import copy
-import datetime
-import gc
 import os
 import glob
 from typing import Iterable, List, Optional
 
 import numpy as np
 import pandas as pd
-import scipy
-import torch
 import torchvision.transforms as transforms
 
 from pytorch_lightning import LightningDataModule
-from scipy.sparse import coo_matrix
 from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline
@@ -66,11 +60,6 @@ class RetinaDataModule(LightningDataModule):
         self.covariate_cols = covariates
 
         self.data = wandb_data
-
-        # todo: do we need those?
-        # self.le_eids, self.cat_type_eid = self.data.record_encodings["eid"]
-        # self.le_concepts, self.cat_type_concepts = self.data.record_encodings["concept_id"]
-        # self.le_concepts_cols = self.le_concepts.classes_
 
         self.train_dataset = None
         self.valid_dataset = None

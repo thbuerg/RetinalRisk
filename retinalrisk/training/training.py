@@ -101,7 +101,6 @@ def setup_training(args: DictConfig):
     else:
         alpha_scheduler = None
 
-    # TODO: fix
     if len(args.datamodule.covariates):
         num_covariates = len(args.datamodule.covariates) + 1
     else:
@@ -164,7 +163,6 @@ def setup_training(args: DictConfig):
     if args.model.model_type == "image":
         tags.append("image")
 
-        # todo: run w/o pretraining
         if args.model.encoder == 'convnext_tiny':
             encoder = tv.models.convnext_tiny(pretrained=args.model.pretrained)
             outshape = 768
@@ -174,8 +172,6 @@ def setup_training(args: DictConfig):
             encoder = tv.models.resnet18(pretrained=args.model.pretrained)
             outshape = encoder.fc.weight.shape[1]
             encoder.fc = torch.nn.Identity()
-
-            # todo: add inception resnet -> to test different input size
 
         else:
             raise NotImplementedError()
