@@ -6,11 +6,9 @@ import pandas as pd
 import ray
 import torch
 import zstandard
-# from captum.attr import DeepLiftShap
 from pytorch_lightning.callbacks.base import Callback
+from pytorch_lightning.callbacks.finetuning import BaseFinetuning
 from tqdm import tqdm
-
-# from retinalrisk.utils.attribution import ShapWrapper
 
 
 def annotate_df(df, trainer, module, split=None):
@@ -362,3 +360,20 @@ class WriteFeatureAttributions(Callback):
         baseline_data.requires_grad = True
 
         return test_data, baseline_data
+
+
+class EncoderFreezeUnfreeze(BaseFinetuning):
+    def __init__(self, warmup_period=10):
+        super().__init__()
+        self._warmup_period = warmup_period
+
+    def freeze_before_training(self, pl_module):
+        self.freeze(pl_module.encoder)
+
+    def finetune_function(self, pl_module, current_epoch, optimizer, optimizer_idx):
+        if current_epoch == self._warmup_period:
+            self.unfreeze_and_add_param_group(
+                modules=pl_module.extractor,
+                optimizer=optimizer,
+                train_bn=True,
+            )

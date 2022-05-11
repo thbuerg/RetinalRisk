@@ -15,6 +15,7 @@ from retinalrisk.utils.callbacks import (
     WriteFeatureAttributions,
     WritePredictionsDataFrame,
     WriteRecordNodeEmbeddingsDataFrame,
+    EncoderFreezeUnfreeze
 )
 
 from retinalrisk.utils.helpers import extract_metadata
@@ -51,6 +52,9 @@ def main(args: DictConfig):
             mode="min",
         ),
     ]
+
+    if args.training.warmup_period > 0:
+        callbacks.append(EncoderFreezeUnfreeze(args.training.warmup_period))
 
     if args.training.write_predictions:
         callbacks.append(WritePredictionsDataFrame())

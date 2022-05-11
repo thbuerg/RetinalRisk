@@ -13,6 +13,7 @@ binarize_records: True
 write_predictions: False
 write_embeddings: False
 write_attributions: False
+warmup_period: 0
 attribution_baseline_mode: 'zeros'
 use_endpoint_embeddings: False
 patience: 30

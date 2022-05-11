@@ -247,7 +247,9 @@ class SupervisedTraining(LightningModule):
         return loss_dict
 
     def configure_optimizers(self) -> torch.optim.Optimizer:
-        optimizer = self.optimizer(self.parameters(), **self.optimizer_kwargs)
+        optimizer = self.optimizer(
+            filter(lambda p: p.requires_grad, self.parameters()),
+            **self.optimizer_kwargs)
         return optimizer
 
 
