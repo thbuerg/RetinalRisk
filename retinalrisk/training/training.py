@@ -163,15 +163,24 @@ def setup_training(args: DictConfig):
     if args.model.model_type == "image":
         tags.append("image")
 
-        if args.model.encoder == 'convnext_tiny':
-            encoder = tv.models.convnext_tiny(pretrained=args.model.pretrained)
-            outshape = 768
-            setattr(encoder.classifier, '2', torch.nn.Identity())
+        if 'convnext' in args.model.encoder:
+            try:
+                encoder = tv.models.__dict__[args.model.encoder](pretrained=args.model.pretrained)
+                outshape = 768
+                setattr(encoder.classifier, '2', torch.nn.Identity())
+            except KeyError:
+                print(f'No model named `{args.model.encoder}`.')
+                raise KeyError('Please check available torchvision models.')
 
-        elif args.model.encoder == 'resnet18':
-            encoder = tv.models.resnet18(pretrained=args.model.pretrained)
-            outshape = encoder.fc.weight.shape[1]
-            encoder.fc = torch.nn.Identity()
+
+        elif 'resnet' in args.model.encoder:
+            try:
+                encoder = tv.models.__dict__[args.model.encoder](pretrained=args.model.pretrained)
+                outshape = encoder.fc.weight.shape[1]
+                encoder.fc = torch.nn.Identity()
+            except KeyError:
+                print(f'No model named `{args.model.encoder}`.')
+                raise KeyError('Please check available torchvision models.')
 
         else:
             raise NotImplementedError()

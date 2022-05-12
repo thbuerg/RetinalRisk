@@ -373,7 +373,7 @@ class EncoderFreezeUnfreeze(BaseFinetuning):
     def finetune_function(self, pl_module, current_epoch, optimizer, optimizer_idx):
         if current_epoch == self._warmup_period:
             self.unfreeze_and_add_param_group(
-                modules=pl_module.extractor,
+                modules=pl_module.encoder,
                 optimizer=optimizer,
                 train_bn=True,
             )
