@@ -10,7 +10,7 @@ vicreg_loss_factor: 0
 node_dropout: null
 normalize_node_embeddings: True
 binarize_records: True
-write_predictions: False
+write_predictions: True
 write_embeddings: False
 write_attributions: False
 warmup_period: 0
@@ -18,5 +18,5 @@ attribution_baseline_mode: 'zeros'
 use_endpoint_embeddings: False
 patience: 30
 optimizer_kwargs:
-  weight_decay: 0.0
+  weight_decay: 0.05
   lr: 0.0001

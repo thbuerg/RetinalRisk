@@ -8,8 +8,8 @@ partition: 0
 num_workers: 4
 img_root: '/sc-projects/sc-proj-ukb-cvd/data/retina/preprocessed/preprocessed'
 img_visit: 0
-img_size_to_gpu: 400
-img_crop_ratio: 0.8
+img_size_to_gpu: 420
+img_crop_ratio: [0.6, 0.7, 0.8]
 
 label_definition:
   all_cause_death: True

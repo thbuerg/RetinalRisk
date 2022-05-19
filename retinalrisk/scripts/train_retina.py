@@ -14,7 +14,6 @@ from retinalrisk.training import setup_training
 from retinalrisk.utils.callbacks import (
     WriteFeatureAttributions,
     WritePredictionsDataFrame,
-    WriteRecordNodeEmbeddingsDataFrame,
     EncoderFreezeUnfreeze
 )
 

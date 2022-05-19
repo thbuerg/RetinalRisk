@@ -72,13 +72,6 @@ class WritePredictionsDataFrame(Callback):
 
             outputs = self.predict_dataloader(module, dataloader, device)
 
-            if "embs" in outputs:
-                embs = outputs["embs"]
-                embs_df = pd.DataFrame(data=embs, index=eids).reset_index(drop=False)
-                embs_df.columns = embs_df.columns.astype(str)
-                embs_df = annotate_df(embs_df, trainer, module).assign(split=split)
-                embs_dfs.append(embs_df)
-
             predictions_df = pd.DataFrame(
                 data=outputs["preds"], index=eids, columns=endpoints
             ).reset_index(drop=False)
@@ -93,34 +86,20 @@ class WritePredictionsDataFrame(Callback):
         self.write_and_log_preds(trainer, predictions_dfs_cc)
 
     def predict_dataloader(self, model, dataloader, device):
-        embs_list = []
         preds_list = []
 
         for batch in tqdm(dataloader):
 
-            batch.graph = batch.graph.to(device)
-            batch.records = batch.records.to(device)
+            batch.data = batch.records.to(device)
             batch.covariates = batch.covariates.to(device)
 
             head_outputs = model(batch)["head_outputs"]
             del batch
 
-            try:
-                embs = head_outputs["pre_logits"].detach().cpu()
-                embs_list.append(embs)
-            except:
-                print("No patient embeddings returned in the forward pass")
-
             preds = head_outputs["logits"].detach().cpu()
             preds_list.append(preds)
 
-        try:
-            return {
-                "embs": torch.cat(embs_list, axis=0).numpy(),
-                "preds": torch.cat(preds_list, axis=0).numpy(),
-            }
-        except:
-            return {"preds": torch.cat(preds_list, axis=0).numpy()}
+        return {"preds": torch.cat(preds_list, axis=0).numpy()}
 
     def write_and_log_embs(self, trainer, embs_df):
         # write the predictions.csv
@@ -137,79 +116,6 @@ class WritePredictionsDataFrame(Callback):
             os.mkdir(outdir)
         predictions_df.to_feather(os.path.join(outdir, "predictions.feather"))
         print(f"Predictions saved {os.path.join(outdir, 'predictions.feather')}")
-
-
-class WriteRecordNodeEmbeddingsDataFrame(Callback):
-    """
-    Write Predictions.
-    """
-
-    def __init__(self, **kwargs):
-        super().__init__()
-
-    # def on_exception(self, trainer, module):
-    #    self.on_fit_end(trainer, module)
-
-    def on_fit_end(self, trainer, module):
-
-        print("Write record node embeddings")
-
-        if trainer.model.graph_encoder:
-            device = module.device
-
-            ckpt = torch.load(trainer.checkpoint_callback.best_model_path)
-            module.load_state_dict(ckpt["state_dict"])
-            module.eval()
-            module.to(device)
-
-            # write the predictions, could be extended for all sets, just works if not shuffled
-            test_dataloader = trainer.datamodule.test_dataloader()
-
-            embeddings = self.predict_batch(module, test_dataloader, device)
-
-            if embeddings is not None:
-                record_nodes = trainer.datamodule.record_cols
-
-                embeddings_df = (
-                    pd.DataFrame(data=embeddings, index=record_nodes)
-                    .rename_axis("record_node")
-                    .reset_index(drop=False)
-                )
-
-                embeddings_df.columns = embeddings_df.columns.astype(str)
-
-                embeddings_df = annotate_df(embeddings_df, trainer, module)
-
-                self.write_and_log(trainer, embeddings_df)
-            else:
-                print("No embeddings saved: Graph encoder available, but no embeddings in outputs.")
-        else:
-            print("No embeddings saved: No graph encoder available.")
-
-    def predict_batch(self, model, dataloader, device):
-
-        batch = next(iter(dataloader))
-
-        batch.graph = batch.graph.to(device)
-        batch.records = batch.records.to(device)
-        batch.covariates = batch.covariates.to(device)
-
-        predictions = model(batch)
-        del batch
-
-        record_node_embeddings = predictions["record_node_embeddings"]
-        if record_node_embeddings is not None:
-            record_node_embeddings = record_node_embeddings.detach()
-
-        return record_node_embeddings
-
-    def write_and_log(self, trainer, predictions_df):
-        # write the predictions.csv
-        outdir = os.path.join(Path(trainer.checkpoint_callback.dirpath).parent, "embeddings")
-        if not os.path.exists(outdir):
-            os.mkdir(outdir)
-        predictions_df.to_feather(os.path.join(outdir, "node_embeddings.feather"))
-        print(f"Embeddings saved {os.path.join(outdir, 'node_embeddings.feather')}")
 
 
 @ray.remote

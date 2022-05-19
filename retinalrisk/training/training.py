@@ -166,7 +166,10 @@ def setup_training(args: DictConfig):
         if 'convnext' in args.model.encoder:
             try:
                 encoder = tv.models.__dict__[args.model.encoder](pretrained=args.model.pretrained)
-                outshape = 768
+
+                outshape = 768 if any(['small' in args.model.encoder,
+                                       'tiny' in args.model.encoder]) else 1024
+
                 setattr(encoder.classifier, '2', torch.nn.Identity())
             except KeyError:
                 print(f'No model named `{args.model.encoder}`.')
