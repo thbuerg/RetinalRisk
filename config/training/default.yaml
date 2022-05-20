@@ -10,6 +10,7 @@ vicreg_loss_factor: 0
 node_dropout: null
 normalize_node_embeddings: True
 binarize_records: True
+gradient_checkpoining: True
 write_predictions: True
 write_embeddings: False
 write_attributions: False

@@ -33,6 +33,7 @@ class SupervisedTraining(LightningModule):
         alpha_scheduler: Optional[AlphaScheduler] = None,
         node_dropout: Optional[float] = None,
         binarize_records: bool = False,
+        gradient_checkpointing: bool = False,
         **kwargs,
     ):
         super().__init__()
@@ -62,6 +63,7 @@ class SupervisedTraining(LightningModule):
 
         self.executor = ThreadPoolExecutor(max_workers=32)
         self.alpha_scheduler = alpha_scheduler
+        self.gradient_checkpointing = gradient_checkpointing
 
         self.node_dropout = node_dropout
         self.binarize_records = binarize_records
@@ -255,7 +257,11 @@ class SupervisedTraining(LightningModule):
 
 class ImageEncoderMixin:
     def get_data_embeddings(self, batch: Batch):
-        embeddings = self.encoder(batch.data)
+
+        if self.gradient_checkpointing:
+             embeddings = torch.utils.checkpoint.checkpoint_sequential(self.encoder, 3, batch.data)
+        else:
+            embeddings = self.encoder(batch.data)
 
         return embeddings
 

@@ -158,6 +158,7 @@ def setup_training(args: DictConfig):
         alpha_scheduler=alpha_scheduler,
         optimizer_kwargs=args.training.optimizer_kwargs,
         binarize_records=args.training.binarize_records,
+        gradient_checkpointing=args.training.gradient_checkpointing
     )
 
     if args.model.model_type == "image":
