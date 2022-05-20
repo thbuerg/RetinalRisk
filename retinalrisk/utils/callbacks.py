@@ -11,18 +11,18 @@ from pytorch_lightning.callbacks.finetuning import BaseFinetuning
 from tqdm import tqdm
 
 
-def annotate_df(df, trainer, module, split=None):
-    df["partition"] = trainer.datamodule.partition
+def annotate_df(df, datamodule, module, split=None):
+    df["partition"] = datamodule.partition
     if split:
         df["split"] = split
     df["module"] = type(module).__name__
-    if trainer.model.encoder:
-        df["encoder"] = trainer.model.encoder._get_name()
+    if module.encoder:
+        df["encoder"] = module.encoder._get_name()
     else:
         df["encoder"] = "None"
-    df["head"] = trainer.model.head._get_name()
-    df["covariate_cols"] = str(trainer.datamodule.covariate_cols)
-    df["record_cols"] = str(trainer.datamodule.record_cols)
+    df["head"] = module.head._get_name()
+    df["covariate_cols"] = str(datamodule.covariate_cols)
+    df["record_cols"] = str(datamodule.record_cols)
 
     for col in ["partition", "module", "encoder", "head", "covariate_cols", "record_cols"]:
         df[col] = df[col].astype("category")
@@ -43,6 +43,48 @@ class WritePredictionsDataFrame(Callback):
 
     # def on_exception(self, trainer, module):
     #    self.on_fit_end(trainer, module)
+
+    def manual(self, args, datamodule, module):
+        print("Write predictions and patient embeddings")
+
+        device = module.device
+
+        ckpt = torch.load(args.model.restore_from_ckpt)
+        module.load_state_dict(ckpt["state_dict"])
+        module.eval()
+
+        module.to(device)
+
+        # write the predictions, could be extended for all sets, just works if not shuffled
+        endpoints = list(datamodule.label_mapping.keys())
+
+        predictions_dfs = []
+
+        for split in tqdm(["train", "valid", "test"]):
+            eids = datamodule.eids[split]
+
+            if split == "train":
+                dataloader = datamodule.train_dataloader(shuffle=False, drop_last=False)
+            if split == "valid":
+                dataloader = datamodule.val_dataloader()
+            if split == "test":
+                dataloader = datamodule.test_dataloader()
+
+            outputs = self.predict_dataloader(module, dataloader, device)
+
+            predictions_df = pd.DataFrame(
+                data=outputs["preds"], index=eids, columns=endpoints
+            ).reset_index(drop=False)
+            predictions_df = annotate_df(predictions_df, datamodule, module).assign(split=split)
+            predictions_dfs.append(predictions_df)
+
+        predictions_df = pd.concat(predictions_dfs, axis=0).reset_index(drop=True)
+
+        outdir = os.path.join(Path(args.model.restore_from_ckpt).parent, "predictions")
+        if not os.path.exists(outdir):
+            os.mkdir(outdir)
+        predictions_df.to_feather(os.path.join(outdir, "predictions.feather"))
+        print(f"Predictions saved {os.path.join(outdir, 'predictions.feather')}")
 
     def on_fit_end(self, trainer, module):
         print("Write predictions and patient embeddings")
@@ -75,12 +117,8 @@ class WritePredictionsDataFrame(Callback):
             predictions_df = pd.DataFrame(
                 data=outputs["preds"], index=eids, columns=endpoints
             ).reset_index(drop=False)
-            predictions_df = annotate_df(predictions_df, trainer, module).assign(split=split)
+            predictions_df = annotate_df(predictions_df, trainer.datamodule, module).assign(split=split)
             predictions_dfs.append(predictions_df)
-
-        if embs_dfs is not None:
-            embs_dfs_cc = pd.concat(embs_dfs, axis=0).reset_index(drop=True)
-            self.write_and_log_embs(trainer, embs_dfs_cc)
 
         predictions_dfs_cc = pd.concat(predictions_dfs, axis=0).reset_index(drop=True)
         self.write_and_log_preds(trainer, predictions_dfs_cc)

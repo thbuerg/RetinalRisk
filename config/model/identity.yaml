@@ -1,1 +1,2 @@
 model_type: 'Identity'
+restore_from_ckpt: False

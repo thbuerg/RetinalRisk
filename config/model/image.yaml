@@ -2,3 +2,4 @@ model_type: 'image'
 encoder: 'resnet18'
 freeze_encoder: False
 pretrained: False
+restore_from_ckpt: False
