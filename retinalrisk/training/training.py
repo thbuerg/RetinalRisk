@@ -200,7 +200,7 @@ def setup_training(args: DictConfig):
 
         model = ImageTraining(encoder=encoder, head=head, **training_kwargs)
 
-    elif args.model.model_type == "Covariates":
+    elif args.model.model_type == "covariates":
         tags.append("covariates_baseline")
 
         num_head_features = num_covariates
