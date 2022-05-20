@@ -90,7 +90,7 @@ class WritePredictionsDataFrame(Callback):
 
         for batch in tqdm(dataloader):
 
-            batch.data = batch.records.to(device)
+            batch.data = batch.data.to(device)
             batch.covariates = batch.covariates.to(device)
 
             head_outputs = model(batch)["head_outputs"]
