@@ -206,7 +206,7 @@ def setup_training(args: DictConfig):
         num_head_features = num_covariates
         head = get_head(args.head, num_head_features)
 
-        model = CovariatesOnlyTraining(graph_encoder=None, head=head, **training_kwargs)
+        model = CovariatesOnlyTraining(ncoder=None, head=head, **training_kwargs)
 
     elif args.model.model_type == "transformer":
 
