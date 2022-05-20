@@ -207,6 +207,12 @@ def setup_training(args: DictConfig):
         head = get_head(args.head, num_head_features)
 
         model = CovariatesOnlyTraining(graph_encoder=None, head=head, **training_kwargs)
+
+    elif args.model.model_type == "transformer":
+
+        tags.append("transformer")
+        raise NotImplementedError()
+
     else:
         assert False
 
