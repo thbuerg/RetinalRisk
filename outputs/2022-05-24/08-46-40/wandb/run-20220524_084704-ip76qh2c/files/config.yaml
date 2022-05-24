@@ -1,0 +1,3128 @@
+wandb_version: 1
+
+_content:
+  desc: null
+  value:
+    datamodule: '{''covariates'': [''age_at_recruitment_f21022_0_0'', ''sex_f31_0_0''],
+      ''augmentation'': {''train'': [], ''valid'': [], ''test'': []}, ''batch_size'':
+      128, ''partition'': 0, ''num_workers'': 4, ''img_root'': ''/sc-projects/sc-proj-ukb-cvd/data/retina/preprocessed/preprocessed'',
+      ''img_visit'': 0, ''img_size_to_gpu'': 420, ''img_crop_ratio'': [0.6, 0.7, 0.8],
+      ''label_definition'': {''all_cause_death'': True, ''phecodes'': True, ''custom'':
+      ''/sc-projects/sc-proj-ukb-cvd/results/projects/22_medical_records/data/220413/frequent_endpoints.csv''},
+      ''use_top_n_phecodes'': 1000, ''filter_input_origins'': [], ''use_loss_weights'':
+      False, ''task'': ''tte'', ''task_kwargs'': {}}'
+    head: '{''model_type'': ''MLP'', ''dropout'': 0.0, ''kwargs'': {''num_hidden'':
+      256, ''num_layers'': 2, ''detach_clf'': False, ''initial_dropout'': 0.0}}'
+    model: '{''model_type'': ''covariates'', ''restore_from_ckpt'': False}'
+    setup: '{''entity'': ''cardiors'', ''project'': ''retina'', ''group'': None, ''name'':
+      ''agesex_baseline'', ''root'': {''charite-hpc'': ''/sc-projects/sc-proj-ukb-cvd'',
+      ''eils-hpc'': ''/data/analysis/ag-reils/ag-reils-shared/cardioRS''}, ''data_path'':
+      ''data/2_datasets_pre/211110_anewbeginning/artifacts'', ''output_path'': ''results/models'',
+      ''use_data_artifact_if_available'': False, ''data'': None, ''restore_id'': None,
+      ''data_identifier'': ''WandBBaselineData:latest'', ''tags'': [''baseline_data'']}'
+    trainer: '{''gpus'': [0], ''precision'': 16, ''max_epochs'': 10000, ''num_sanity_val_steps'':
+      -1, ''detect_anomaly'': False, ''amp_backend'': ''native'', ''accumulate_grad_batches'':
+      1}'
+    training: '{''exclusions_on_losses'': False, ''exclusions_on_metrics'': True,
+      ''gradient_checkpointing'': False, ''contrastive_loss_factor'': 0, ''endpoint_loss_factor'':
+      1, ''vicreg_loss_factor'': 0, ''node_dropout'': None, ''normalize_node_embeddings'':
+      True, ''binarize_records'': True, ''gradient_checkpoining'': True, ''write_predictions'':
+      True, ''write_embeddings'': False, ''write_attributions'': False, ''warmup_period'':
+      0, ''attribution_baseline_mode'': ''zeros'', ''use_endpoint_embeddings'': False,
+      ''patience'': 30, ''optimizer_kwargs'': {''weight_decay'': 0.05, ''lr'': 0.0001}}'
+_flags_cache:
+  desc: null
+  value:
+    struct: true
+_metadata:
+  desc: null
+  value: 'ContainerMetadata(ref_type=typing.Any, object_type=None, optional=True,
+    key=None, flags={''struct'': True}, flags_root=False, resolver_cache=defaultdict(<class
+    ''dict''>, {''now'': {(''%Y-%m-%d'',): ''2022-05-24'', (''%H-%M-%S'',): ''08-46-40''}}),
+    key_type=typing.Any, element_type=typing.Any)'
+_parent:
+  desc: null
+  value: null
+_wandb:
+  desc: null
+  value:
+    cli_version: 0.12.7
+    framework: lightning
+    is_jupyter_run: false
+    is_kaggle_kernel: false
+    m:
+    - 1: trainer/global_step
+      6:
+      - 3
+    - 1: valid/auroc_hist._type
+      5: 1
+      6:
+      - 1
+    - 1: valid/auroc_hist.values
+      5: 1
+      6:
+      - 1
+    - 1: valid/auroc_hist.bins
+      5: 1
+      6:
+      - 1
+    - 1: train/CoxPH
+      5: 1
+      6:
+      - 1
+    - 1: train/CoxPH_scaled
+      5: 1
+      6:
+      - 1
+    - 1: train/loss
+      5: 1
+      6:
+      - 1
+    - 1: epoch
+      5: 1
+      6:
+      - 1
+    python_version: 3.9.7
+    start_time: 1653374824
+    t:
+      1:
+      - 1
+      - 5
+      - 9
+      3:
+      - 13
+      - 15
+      - 16
+      4: 3.9.7
+      5: 0.12.7
+      8:
+      - 5
+alpha_scheduler:
+  desc: null
+  value: None
+binarize_records:
+  desc: null
+  value: true
+exclusions_on_metrics:
+  desc: null
+  value: true
+gradient_checkpointing:
+  desc: null
+  value: false
+incidence_mapping/OMOP_4306655:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_052:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_052-1:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_052-3:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_052-32:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_056:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_056-1:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_070:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_089:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_089-1:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_089-2:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_089-3:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_099:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_101:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_101-4:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_103:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_103-2:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_103-21:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_105:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_105-1:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_106:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_107:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_107-2:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_112:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_130:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_136:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_136-4:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_136-41:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_136-42:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_138:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_138-2:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_139:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_139-5:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_142:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_142-1:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_144:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_144-2:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_144-21:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_146:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_146-2:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_160:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_160-1:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_164:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_164-1:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_168:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_170:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_170-1:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_177:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_177-2:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_181:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_200:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_200-1:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_200-14:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_202:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_202-2:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_202-4:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_204:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_204-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_204-2:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_230:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_230-2:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_230-21:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_232:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_232-2:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_232-4:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_236:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_236-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_239:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_239-1:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_239-11:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_247:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_247-7:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_247-72:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_256:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_256-2:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_256-7:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_280:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_280-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_280-11:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_281:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_281-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_281-2:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_282-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_283:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_283-4:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_283-8:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_286:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_286-2:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_288:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_288-3:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_290:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_294:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_308:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_324:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_324-3:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_324-4:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_325:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_325-2:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_328:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_328-9:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_329:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_329-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_331:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_331-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_331-6:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_331-8:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_333:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_333-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_333-11:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_333-2:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_334:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_336:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_336-1:
+  desc: null
+  value: '>1:10'
+incidence_mapping/phecode_336-5:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_337:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_350:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_350-5:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_351:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_351-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_351-3:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_353:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_354:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_360:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_360-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_360-11:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_360-2:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_360-4:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_362:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_363:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_363-2:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_367:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_367-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_371:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_374:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_374-3:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_374-4:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_374-42:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_374-5:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_374-51:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_375:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_375-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_375-6:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_376:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_376-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_376-2:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_376-21:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_377:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_377-2:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_386:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_389:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_390:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_390-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_390-4:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_391:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_391-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_391-2:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_392:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_394:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_394-2:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_394-21:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_395:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_395-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_396:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_396-2:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_397:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_397-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_398:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_401:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_401-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_402:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_403:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_404:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_404-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_404-11:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_404-2:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_413:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_413-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_413-2:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_416:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_416-2:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_416-21:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_416-211:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_416-4:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_416-5:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_417:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_417-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_417-3:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_418:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_418-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_424:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_431:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_431-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_431-11:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_431-2:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_436:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_439:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_440:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_440-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_440-11:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_440-13:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_440-3:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_443:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_444:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_444-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_444-11:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_444-5:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_446:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_446-2:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_448:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_460:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_460-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_460-2:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_462:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_462-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_462-2:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_463:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_463-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_463-2:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_463-21:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_463-4:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_463-5:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_464:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_464-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_465:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_465-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_465-2:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_466:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_466-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_467:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_467-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_468:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_469:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_471:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_473:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_474:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_475:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_476:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_483:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_486:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_486-5:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_487:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_487-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_488:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_488-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_488-6:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_488-8:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_494:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_495:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_496:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_502:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_503:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_503-5:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_506:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_507:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_507-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_509:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_510:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_510-2:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_511:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_512:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_515:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_520:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_520-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_520-11:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_520-2:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_522:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_522-9:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_523:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_523-4:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_526:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_526-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_527:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_528:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_528-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_528-2:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_529:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_529-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_529-2:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_529-3:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_529-5:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_530:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_530-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_542:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_542-2:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_545:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_550:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_550-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_556:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_556-3:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_556-8:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_557:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_557-8:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_558:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_581:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_583:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_585:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_586:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_591:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_592:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_592-1:
+  desc: null
+  value: '>1:1000'
+incidence_mapping/phecode_593:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_593-2:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_594:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_594-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_594-2:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_594-3:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_594-31:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_594-32:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_594-4:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_594-41:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_594-6:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_596:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_596-2:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_599:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_600:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_601:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_601-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_602:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_602-4:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_603:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_603-2:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_603-5:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_604:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_604-5:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_605:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_605-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_608:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_608-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_610:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_613:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_613-5:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_613-7:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_614:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_614-5:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_614-52:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_614-55:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_618:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_618-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_618-11:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_618-12:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_618-2:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_619:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_619-4:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_619-5:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_623:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_625:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_625-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_626:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_626-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_626-13:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_627:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_627-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_627-2:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_627-3:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_627-4:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_628:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_628-2:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_660:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_660-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_660-12:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_660-4:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_660-6:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_662:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_664:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_665:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_666:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_668:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_668-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_668-2:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_668-3:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_670:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_673:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_673-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_674:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_675:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_675-1:
+  desc: null
+  value: '>1:1000'
+incidence_mapping/phecode_676:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_678:
+  desc: null
+  value: '>1:1000'
+incidence_mapping/phecode_679:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_679-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_679-3:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_679-4:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_680:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_680-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_680-3:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_681:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_682:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_682-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_682-11:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_682-12:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_683:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_683-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_684:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_684-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_685:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_685-8:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_685-82:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_686:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_686-2:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_703:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_703-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_703-11:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_705:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_705-3:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_707:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_708:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_708-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_708-13:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_708-16:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_708-7:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_709:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_709-2:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_709-21:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_710:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_713:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_713-2:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_713-3:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_715:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_715-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_715-4:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_716:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_716-3:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_717:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_718:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_718-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_718-2:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_718-3:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_718-4:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_718-5:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_719:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_719-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_721:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_721-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_721-11:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_721-2:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_721-5:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_721-6:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_722:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_722-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_722-4:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_723:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_723-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_723-2:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_723-3:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_723-4:
+  desc: null
+  value: '>1:1000'
+incidence_mapping/phecode_723-5:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_723-51:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_723-6:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_724:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_724-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_726:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_726-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_727:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_728:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_728-3:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_731:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_732:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_733:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_733-6:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_800:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_800-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_800-11:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_801:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_802:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_804:
+  desc: null
+  value: '>1:1000'
+incidence_mapping/phecode_805:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_807:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_807-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_808:
+  desc: null
+  value: '>1:1000'
+incidence_mapping/phecode_809:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_809-3:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_812:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_819:
+  desc: null
+  value: '>1:1000'
+incidence_mapping/phecode_823:
+  desc: null
+  value: '>1:1000'
+incidence_mapping/phecode_823-2:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_829:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_829-2:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_830:
+  desc: null
+  value: '>1:1000'
+incidence_mapping/phecode_831:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_832:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_832-5:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_832-6:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_835:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_840:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_840-2:
+  desc: null
+  value: '>1:1000'
+incidence_mapping/phecode_840-8:
+  desc: null
+  value: '>1:1000'
+incidence_mapping/phecode_841:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_841-1:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_848:
+  desc: null
+  value: '>1:1000'
+incidence_mapping/phecode_848-2:
+  desc: null
+  value: '>1:1000'
+incidence_mapping/phecode_969:
+  desc: null
+  value: '>1:1000'
+incidence_mapping/phecode_977:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_977-4:
+  desc: null
+  value: '>1:1000'
+incidence_mapping/phecode_977-41:
+  desc: null
+  value: '>1:1000'
+incidence_mapping/phecode_977-5:
+  desc: null
+  value: '>1:1000'
+incidence_mapping/phecode_977-52:
+  desc: null
+  value: '>1:100'
+incidence_mapping/phecode_977-7:
+  desc: null
+  value: '>1:1000'
+incidence_mapping/phecode_977-72:
+  desc: null
+  value: '>1:100'
+label_mapping/OMOP_4306655:
+  desc: null
+  value: OMOP_4306655
+label_mapping/phecode_052:
+  desc: null
+  value: phecode_052 - Herpesvirus
+label_mapping/phecode_052-1:
+  desc: null
+  value: phecode_052-1 - Herpes simplex
+label_mapping/phecode_052-3:
+  desc: null
+  value: phecode_052-3 - Varicella zoster virus
+label_mapping/phecode_052-32:
+  desc: null
+  value: phecode_052-32 - Herpes zoster
+label_mapping/phecode_056:
+  desc: null
+  value: phecode_056 - Human papillomavirus
+label_mapping/phecode_056-1:
+  desc: null
+  value: phecode_056-1 - Plantar wart
+label_mapping/phecode_070:
+  desc: null
+  value: phecode_070 - Candidiasis
+label_mapping/phecode_089:
+  desc: null
+  value: phecode_089 - Infections
+label_mapping/phecode_089-1:
+  desc: null
+  value: phecode_089-1 - Bacterial infections
+label_mapping/phecode_089-2:
+  desc: null
+  value: phecode_089-2 - Viral infections
+label_mapping/phecode_089-3:
+  desc: null
+  value: phecode_089-3 - Fungal infections
+label_mapping/phecode_099:
+  desc: null
+  value: phecode_099 - Lab findings related to infections
+label_mapping/phecode_101:
+  desc: null
+  value: phecode_101 - Malignant neoplasm of the digestive organs
+label_mapping/phecode_101-4:
+  desc: null
+  value: phecode_101-4 - Malignant neoplasm of the colon and rectum
+label_mapping/phecode_103:
+  desc: null
+  value: phecode_103 - Malignant neoplasm of the skin
+label_mapping/phecode_103-2:
+  desc: null
+  value: phecode_103-2 - Keratinocyte carcinoma
+label_mapping/phecode_103-21:
+  desc: null
+  value: phecode_103-21 - Basal cell carcinoma
+label_mapping/phecode_105:
+  desc: null
+  value: phecode_105 - Malignant neoplasm of the breast
+label_mapping/phecode_105-1:
+  desc: null
+  value: phecode_105-1 - Malignant neoplasm of the breast, female
+label_mapping/phecode_106:
+  desc: null
+  value: phecode_106 - Gynecological malignant neoplasms
+label_mapping/phecode_107:
+  desc: null
+  value: phecode_107 - Malignant neoplasm of male genitalia
+label_mapping/phecode_107-2:
+  desc: null
+  value: phecode_107-2 - Malignant neoplasm of the prostate
+label_mapping/phecode_112:
+  desc: null
+  value: phecode_112 - Malignant neoplasm of other and ill-defined sites
+label_mapping/phecode_130:
+  desc: null
+  value: phecode_130 - Cancer (solid tumor, excluding BCC)
+label_mapping/phecode_136:
+  desc: null
+  value: phecode_136 - Benign neoplasm of the digestive organs
+label_mapping/phecode_136-4:
+  desc: null
+  value: phecode_136-4 - Benign neoplasm of colon, rectum, anus and anal canal
+label_mapping/phecode_136-41:
+  desc: null
+  value: phecode_136-41 - Benign neoplasm of the colon
+label_mapping/phecode_136-42:
+  desc: null
+  value: phecode_136-42 - Benign neoplasm of rectum and anus
+label_mapping/phecode_138:
+  desc: null
+  value: phecode_138 - Benign neoplasm of the skin
+label_mapping/phecode_138-2:
+  desc: null
+  value: phecode_138-2 - Melanocytic nevi*
+label_mapping/phecode_139:
+  desc: null
+  value: phecode_139 - Benign sarcoma-related cancers
+label_mapping/phecode_139-5:
+  desc: null
+  value: phecode_139-5 - Lipoma
+label_mapping/phecode_142:
+  desc: null
+  value: phecode_142 - Lump or mass in breast or nonspecific abnormal breast exam
+label_mapping/phecode_142-1:
+  desc: null
+  value: phecode_142-1 - Lump or mass in breast
+label_mapping/phecode_144:
+  desc: null
+  value: phecode_144 - Gynecological benign neoplasms
+label_mapping/phecode_144-2:
+  desc: null
+  value: phecode_144-2 - Benign neoplasms of the uterus
+label_mapping/phecode_144-21:
+  desc: null
+  value: phecode_144-21 - Leiomyoma of uterus
+label_mapping/phecode_146:
+  desc: null
+  value: phecode_146 - Benign neoplasm of the genitourinary system
+label_mapping/phecode_146-2:
+  desc: null
+  value: phecode_146-2 - Benign neoplasm of the prostate
+label_mapping/phecode_160:
+  desc: null
+  value: phecode_160 - Nutritional anemias
+label_mapping/phecode_160-1:
+  desc: null
+  value: phecode_160-1 - Iron deficiency anemia
+label_mapping/phecode_164:
+  desc: null
+  value: phecode_164 - Anemia
+label_mapping/phecode_164-1:
+  desc: null
+  value: phecode_164-1 - Microcytic anemia
+label_mapping/phecode_168:
+  desc: null
+  value: phecode_168 - Coagulation defects, purpura and other hemorrhagic conditions
+label_mapping/phecode_170:
+  desc: null
+  value: phecode_170 - Decreased white blood cell count
+label_mapping/phecode_170-1:
+  desc: null
+  value: phecode_170-1 - Neutropenia
+label_mapping/phecode_177:
+  desc: null
+  value: phecode_177 - Abnormality of the lymph nodes
+label_mapping/phecode_177-2:
+  desc: null
+  value: phecode_177-2 - Enlargement of lymph nodes [Lymphadenopathy]
+label_mapping/phecode_181:
+  desc: null
+  value: phecode_181 - Autoimmune disease
+label_mapping/phecode_200:
+  desc: null
+  value: phecode_200 - Disorders of thyroid gland
+label_mapping/phecode_200-1:
+  desc: null
+  value: phecode_200-1 - Hypothyroidism
+label_mapping/phecode_200-14:
+  desc: null
+  value: phecode_200-14 - Hypothyroidism, not specified as secondary
+label_mapping/phecode_202:
+  desc: null
+  value: phecode_202 - Diabetes mellitus
+label_mapping/phecode_202-2:
+  desc: null
+  value: phecode_202-2 - Type 2 diabetes
+label_mapping/phecode_202-4:
+  desc: null
+  value: phecode_202-4 - Other specified diabetes*
+label_mapping/phecode_204:
+  desc: null
+  value: phecode_204 - Elevated blood glucose level
+label_mapping/phecode_204-1:
+  desc: null
+  value: phecode_204-1 - Impaired fasting glucose
+label_mapping/phecode_204-2:
+  desc: null
+  value: phecode_204-2 - Impaired glucose tolerance (oral)
+label_mapping/phecode_230:
+  desc: null
+  value: phecode_230 - Malnutrition and underweight
+label_mapping/phecode_230-2:
+  desc: null
+  value: phecode_230-2 - Abnormal loss of weight and underweight
+label_mapping/phecode_230-21:
+  desc: null
+  value: phecode_230-21 - Abnormal weight loss
+label_mapping/phecode_232:
+  desc: null
+  value: phecode_232 - Vitamin deficiencies
+label_mapping/phecode_232-2:
+  desc: null
+  value: phecode_232-2 - Vitamin B group deficiency
+label_mapping/phecode_232-4:
+  desc: null
+  value: phecode_232-4 - Vitamin D deficiency
+label_mapping/phecode_236:
+  desc: null
+  value: phecode_236 - Overweight and obesity
+label_mapping/phecode_236-1:
+  desc: null
+  value: phecode_236-1 - Obesity
+label_mapping/phecode_239:
+  desc: null
+  value: phecode_239 - Hyperlipidemia
+label_mapping/phecode_239-1:
+  desc: null
+  value: phecode_239-1 - Hypercholesterolemia
+label_mapping/phecode_239-11:
+  desc: null
+  value: phecode_239-11 - Pure hypercholesterolemia
+label_mapping/phecode_247:
+  desc: null
+  value: phecode_247 - Disorders of mineral metabolism and mineral deficiencies
+label_mapping/phecode_247-7:
+  desc: null
+  value: phecode_247-7 - Disorders of iron metabolism
+label_mapping/phecode_247-72:
+  desc: null
+  value: phecode_247-72 - Iron deficiency
+label_mapping/phecode_256:
+  desc: null
+  value: phecode_256 - Disorders of fluid, electrolyte and acid-base balance
+label_mapping/phecode_256-2:
+  desc: null
+  value: phecode_256-2 - Hyposmolality and-or hyponatremia
+label_mapping/phecode_256-7:
+  desc: null
+  value: phecode_256-7 - Volume depletion
+label_mapping/phecode_280:
+  desc: null
+  value: phecode_280 - Substance related disorders
+label_mapping/phecode_280-1:
+  desc: null
+  value: phecode_280-1 - Alcohol use disorders
+label_mapping/phecode_280-11:
+  desc: null
+  value: phecode_280-11 - Alcohol abuse
+label_mapping/phecode_281:
+  desc: null
+  value: phecode_281 - Substance abuse, dependence, and withdrawl
+label_mapping/phecode_281-1:
+  desc: null
+  value: phecode_281-1 - Substance abuse
+label_mapping/phecode_281-2:
+  desc: null
+  value: phecode_281-2 - Substance dependence
+label_mapping/phecode_282-1:
+  desc: null
+  value: phecode_282-1 - Current tobacco use and nicotine dependence
+label_mapping/phecode_283:
+  desc: null
+  value: phecode_283 - Other behavioral problems
+label_mapping/phecode_283-4:
+  desc: null
+  value: phecode_283-4 - Patient's noncompliance with medical treatment and regimen
+label_mapping/phecode_283-8:
+  desc: null
+  value: phecode_283-8 - Other problems related to lifestyle
+label_mapping/phecode_286:
+  desc: null
+  value: phecode_286 - Mood [affective] disorders
+label_mapping/phecode_286-2:
+  desc: null
+  value: phecode_286-2 - Major depressive disorder
+label_mapping/phecode_288:
+  desc: null
+  value: phecode_288 - Anxiety disorders
+label_mapping/phecode_288-3:
+  desc: null
+  value: phecode_288-3 - Generalized anxiety disorder
+label_mapping/phecode_290:
+  desc: null
+  value: phecode_290 - Reaction to severe stress, and adjustment disorders
+label_mapping/phecode_294:
+  desc: null
+  value: phecode_294 - Sexual dysfunction and disorders
+label_mapping/phecode_308:
+  desc: null
+  value: phecode_308 - Signs and symptoms involving emotional state
+label_mapping/phecode_324:
+  desc: null
+  value: phecode_324 - Extrapyramidal and movement disorders
+label_mapping/phecode_324-3:
+  desc: null
+  value: phecode_324-3 - Dystonia
+label_mapping/phecode_324-4:
+  desc: null
+  value: phecode_324-4 - Tremor
+label_mapping/phecode_325:
+  desc: null
+  value: phecode_325 - Symptoms and signs related to movement disorders
+label_mapping/phecode_325-2:
+  desc: null
+  value: phecode_325-2 - Abnormality of gait and mobility
+label_mapping/phecode_328:
+  desc: null
+  value: phecode_328 - Dementias and cerebral degeneration
+label_mapping/phecode_328-9:
+  desc: null
+  value: phecode_328-9 - Dementia NOS
+label_mapping/phecode_329:
+  desc: null
+  value: phecode_329 - Symptoms and signs involving cognitive functions and awareness
+label_mapping/phecode_329-1:
+  desc: null
+  value: phecode_329-1 - Memory loss
+label_mapping/phecode_331:
+  desc: null
+  value: phecode_331 - Headache
+label_mapping/phecode_331-1:
+  desc: null
+  value: phecode_331-1 - Tension headache
+label_mapping/phecode_331-6:
+  desc: null
+  value: phecode_331-6 - Migraine
+label_mapping/phecode_331-8:
+  desc: null
+  value: phecode_331-8 - Headache NOS
+label_mapping/phecode_333:
+  desc: null
+  value: phecode_333 - Sleep disorders
+label_mapping/phecode_333-1:
+  desc: null
+  value: phecode_333-1 - Sleep apnea
+label_mapping/phecode_333-11:
+  desc: null
+  value: phecode_333-11 - Obstructive sleep apnea
+label_mapping/phecode_333-2:
+  desc: null
+  value: phecode_333-2 - Insomnia
+label_mapping/phecode_334:
+  desc: null
+  value: phecode_334 - Disorders of other cranial nerves
+label_mapping/phecode_336:
+  desc: null
+  value: phecode_336 - Mononeuropathies
+label_mapping/phecode_336-1:
+  desc: null
+  value: phecode_336-1 - Carpal tunnel syndrome
+label_mapping/phecode_336-5:
+  desc: null
+  value: phecode_336-5 - Mononeuritis of lower limb
+label_mapping/phecode_337:
+  desc: null
+  value: phecode_337 - Polyneuropathies
+label_mapping/phecode_350:
+  desc: null
+  value: phecode_350 - Other symptoms involving nervous system
+label_mapping/phecode_350-5:
+  desc: null
+  value: phecode_350-5 - Repeated falls*
+label_mapping/phecode_351:
+  desc: null
+  value: phecode_351 - Disturbances of skin sensation
+label_mapping/phecode_351-1:
+  desc: null
+  value: phecode_351-1 - Anesthesia of skin*
+label_mapping/phecode_351-3:
+  desc: null
+  value: phecode_351-3 - Paresthesia of skin*
+label_mapping/phecode_353:
+  desc: null
+  value: phecode_353 - Symptoms and signs involving general sensations and perceptions
+label_mapping/phecode_354:
+  desc: null
+  value: phecode_354 - Dizziness and giddiness
+label_mapping/phecode_360:
+  desc: null
+  value: phecode_360 - Inflammation of eyelids
+label_mapping/phecode_360-1:
+  desc: null
+  value: phecode_360-1 - Hordeolum
+label_mapping/phecode_360-11:
+  desc: null
+  value: phecode_360-11 - Hordeolum externum
+label_mapping/phecode_360-2:
+  desc: null
+  value: phecode_360-2 - Chalazion
+label_mapping/phecode_360-4:
+  desc: null
+  value: phecode_360-4 - Blepharitis
+label_mapping/phecode_362:
+  desc: null
+  value: phecode_362 - Other disorders of the eyelids
+label_mapping/phecode_363:
+  desc: null
+  value: phecode_363 - Disorders of lacrimal system
+label_mapping/phecode_363-2:
+  desc: null
+  value: phecode_363-2 - Dry eye syndrome [Tear film insufficiency]
+label_mapping/phecode_367:
+  desc: null
+  value: phecode_367 - Inflammation of the eye
+label_mapping/phecode_367-1:
+  desc: null
+  value: phecode_367-1 - Conjunctivitis
+label_mapping/phecode_371:
+  desc: null
+  value: phecode_371 - Cataract
+label_mapping/phecode_374:
+  desc: null
+  value: phecode_374 - Disorders of the retina
+label_mapping/phecode_374-3:
+  desc: null
+  value: phecode_374-3 - Retinal vascular changes and occlusions
+label_mapping/phecode_374-4:
+  desc: null
+  value: phecode_374-4 - Retinal disorders in diseases classified elsewhere
+label_mapping/phecode_374-42:
+  desc: null
+  value: phecode_374-42 - Diabetic retinopathy
+label_mapping/phecode_374-5:
+  desc: null
+  value: phecode_374-5 - Macular degeneration
+label_mapping/phecode_374-51:
+  desc: null
+  value: phecode_374-51 - Age-related macular degeneration
+label_mapping/phecode_375:
+  desc: null
+  value: phecode_375 - Abnormal intraocular pressure
+label_mapping/phecode_375-1:
+  desc: null
+  value: phecode_375-1 - Glaucoma
+label_mapping/phecode_375-6:
+  desc: null
+  value: phecode_375-6 - Ocular hypertension
+label_mapping/phecode_376:
+  desc: null
+  value: phecode_376 - Disorders of vitreous body
+label_mapping/phecode_376-1:
+  desc: null
+  value: phecode_376-1 - Vitreous degeneration
+label_mapping/phecode_376-2:
+  desc: null
+  value: phecode_376-2 - Vitreous opacities
+label_mapping/phecode_376-21:
+  desc: null
+  value: phecode_376-21 - Crystalline deposits in vitreous body
+label_mapping/phecode_377:
+  desc: null
+  value: phecode_377 - Hemorrhage of the eye
+label_mapping/phecode_377-2:
+  desc: null
+  value: phecode_377-2 - Conjunctival hemorrhage
+label_mapping/phecode_386:
+  desc: null
+  value: phecode_386 - Visual disturbances
+label_mapping/phecode_389:
+  desc: null
+  value: phecode_389 - Other disorders of eye
+label_mapping/phecode_390:
+  desc: null
+  value: phecode_390 - Disorders of external ear
+label_mapping/phecode_390-1:
+  desc: null
+  value: phecode_390-1 - Otitis externa
+label_mapping/phecode_390-4:
+  desc: null
+  value: phecode_390-4 - Impacted cerumen
+label_mapping/phecode_391:
+  desc: null
+  value: phecode_391 - Disorders of the middle ear
+label_mapping/phecode_391-1:
+  desc: null
+  value: phecode_391-1 - Otitis media
+label_mapping/phecode_391-2:
+  desc: null
+  value: phecode_391-2 - Eustachian tube disorders
+label_mapping/phecode_392:
+  desc: null
+  value: phecode_392 - Otalgia and effusion of ear
+label_mapping/phecode_394:
+  desc: null
+  value: phecode_394 - Disorders of vestibular function
+label_mapping/phecode_394-2:
+  desc: null
+  value: phecode_394-2 - Vertigo
+label_mapping/phecode_394-21:
+  desc: null
+  value: phecode_394-21 - Paroxysmal vertigo
+label_mapping/phecode_395:
+  desc: null
+  value: phecode_395 - Other diseases of inner ear
+label_mapping/phecode_395-1:
+  desc: null
+  value: phecode_395-1 - Labyrinthitis
+label_mapping/phecode_396:
+  desc: null
+  value: phecode_396 - Hearing impairment
+label_mapping/phecode_396-2:
+  desc: null
+  value: phecode_396-2 - Sensorineural hearing loss
+label_mapping/phecode_397:
+  desc: null
+  value: phecode_397 - Other hearing abnormality
+label_mapping/phecode_397-1:
+  desc: null
+  value: phecode_397-1 - Tinnitus
+label_mapping/phecode_398:
+  desc: null
+  value: phecode_398 - Other disorders of ear
+label_mapping/phecode_401:
+  desc: null
+  value: phecode_401 - Hypertension
+label_mapping/phecode_401-1:
+  desc: null
+  value: phecode_401-1 - Essential hypertension
+label_mapping/phecode_402:
+  desc: null
+  value: phecode_402 - Elevated blood pressure reading without diagnosis of hypertension
+label_mapping/phecode_403:
+  desc: null
+  value: phecode_403 - Angina pectoris
+label_mapping/phecode_404:
+  desc: null
+  value: phecode_404 - Ischemic heart disease
+label_mapping/phecode_404-1:
+  desc: null
+  value: phecode_404-1 - Myocardial infarction [Heart attack]
+label_mapping/phecode_404-11:
+  desc: null
+  value: phecode_404-11 - Acute myocardial infarction
+label_mapping/phecode_404-2:
+  desc: null
+  value: phecode_404-2 - Coronary atherosclerosis [Atherosclerotic heart disease]
+label_mapping/phecode_413:
+  desc: null
+  value: phecode_413 - Heart valve disorders
+label_mapping/phecode_413-1:
+  desc: null
+  value: phecode_413-1 - Mitral valve disorders
+label_mapping/phecode_413-2:
+  desc: null
+  value: phecode_413-2 - Aortic valve disorders
+label_mapping/phecode_416:
+  desc: null
+  value: phecode_416 - Cardiac arrhythmia and conduction disorders
+label_mapping/phecode_416-2:
+  desc: null
+  value: phecode_416-2 - Atrial fibrillation and flutter
+label_mapping/phecode_416-21:
+  desc: null
+  value: phecode_416-21 - Atrial fibrillation
+label_mapping/phecode_416-211:
+  desc: null
+  value: phecode_416-211 - Paroxysmal atrial fibrillation*
+label_mapping/phecode_416-4:
+  desc: null
+  value: phecode_416-4 - Heart block
+label_mapping/phecode_416-5:
+  desc: null
+  value: phecode_416-5 - Premature depolarization [Premature beats]
+label_mapping/phecode_417:
+  desc: null
+  value: phecode_417 - Abnormalities of heart beat
+label_mapping/phecode_417-1:
+  desc: null
+  value: phecode_417-1 - Palpitations
+label_mapping/phecode_417-3:
+  desc: null
+  value: phecode_417-3 - Bradycardia*
+label_mapping/phecode_418:
+  desc: null
+  value: phecode_418 - Abnormal results of cardiovascular function studies
+label_mapping/phecode_418-1:
+  desc: null
+  value: phecode_418-1 - Abnormal electrocardiogram [ECG] [EKG]
+label_mapping/phecode_424:
+  desc: null
+  value: phecode_424 - Heart failure
+label_mapping/phecode_431:
+  desc: null
+  value: phecode_431 - Stroke and transient cerebral ischemic attacks
+label_mapping/phecode_431-1:
+  desc: null
+  value: phecode_431-1 - Stroke
+label_mapping/phecode_431-11:
+  desc: null
+  value: phecode_431-11 - Cerebral infarction [Ischemic stroke]
+label_mapping/phecode_431-2:
+  desc: null
+  value: phecode_431-2 - Transient cerebral ischemic attacks
+label_mapping/phecode_436:
+  desc: null
+  value: phecode_436 - Atherosclerosis [ASCVD]
+label_mapping/phecode_439:
+  desc: null
+  value: phecode_439 - Hemorrhoids
+label_mapping/phecode_440:
+  desc: null
+  value: phecode_440 - Embolism and thrombosis
+label_mapping/phecode_440-1:
+  desc: null
+  value: phecode_440-1 - Venous thromboembolism
+label_mapping/phecode_440-11:
+  desc: null
+  value: phecode_440-11 - Deep vein thrombosis [DVT]
+label_mapping/phecode_440-13:
+  desc: null
+  value: phecode_440-13 - Phlebitis and thrombophlebitis
+label_mapping/phecode_440-3:
+  desc: null
+  value: phecode_440-3 - Pulmonary embolism
+label_mapping/phecode_443:
+  desc: null
+  value: phecode_443 - Other specified disorders of arteries and arterioles
+label_mapping/phecode_444:
+  desc: null
+  value: phecode_444 - Venous insufficiency
+label_mapping/phecode_444-1:
+  desc: null
+  value: phecode_444-1 - Varicose veins
+label_mapping/phecode_444-11:
+  desc: null
+  value: phecode_444-11 - Varicose veins of lower extremities
+label_mapping/phecode_444-5:
+  desc: null
+  value: phecode_444-5 - Venous insufficiency (chronic) (peripheral)
+label_mapping/phecode_446:
+  desc: null
+  value: phecode_446 - Hypotension
+label_mapping/phecode_446-2:
+  desc: null
+  value: phecode_446-2 - Orthostatic hypotension
+label_mapping/phecode_448:
+  desc: null
+  value: phecode_448 - Peripheral vascular disease
+label_mapping/phecode_460:
+  desc: null
+  value: phecode_460 - Acute respiratory infection
+label_mapping/phecode_460-1:
+  desc: null
+  value: phecode_460-1 - Acute upper respiratory infection
+label_mapping/phecode_460-2:
+  desc: null
+  value: phecode_460-2 - Acute lower respiratory infection
+label_mapping/phecode_462:
+  desc: null
+  value: phecode_462 - Sinusitis
+label_mapping/phecode_462-1:
+  desc: null
+  value: phecode_462-1 - Acute sinusitis
+label_mapping/phecode_462-2:
+  desc: null
+  value: phecode_462-2 - Chronic sinusitis
+label_mapping/phecode_463:
+  desc: null
+  value: phecode_463 - Rhinitis and nasal congestion
+label_mapping/phecode_463-1:
+  desc: null
+  value: phecode_463-1 - Chronic rhinitis
+label_mapping/phecode_463-2:
+  desc: null
+  value: phecode_463-2 - Allergic rhinitis
+label_mapping/phecode_463-21:
+  desc: null
+  value: phecode_463-21 - Seasonal allergic rhinitis
+label_mapping/phecode_463-4:
+  desc: null
+  value: phecode_463-4 - Nasal congestion*
+label_mapping/phecode_463-5:
+  desc: null
+  value: phecode_463-5 - Postnasal drip
+label_mapping/phecode_464:
+  desc: null
+  value: phecode_464 - Nasopharyngitis
+label_mapping/phecode_464-1:
+  desc: null
+  value: phecode_464-1 - Acute nasopharyngitis
+label_mapping/phecode_465:
+  desc: null
+  value: phecode_465 - Pharyngitis
+label_mapping/phecode_465-1:
+  desc: null
+  value: phecode_465-1 - Acute Pharyngitis
+label_mapping/phecode_465-2:
+  desc: null
+  value: phecode_465-2 - Chronic Pharyngitis
+label_mapping/phecode_466:
+  desc: null
+  value: phecode_466 - Tonsillitis and adenoiditis
+label_mapping/phecode_466-1:
+  desc: null
+  value: phecode_466-1 - Acute tonsillitis and adenoiditis
+label_mapping/phecode_467:
+  desc: null
+  value: phecode_467 - Laryngitis and tracheitis
+label_mapping/phecode_467-1:
+  desc: null
+  value: phecode_467-1 - Acute laryngitis and tracheitis
+label_mapping/phecode_468:
+  desc: null
+  value: phecode_468 - Pneumonia
+label_mapping/phecode_469:
+  desc: null
+  value: phecode_469 - Bronchitis
+label_mapping/phecode_471:
+  desc: null
+  value: phecode_471 - Other disorders of nose and nasal sinuses
+label_mapping/phecode_473:
+  desc: null
+  value: phecode_473 - Other diseases of upper respiratory tract
+label_mapping/phecode_474:
+  desc: null
+  value: phecode_474 - Chronic obstructive pulmonary disease [COPD]
+label_mapping/phecode_475:
+  desc: null
+  value: phecode_475 - Asthma
+label_mapping/phecode_476:
+  desc: null
+  value: phecode_476 - Bronchiectasis
+label_mapping/phecode_483:
+  desc: null
+  value: phecode_483 - Pleural effusion
+label_mapping/phecode_486:
+  desc: null
+  value: phecode_486 - Other respiratory disorders
+label_mapping/phecode_486-5:
+  desc: null
+  value: phecode_486-5 - Abnormal sputum
+label_mapping/phecode_487:
+  desc: null
+  value: phecode_487 - Hemorrhage from respiratory passages
+label_mapping/phecode_487-1:
+  desc: null
+  value: phecode_487-1 - Epistaxis
+label_mapping/phecode_488:
+  desc: null
+  value: phecode_488 - Abnormalities of breathing
+label_mapping/phecode_488-1:
+  desc: null
+  value: phecode_488-1 - Dyspnea [Shortness of breath]
+label_mapping/phecode_488-6:
+  desc: null
+  value: phecode_488-6 - Wheezing
+label_mapping/phecode_488-8:
+  desc: null
+  value: phecode_488-8 - Mouth breathing*
+label_mapping/phecode_494:
+  desc: null
+  value: phecode_494 - Voice disturbance
+label_mapping/phecode_495:
+  desc: null
+  value: phecode_495 - Abnormal findings on diagnostic imaging of lung
+label_mapping/phecode_496:
+  desc: null
+  value: phecode_496 - Abnormal results of pulmonary function studies
+label_mapping/phecode_502:
+  desc: null
+  value: phecode_502 - Other diseases of teeth and supporting structures
+label_mapping/phecode_503:
+  desc: null
+  value: phecode_503 - Diseases of pulp and periapical tissues
+label_mapping/phecode_503-5:
+  desc: null
+  value: phecode_503-5 - Periapical abscess
+label_mapping/phecode_506:
+  desc: null
+  value: phecode_506 - Diseases of salivary glands
+label_mapping/phecode_507:
+  desc: null
+  value: phecode_507 - Lesions of mouth
+label_mapping/phecode_507-1:
+  desc: null
+  value: phecode_507-1 - Stomatitis
+label_mapping/phecode_509:
+  desc: null
+  value: phecode_509 - Diseases of tongue
+label_mapping/phecode_510:
+  desc: null
+  value: phecode_510 - Diseases of esophagus
+label_mapping/phecode_510-2:
+  desc: null
+  value: phecode_510-2 - Esophagitis
+label_mapping/phecode_511:
+  desc: null
+  value: phecode_511 - Gastro-esophageal reflux disease
+label_mapping/phecode_512:
+  desc: null
+  value: phecode_512 - Dysphagia
+label_mapping/phecode_515:
+  desc: null
+  value: phecode_515 - Heartburn and epigastric pain
+label_mapping/phecode_520:
+  desc: null
+  value: phecode_520 - Hernia
+label_mapping/phecode_520-1:
+  desc: null
+  value: phecode_520-1 - Hernia of the abdominal wall
+label_mapping/phecode_520-11:
+  desc: null
+  value: phecode_520-11 - Inguinal hernia
+label_mapping/phecode_520-2:
+  desc: null
+  value: phecode_520-2 - Diaphragmatic hernia [Hiatal hernia]
+label_mapping/phecode_522:
+  desc: null
+  value: phecode_522 - Gastrointestinal inflammation
+label_mapping/phecode_522-9:
+  desc: null
+  value: phecode_522-9 - Gastritis
+label_mapping/phecode_523:
+  desc: null
+  value: phecode_523 - Diverticular disease [Bowel diverticulosis]
+label_mapping/phecode_523-4:
+  desc: null
+  value: phecode_523-4 - Diverticulitis
+label_mapping/phecode_526:
+  desc: null
+  value: phecode_526 - Intestinal infection
+label_mapping/phecode_526-1:
+  desc: null
+  value: phecode_526-1 - Bacterial enteritis
+label_mapping/phecode_527:
+  desc: null
+  value: phecode_527 - Abdominal pain
+label_mapping/phecode_528:
+  desc: null
+  value: phecode_528 - Nausea and vomiting
+label_mapping/phecode_528-1:
+  desc: null
+  value: phecode_528-1 - Nausea
+label_mapping/phecode_528-2:
+  desc: null
+  value: phecode_528-2 - Vomiting
+label_mapping/phecode_529:
+  desc: null
+  value: phecode_529 - Symptoms involving digestive system
+label_mapping/phecode_529-1:
+  desc: null
+  value: phecode_529-1 - Diarrhea
+label_mapping/phecode_529-2:
+  desc: null
+  value: phecode_529-2 - Abdominal distension and flatulence
+label_mapping/phecode_529-3:
+  desc: null
+  value: phecode_529-3 - Fecal incontinence
+label_mapping/phecode_529-5:
+  desc: null
+  value: phecode_529-5 - Constipation
+label_mapping/phecode_530:
+  desc: null
+  value: phecode_530 - Disease of anus and rectum
+label_mapping/phecode_530-1:
+  desc: null
+  value: phecode_530-1 - Anal fissure
+label_mapping/phecode_542:
+  desc: null
+  value: phecode_542 - Chronic liver disease and sequelae
+label_mapping/phecode_542-2:
+  desc: null
+  value: phecode_542-2 - Fatty liver disease (FLD)
+label_mapping/phecode_545:
+  desc: null
+  value: phecode_545 - Nonspecific abnormal results of function study of liver
+label_mapping/phecode_550:
+  desc: null
+  value: phecode_550 - Disorders of the gallbladder
+label_mapping/phecode_550-1:
+  desc: null
+  value: phecode_550-1 - Gallstones [Cholelithiasis]
+label_mapping/phecode_556:
+  desc: null
+  value: phecode_556 - Other symptoms involving the digestive system and abdomen
+label_mapping/phecode_556-3:
+  desc: null
+  value: phecode_556-3 - Abdominal or pelvic swelling, mass, or lump
+label_mapping/phecode_556-8:
+  desc: null
+  value: phecode_556-8 - Nonspecific abnormal findings in stool contents
+label_mapping/phecode_557:
+  desc: null
+  value: phecode_557 - Gastrointestinal hemorrhage
+label_mapping/phecode_557-8:
+  desc: null
+  value: phecode_557-8 - Hemorrhage of rectum and anus
+label_mapping/phecode_558:
+  desc: null
+  value: phecode_558 - Abnormal findings on diagnostic imaging of the digestive tract
+label_mapping/phecode_581:
+  desc: null
+  value: phecode_581 - Renal tubulo-interstitial diseases
+label_mapping/phecode_583:
+  desc: null
+  value: phecode_583 - Chronic kidney disease
+label_mapping/phecode_585:
+  desc: null
+  value: phecode_585 - Kidney stone disease
+label_mapping/phecode_586:
+  desc: null
+  value: phecode_586 - Other disorders of the kidney and ureters
+label_mapping/phecode_591:
+  desc: null
+  value: phecode_591 - Urinary tract infection
+label_mapping/phecode_592:
+  desc: null
+  value: phecode_592 - Cystitis and urethritis
+label_mapping/phecode_592-1:
+  desc: null
+  value: phecode_592-1 - Cystitis
+label_mapping/phecode_593:
+  desc: null
+  value: phecode_593 - Hematuria
+label_mapping/phecode_593-2:
+  desc: null
+  value: phecode_593-2 - Microscopic hematuria
+label_mapping/phecode_594:
+  desc: null
+  value: phecode_594 - Abnormality of urination
+label_mapping/phecode_594-1:
+  desc: null
+  value: phecode_594-1 - Retention of urine
+label_mapping/phecode_594-2:
+  desc: null
+  value: phecode_594-2 - Dysuria
+label_mapping/phecode_594-3:
+  desc: null
+  value: phecode_594-3 - Urinary incontinence
+label_mapping/phecode_594-31:
+  desc: null
+  value: phecode_594-31 - Urge incontinence
+label_mapping/phecode_594-32:
+  desc: null
+  value: phecode_594-32 - Stress incontinence
+label_mapping/phecode_594-4:
+  desc: null
+  value: phecode_594-4 - Frequency of urination and polyuria
+label_mapping/phecode_594-41:
+  desc: null
+  value: phecode_594-41 - Nocturia
+label_mapping/phecode_594-6:
+  desc: null
+  value: phecode_594-6 - Urinary urgency
+label_mapping/phecode_596:
+  desc: null
+  value: phecode_596 - Other disorders of bladder
+label_mapping/phecode_596-2:
+  desc: null
+  value: phecode_596-2 - Overactive bladder
+label_mapping/phecode_599:
+  desc: null
+  value: phecode_599 - Other symptoms-disorders or the urinary system
+label_mapping/phecode_600:
+  desc: null
+  value: phecode_600 - Benign prostatic hyperplasia
+label_mapping/phecode_601:
+  desc: null
+  value: phecode_601 - Inflammatory diseases of prostate
+label_mapping/phecode_601-1:
+  desc: null
+  value: phecode_601-1 - Prostatitis
+label_mapping/phecode_602:
+  desc: null
+  value: phecode_602 - Other disorders of prostate
+label_mapping/phecode_602-4:
+  desc: null
+  value: phecode_602-4 - Elevated prostate specific antigen [PSA]
+label_mapping/phecode_603:
+  desc: null
+  value: phecode_603 - Disorders and symptoms of testis
+label_mapping/phecode_603-2:
+  desc: null
+  value: phecode_603-2 - Spermatocele
+label_mapping/phecode_603-5:
+  desc: null
+  value: phecode_603-5 - Orchitis and epididymitis
+label_mapping/phecode_604:
+  desc: null
+  value: phecode_604 - Disorders of penis
+label_mapping/phecode_604-5:
+  desc: null
+  value: phecode_604-5 - Balanoposthitis
+label_mapping/phecode_605:
+  desc: null
+  value: phecode_605 - Male sexual dysfuction
+label_mapping/phecode_605-1:
+  desc: null
+  value: phecode_605-1 - Male erectile dysfunction
+label_mapping/phecode_608:
+  desc: null
+  value: phecode_608 - Other disorders of male genital organs
+label_mapping/phecode_608-1:
+  desc: null
+  value: phecode_608-1 - Abnormal findings in semen
+label_mapping/phecode_610:
+  desc: null
+  value: phecode_610 - Benign mammary dysplasias
+label_mapping/phecode_613:
+  desc: null
+  value: phecode_613 - Other nonmalignant breast conditions
+label_mapping/phecode_613-5:
+  desc: null
+  value: phecode_613-5 - Mastodynia
+label_mapping/phecode_613-7:
+  desc: null
+  value: phecode_613-7 - Other signs and symptoms in breast
+label_mapping/phecode_614:
+  desc: null
+  value: phecode_614 - Inflammatory diseases of female pelvic organs
+label_mapping/phecode_614-5:
+  desc: null
+  value: phecode_614-5 - Inflammatory disease of cervix, vagina, and vulva
+label_mapping/phecode_614-52:
+  desc: null
+  value: phecode_614-52 - Vaginitis and vulvovaginitis
+label_mapping/phecode_614-55:
+  desc: null
+  value: phecode_614-55 - Candidiasis of vulva and vagina
+label_mapping/phecode_618:
+  desc: null
+  value: phecode_618 - Genital prolapse
+label_mapping/phecode_618-1:
+  desc: null
+  value: phecode_618-1 - Prolapse of vaginal walls
+label_mapping/phecode_618-11:
+  desc: null
+  value: phecode_618-11 - Cystocele
+label_mapping/phecode_618-12:
+  desc: null
+  value: phecode_618-12 - Rectocele
+label_mapping/phecode_618-2:
+  desc: null
+  value: phecode_618-2 - Uterine-Uterovaginal prolapse
+label_mapping/phecode_619:
+  desc: null
+  value: phecode_619 - Noninflammatory female genital disorders
+label_mapping/phecode_619-4:
+  desc: null
+  value: phecode_619-4 - Noninflammatory disorders of vagina
+label_mapping/phecode_619-5:
+  desc: null
+  value: phecode_619-5 - Noninflammatory disorders of vulva and perineum
+label_mapping/phecode_623:
+  desc: null
+  value: phecode_623 - Hypertrophy of female genital organs
+label_mapping/phecode_625:
+  desc: null
+  value: phecode_625 - Pain and other symptoms associated with female genital organs
+label_mapping/phecode_625-1:
+  desc: null
+  value: phecode_625-1 - Dyspareunia
+label_mapping/phecode_626:
+  desc: null
+  value: phecode_626 - Disorders of menstruation and other abnormal bleeding from
+    female genital tract
+label_mapping/phecode_626-1:
+  desc: null
+  value: phecode_626-1 - Irregular menstrual cycle-bleeding
+label_mapping/phecode_626-13:
+  desc: null
+  value: phecode_626-13 - Irregular menstrual cycle
+label_mapping/phecode_627:
+  desc: null
+  value: phecode_627 - Menopausal and postmenopausal disorders
+label_mapping/phecode_627-1:
+  desc: null
+  value: phecode_627-1 - Postmenopausal bleeding
+label_mapping/phecode_627-2:
+  desc: null
+  value: phecode_627-2 - Symptomatic menopause
+label_mapping/phecode_627-3:
+  desc: null
+  value: phecode_627-3 - Postmenopausal atrophic vaginitis
+label_mapping/phecode_627-4:
+  desc: null
+  value: phecode_627-4 - Menorrhagia-Excessive and frequent menstruation
+label_mapping/phecode_628:
+  desc: null
+  value: phecode_628 - Ovarian cyst
+label_mapping/phecode_628-2:
+  desc: null
+  value: phecode_628-2 - Corpus luteum cyst or hematoma
+label_mapping/phecode_660:
+  desc: null
+  value: phecode_660 - Infection of the skin
+label_mapping/phecode_660-1:
+  desc: null
+  value: phecode_660-1 - Fungal infection of the skin
+label_mapping/phecode_660-12:
+  desc: null
+  value: phecode_660-12 - Dermatophytosis
+label_mapping/phecode_660-4:
+  desc: null
+  value: phecode_660-4 - Carbuncle and furuncle
+label_mapping/phecode_660-6:
+  desc: null
+  value: phecode_660-6 - Cellulitis and abscess
+label_mapping/phecode_662:
+  desc: null
+  value: phecode_662 - Rosacea
+label_mapping/phecode_664:
+  desc: null
+  value: phecode_664 - Papulosquamous disorders
+label_mapping/phecode_665:
+  desc: null
+  value: phecode_665 - Psoriasis
+label_mapping/phecode_666:
+  desc: null
+  value: phecode_666 - Urticaria
+label_mapping/phecode_668:
+  desc: null
+  value: phecode_668 - Dermatitis [eczema]
+label_mapping/phecode_668-1:
+  desc: null
+  value: phecode_668-1 - Atopic dermatitis
+label_mapping/phecode_668-2:
+  desc: null
+  value: phecode_668-2 - Seborrheic dermatitis
+label_mapping/phecode_668-3:
+  desc: null
+  value: phecode_668-3 - Contact dermatitis
+label_mapping/phecode_670:
+  desc: null
+  value: phecode_670 - Seborrheic keratosis
+label_mapping/phecode_673:
+  desc: null
+  value: phecode_673 - Skin changes due to chronic exposure to nonionizing radiation
+label_mapping/phecode_673-1:
+  desc: null
+  value: phecode_673-1 - Actinic keratosis
+label_mapping/phecode_674:
+  desc: null
+  value: phecode_674 - Disorders of pigmentation
+label_mapping/phecode_675:
+  desc: null
+  value: phecode_675 - Atrophic conditions of skin
+label_mapping/phecode_675-1:
+  desc: null
+  value: phecode_675-1 - Circumscribed scleroderma
+label_mapping/phecode_676:
+  desc: null
+  value: phecode_676 - Hypertrophic conditions of skin
+label_mapping/phecode_678:
+  desc: null
+  value: phecode_678 - Other skin and connective tissue disorders
+label_mapping/phecode_679:
+  desc: null
+  value: phecode_679 - Skin symptoms
+label_mapping/phecode_679-1:
+  desc: null
+  value: phecode_679-1 - Rash and other nonspecific skin eruption
+label_mapping/phecode_679-3:
+  desc: null
+  value: phecode_679-3 - Changes in skin texture
+label_mapping/phecode_679-4:
+  desc: null
+  value: phecode_679-4 - Pruritus
+label_mapping/phecode_680:
+  desc: null
+  value: phecode_680 - Epidermal thickening
+label_mapping/phecode_680-1:
+  desc: null
+  value: phecode_680-1 - Corns and callosities
+label_mapping/phecode_680-3:
+  desc: null
+  value: phecode_680-3 - Xerosis cutis*
+label_mapping/phecode_681:
+  desc: null
+  value: phecode_681 - Localized swelling, mass and lump of skin and subcutaneous
+    tissue
+label_mapping/phecode_682:
+  desc: null
+  value: phecode_682 - Other follicular disorders
+label_mapping/phecode_682-1:
+  desc: null
+  value: phecode_682-1 - Cutaneous cyst
+label_mapping/phecode_682-11:
+  desc: null
+  value: phecode_682-11 - Sebaceous cyst [Epidermal cyst]
+label_mapping/phecode_682-12:
+  desc: null
+  value: phecode_682-12 - Pilar and trichodermal cyst
+label_mapping/phecode_683:
+  desc: null
+  value: phecode_683 - Nail disorders
+label_mapping/phecode_683-1:
+  desc: null
+  value: phecode_683-1 - Ingrowing nail
+label_mapping/phecode_684:
+  desc: null
+  value: phecode_684 - Diseases of hair and hair follicles
+label_mapping/phecode_684-1:
+  desc: null
+  value: phecode_684-1 - Alopecia
+label_mapping/phecode_685:
+  desc: null
+  value: phecode_685 - Disorders of sweat glands
+label_mapping/phecode_685-8:
+  desc: null
+  value: phecode_685-8 - Hyperhidrosis
+label_mapping/phecode_685-82:
+  desc: null
+  value: phecode_685-82 - Generalized hyperhidrosis
+label_mapping/phecode_686:
+  desc: null
+  value: phecode_686 - Chronic ulcer of skin
+label_mapping/phecode_686-2:
+  desc: null
+  value: phecode_686-2 - Non-pressure chronic ulcer
+label_mapping/phecode_703:
+  desc: null
+  value: phecode_703 - Chrystal arthropathies
+label_mapping/phecode_703-1:
+  desc: null
+  value: phecode_703-1 - Hyperuricemia
+label_mapping/phecode_703-11:
+  desc: null
+  value: phecode_703-11 - Gout
+label_mapping/phecode_705:
+  desc: null
+  value: phecode_705 - Rheumatoid arthritis and other inflammatory polyarthropathies
+label_mapping/phecode_705-3:
+  desc: null
+  value: phecode_705-3 - Polymyalgia rheumatica
+label_mapping/phecode_707:
+  desc: null
+  value: phecode_707 - Other arthropathies
+label_mapping/phecode_708:
+  desc: null
+  value: phecode_708 - Osteoarthritis
+label_mapping/phecode_708-1:
+  desc: null
+  value: phecode_708-1 - Primary osteoarthritis
+label_mapping/phecode_708-13:
+  desc: null
+  value: phecode_708-13 - Primary osteoarthritis of the hand
+label_mapping/phecode_708-16:
+  desc: null
+  value: phecode_708-16 - Primary osteoarthritis ankle and foot
+label_mapping/phecode_708-7:
+  desc: null
+  value: phecode_708-7 - Generalized osteoarthritis
+label_mapping/phecode_709:
+  desc: null
+  value: phecode_709 - Acquired deformities of fingers and toes
+label_mapping/phecode_709-2:
+  desc: null
+  value: phecode_709-2 - Acquired deformities of toe
+label_mapping/phecode_709-21:
+  desc: null
+  value: phecode_709-21 - Hallux valgus (Bunion)
+label_mapping/phecode_710:
+  desc: null
+  value: phecode_710 - Acquired deformities of limbs
+label_mapping/phecode_713:
+  desc: null
+  value: phecode_713 - Symptoms related to joints
+label_mapping/phecode_713-2:
+  desc: null
+  value: phecode_713-2 - Effusion of joint
+label_mapping/phecode_713-3:
+  desc: null
+  value: phecode_713-3 - Pain in joint
+label_mapping/phecode_715:
+  desc: null
+  value: phecode_715 - Non-inflammatory spondylopathy
+label_mapping/phecode_715-1:
+  desc: null
+  value: phecode_715-1 - Spondylosis
+label_mapping/phecode_715-4:
+  desc: null
+  value: phecode_715-4 - Spinal stenosis
+label_mapping/phecode_716:
+  desc: null
+  value: phecode_716 - Intervertebral disc disorder
+label_mapping/phecode_716-3:
+  desc: null
+  value: phecode_716-3 - Spinal disc displacement (herniation)
+label_mapping/phecode_717:
+  desc: null
+  value: phecode_717 - Other and unspecified dorsopathies
+label_mapping/phecode_718:
+  desc: null
+  value: phecode_718 - Back pain
+label_mapping/phecode_718-1:
+  desc: null
+  value: phecode_718-1 - Radiculopathy
+label_mapping/phecode_718-2:
+  desc: null
+  value: phecode_718-2 - Cervicalgia
+label_mapping/phecode_718-3:
+  desc: null
+  value: phecode_718-3 - Mid back pain
+label_mapping/phecode_718-4:
+  desc: null
+  value: phecode_718-4 - Low back pain
+label_mapping/phecode_718-5:
+  desc: null
+  value: phecode_718-5 - Sciatica
+label_mapping/phecode_719:
+  desc: null
+  value: phecode_719 - Disorders of muscle
+label_mapping/phecode_719-1:
+  desc: null
+  value: phecode_719-1 - Cramp and spasm
+label_mapping/phecode_721:
+  desc: null
+  value: phecode_721 - Synoviopathy and bursopathy
+label_mapping/phecode_721-1:
+  desc: null
+  value: phecode_721-1 - Synovitis and tenosynovitis
+label_mapping/phecode_721-11:
+  desc: null
+  value: phecode_721-11 - Trigger finger
+label_mapping/phecode_721-2:
+  desc: null
+  value: phecode_721-2 - Ganglion cyst
+label_mapping/phecode_721-5:
+  desc: null
+  value: phecode_721-5 - Bursitis
+label_mapping/phecode_721-6:
+  desc: null
+  value: phecode_721-6 - Baker's cyst [popliteal cyst]
+label_mapping/phecode_722:
+  desc: null
+  value: phecode_722 - Fasciopathy
+label_mapping/phecode_722-1:
+  desc: null
+  value: phecode_722-1 - Plantar fascial fibromatosis [Plantar fasciitis]
+label_mapping/phecode_722-4:
+  desc: null
+  value: phecode_722-4 - Palmar fascial fibromatosis [Dupuytren]
+label_mapping/phecode_723:
+  desc: null
+  value: phecode_723 - Enthesopathy-Enthesitis-Tendinopathy
+label_mapping/phecode_723-1:
+  desc: null
+  value: phecode_723-1 - Adhesive capsulitis of shoulder
+label_mapping/phecode_723-2:
+  desc: null
+  value: phecode_723-2 - Rotator cuff tear or rupture
+label_mapping/phecode_723-3:
+  desc: null
+  value: phecode_723-3 - Medial epicondylitis (Golfer's elbow)
+label_mapping/phecode_723-4:
+  desc: null
+  value: phecode_723-4 - Lateral epicondylitis (Tennis elbow)
+label_mapping/phecode_723-5:
+  desc: null
+  value: phecode_723-5 - Tendinitis
+label_mapping/phecode_723-51:
+  desc: null
+  value: phecode_723-51 - Achilles tendinitis
+label_mapping/phecode_723-6:
+  desc: null
+  value: phecode_723-6 - Impingement syndrome of shoulder*
+label_mapping/phecode_724:
+  desc: null
+  value: phecode_724 - Other symptoms and disorders of the soft tissue
+label_mapping/phecode_724-1:
+  desc: null
+  value: phecode_724-1 - Myalgia
+label_mapping/phecode_726:
+  desc: null
+  value: phecode_726 - Osteoporosis and low bone density
+label_mapping/phecode_726-1:
+  desc: null
+  value: phecode_726-1 - Osteoporosis
+label_mapping/phecode_727:
+  desc: null
+  value: phecode_727 - Other disorders of bone
+label_mapping/phecode_728:
+  desc: null
+  value: phecode_728 - Chondropathies
+label_mapping/phecode_728-3:
+  desc: null
+  value: phecode_728-3 - Costochondritis (Tietze's disease)
+label_mapping/phecode_731:
+  desc: null
+  value: phecode_731 - Symptoms involving musculoskeletal systems
+label_mapping/phecode_732:
+  desc: null
+  value: phecode_732 - Nonspecific abnormal findings on radiological and other examination
+    of musculoskeletal system
+label_mapping/phecode_733:
+  desc: null
+  value: phecode_733 - Dentofacial anomalies, including malocclusion
+label_mapping/phecode_733-6:
+  desc: null
+  value: phecode_733-6 - Temporomandibular joint disorders
+label_mapping/phecode_800:
+  desc: null
+  value: phecode_800 - Chest pain
+label_mapping/phecode_800-1:
+  desc: null
+  value: phecode_800-1 - Chest pain on breathing
+label_mapping/phecode_800-11:
+  desc: null
+  value: phecode_800-11 - Pleurodynia*
+label_mapping/phecode_801:
+  desc: null
+  value: phecode_801 - Cough
+label_mapping/phecode_802:
+  desc: null
+  value: phecode_802 - Throat pain
+label_mapping/phecode_804:
+  desc: null
+  value: phecode_804 - Other symptoms and signs involving the circulatory and respiratory
+    system
+label_mapping/phecode_805:
+  desc: null
+  value: phecode_805 - Fever of unknown origin
+label_mapping/phecode_807:
+  desc: null
+  value: phecode_807 - Malaise and fatigue
+label_mapping/phecode_807-1:
+  desc: null
+  value: phecode_807-1 - Chronic fatigue syndrome
+label_mapping/phecode_808:
+  desc: null
+  value: phecode_808 - Syncope and collapse
+label_mapping/phecode_809:
+  desc: null
+  value: phecode_809 - Pain
+label_mapping/phecode_809-3:
+  desc: null
+  value: phecode_809-3 - Pain in limb
+label_mapping/phecode_812:
+  desc: null
+  value: phecode_812 - Edema
+label_mapping/phecode_819:
+  desc: null
+  value: phecode_819 - General symptoms and other findings
+label_mapping/phecode_823:
+  desc: null
+  value: phecode_823 - Abnormal serum enzyme levels
+label_mapping/phecode_823-2:
+  desc: null
+  value: phecode_823-2 - Abnormal levels of other serum enzymes
+label_mapping/phecode_829:
+  desc: null
+  value: phecode_829 - Nonspecific findings on examination of blood
+label_mapping/phecode_829-2:
+  desc: null
+  value: phecode_829-2 - Abnormal level of blood mineral*
+label_mapping/phecode_830:
+  desc: null
+  value: phecode_830 - Proteinuria
+label_mapping/phecode_831:
+  desc: null
+  value: phecode_831 - Glycosuria
+label_mapping/phecode_832:
+  desc: null
+  value: phecode_832 - Other abnormal findings in urine
+label_mapping/phecode_832-5:
+  desc: null
+  value: phecode_832-5 - Acetonuria
+label_mapping/phecode_832-6:
+  desc: null
+  value: phecode_832-6 - Pyuria*
+label_mapping/phecode_835:
+  desc: null
+  value: phecode_835 - Cytology and pathology findings
+label_mapping/phecode_840:
+  desc: null
+  value: phecode_840 - Allergy
+label_mapping/phecode_840-2:
+  desc: null
+  value: phecode_840-2 - Allergy to insects
+label_mapping/phecode_840-8:
+  desc: null
+  value: phecode_840-8 - Allergies related to other diseases-symptoms
+label_mapping/phecode_841:
+  desc: null
+  value: phecode_841 - Drug and medical agent allergy
+label_mapping/phecode_841-1:
+  desc: null
+  value: phecode_841-1 - Allergy to other anti-infective agents
+label_mapping/phecode_848:
+  desc: null
+  value: phecode_848 - Nonspecific abnormal findings of other body structures
+label_mapping/phecode_848-2:
+  desc: null
+  value: phecode_848-2 - Nonspecific abnormal findings on radiological and other examination
+    of other intrathoracic organs (echo)
+label_mapping/phecode_969:
+  desc: null
+  value: phecode_969 - Adverse effects of agents primarily affecting gastrointestinal
+    system
+label_mapping/phecode_977:
+  desc: null
+  value: phecode_977 - Long term (current) drug therapy
+label_mapping/phecode_977-4:
+  desc: null
+  value: phecode_977-4 - Long term (current) use of steroids
+label_mapping/phecode_977-41:
+  desc: null
+  value: phecode_977-41 - Long term (current) use of inhaled steroids*
+label_mapping/phecode_977-5:
+  desc: null
+  value: phecode_977-5 - Long term (current) use of agents affecting hormones
+label_mapping/phecode_977-52:
+  desc: null
+  value: phecode_977-52 - Hormone replacement therapy (postmenopausal)
+label_mapping/phecode_977-7:
+  desc: null
+  value: phecode_977-7 - Long term (current) use of insulin or oral hypoglycemic drugs
+label_mapping/phecode_977-72:
+  desc: null
+  value: phecode_977-72 - Long term (current) use of oral hypoglycemic drugs
+losses:
+  desc: null
+  value:
+  - <retinalrisk.models.loss_wrapper.EndpointTTELoss object at 0x7f98dd89fe20>
+metrics_kwargs:
+  desc: null
+  value: None
+metrics_list:
+  desc: null
+  value:
+  - retinalrisk.loss.tte.CIndex
+node_dropout:
+  desc: null
+  value: None
+optimizer:
+  desc: null
+  value: FusedAdam
+optimizer_kwargs/lr:
+  desc: null
+  value: 0.0001
+optimizer_kwargs/weight_decay:
+  desc: null
+  value: 0.05

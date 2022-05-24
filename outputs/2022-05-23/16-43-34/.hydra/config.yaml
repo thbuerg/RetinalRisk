@@ -1,0 +1,84 @@
+setup:
+  entity: cardiors
+  project: retina
+  group: null
+  name: agesex_baseline
+  root:
+    charite-hpc: /sc-projects/sc-proj-ukb-cvd
+    eils-hpc: /data/analysis/ag-reils/ag-reils-shared/cardioRS
+  data_path: data/2_datasets_pre/211110_anewbeginning/artifacts
+  output_path: results/models
+  use_data_artifact_if_available: false
+  data: null
+  restore_id: null
+  data_identifier: WandBBaselineData:latest
+  tags:
+  - baseline_data
+head:
+  model_type: MLP
+  dropout: 0.0
+  kwargs:
+    num_hidden: 256
+    num_layers: 2
+    detach_clf: false
+    initial_dropout: 0.0
+datamodule:
+  covariates:
+  - age_at_recruitment_f21022_0_0
+  - sex_f31_0_0
+  augmentation:
+    train: []
+    valid: []
+    test: []
+  batch_size: 512
+  partition: 0
+  num_workers: 4
+  img_root: /sc-projects/sc-proj-ukb-cvd/data/retina/preprocessed/preprocessed
+  img_visit: 0
+  img_size_to_gpu: 420
+  img_crop_ratio:
+  - 0.6
+  - 0.7
+  - 0.8
+  label_definition:
+    all_cause_death: true
+    phecodes: true
+    custom: /sc-projects/sc-proj-ukb-cvd/results/projects/22_medical_records/data/220413/frequent_endpoints.csv
+  use_top_n_phecodes: 1000
+  filter_input_origins: []
+  use_loss_weights: false
+  task: tte
+  task_kwargs: {}
+model:
+  model_type: Covariates
+  restore_from_ckpt: false
+training:
+  exclusions_on_losses: false
+  exclusions_on_metrics: true
+  gradient_checkpointing: false
+  contrastive_loss_factor: 0
+  endpoint_loss_factor: 1
+  vicreg_loss_factor: 0
+  node_dropout: null
+  normalize_node_embeddings: true
+  binarize_records: true
+  gradient_checkpoining: true
+  write_predictions: true
+  write_embeddings: false
+  write_attributions: false
+  warmup_period: 0
+  attribution_baseline_mode: zeros
+  use_endpoint_embeddings: false
+  patience: 30
+  optimizer_kwargs:
+    weight_decay: 0.05
+    lr: 0.0001
+trainer:
+  gpus:
+  - 0
+  precision: 16
+  max_epochs: 10000
+  num_sanity_val_steps: -1
+  detect_anomaly: false
+  amp_backend: native
+  accumulate_grad_batches: 1

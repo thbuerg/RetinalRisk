@@ -1,0 +1,24 @@
+{
+    "os": "Linux-4.18.0-240.el8.x86_64-x86_64-with-glibc2.28",
+    "python": "3.9.7",
+    "heartbeatAt": "2022-03-14T12:26:13.947757",
+    "startedAt": "2022-03-14T12:26:03.334058",
+    "docker": null,
+    "cpu_count": 128,
+    "cuda": null,
+    "args": [
+        "-f",
+        "/home/steinfej/.local/share/jupyter/runtime/kernel-739b77be-be35-4e15-b765-9acbc271b209.json"
+    ],
+    "state": "running",
+    "program": "<python with no main file>",
+    "git": {
+        "remote": "https://github.com/JakobSteinfeldt/22_medical_records.git",
+        "commit": "8300a2d23f184a90dad7804c4553a4a64923db7c"
+    },
+    "email": "jakob.steinfeldt@gmail.com",
+    "root": "/home/steinfej/code/22_medical_records",
+    "host": "s-sc-node003",
+    "username": "steinfej",
+    "executable": "/home/steinfej/miniconda3/envs/ehrgraphs/bin/python"
+}
