@@ -23,7 +23,8 @@ class RepeatIterator(object):
         else:
             self.idx += 1
             self.reps = 1
-        if self.idx < self.length-1:
+
+        if self.idx < self.length:
             return self.idx
         else:
             raise StopIteration

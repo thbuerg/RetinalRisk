@@ -47,14 +47,12 @@ class WritePredictionsDataFrame(Callback):
     def manual(self, args, datamodule, module):
         print("Write predictions and patient embeddings")
 
-        # device = module.device
-        device = torch.device('cuda')
 
         ckpt = torch.load(args.model.restore_from_ckpt)
         module.load_state_dict(ckpt["state_dict"])
         module.eval()
 
-        # todo make this nice
+        device = torch.device('cuda')
         module.to(device)
 
         # write the predictions, could be extended for all sets, just works if not shuffled
@@ -103,7 +101,8 @@ class WritePredictionsDataFrame(Callback):
     def on_fit_end(self, trainer, module):
         print("Write predictions and patient embeddings")
 
-        device = module.device
+        device = torch.device('cuda')
+        module.to(device)
 
         ckpt = torch.load(trainer.checkpoint_callback.best_model_path)
         module.load_state_dict(ckpt["state_dict"])
@@ -114,32 +113,35 @@ class WritePredictionsDataFrame(Callback):
         endpoints = list(trainer.datamodule.label_mapping.keys())
 
         predictions_dfs = []
-        embs_dfs = []
 
-        for split in tqdm(["test", "valid", "train"]):
-            print(split)
-            # eids = trainer.datamodule.dataset.retina_map['eid'].values
+        for split in tqdm(["train", "valid", "test"]):
 
             if split == "train":
                 dataloader = trainer.datamodule.train_dataloader(shuffle=False, drop_last=False)
             if split == "valid":
-                dataloader = trainer.datamodule.val_dataloader()
+                dataloader = trainer.datamodule.val_dataloader(testtime=True)
             if split == "test":
-                dataloader = trainer.datamodule.test_dataloader()
+                dataloader = trainer.datamodule.test_dataloader(testtime=True)
 
             outputs = self.predict_dataloader(module, dataloader, device)
 
+            index = dataloader.dataset.retina_map['eid'].values
+            if split in ['valid', 'test'] and trainer.datamodule.img_n_testtime_views > 1:
+                # prepare tta index:
+                index = []
+                for i in dataloader.dataset.retina_map['eid'].values:
+                    index.extend([i]*trainer.datamodule.img_n_testtime_views)
+
             predictions_df = pd.DataFrame(
-                data=outputs["preds"], index=dataloader.dataset.retina_map['eids'].values, columns=endpoints
+                data=outputs["preds"],
+                index=index,
+                columns=endpoints
             ).reset_index(drop=False)
             predictions_df = annotate_df(predictions_df, trainer.datamodule, module).assign(split=split)
-            self.write_and_log_preds(trainer, predictions_df, split=split)
-            del predictions_df
-            del dataloader
-            # predictions_dfs.append(predictions_df)
+            predictions_dfs.append(predictions_df)
 
-        # predictions_dfs_cc = pd.concat(predictions_dfs, axis=0).reset_index(drop=True)
-        # self.write_and_log_preds(trainer, predictions_dfs_cc)
+        predictions_dfs_cc = pd.concat(predictions_dfs, axis=0).reset_index(drop=True)
+        self.write_and_log_preds(trainer, predictions_dfs_cc)
 
     def predict_dataloader(self, model, dataloader, device):
         preds_list = []

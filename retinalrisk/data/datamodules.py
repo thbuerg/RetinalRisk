@@ -244,11 +244,11 @@ class RetinaDataModule(LightningDataModule):
             persistent_workers=self.num_workers > 0,
         )
 
-    def val_dataloader(self):
+    def val_dataloader(self, testtime=False):
         sampler = None
         batch_size = self.batch_size
 
-        if self.img_n_testtime_views > 1:
+        if testtime and self.img_n_testtime_views > 1:
             sampler = RepeatedSampler(n_times=self.img_n_testtime_views,
                                       data_source=self.valid_dataset)
             batch_size = int((batch_size // self.img_n_testtime_views) * self.img_n_testtime_views)
@@ -265,14 +265,14 @@ class RetinaDataModule(LightningDataModule):
             sampler=sampler
         )
 
-    def test_dataloader(self):
+    def test_dataloader(self, testtime=True):
         if self.test_dataset is None:
             print("Generating test dataset...")
         self.test_dataset = self.get_retina_dataset(set="test")
 
         sampler = None
         batch_size = self.batch_size
-        if self.img_n_testtime_views > 1:
+        if testtime and self.img_n_testtime_views > 1:
             sampler = RepeatedSampler(n_times=self.img_n_testtime_views,
                                       data_source=self.test_dataset)
             batch_size = int((batch_size // self.img_n_testtime_views) * self.img_n_testtime_views)
