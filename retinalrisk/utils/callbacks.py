@@ -22,9 +22,9 @@ def annotate_df(df, datamodule, module, split=None):
         df["encoder"] = "None"
     df["head"] = module.head._get_name()
     df["covariate_cols"] = str(datamodule.covariate_cols)
-    df["record_cols"] = str(datamodule.record_cols)
+    # df["record_cols"] = str(datamodule.record_cols)
 
-    for col in ["partition", "module", "encoder", "head", "covariate_cols", "record_cols"]:
+    for col in ["partition", "module", "encoder", "head", "covariate_cols"]:
         df[col] = df[col].astype("category")
 
     if split:
@@ -47,12 +47,14 @@ class WritePredictionsDataFrame(Callback):
     def manual(self, args, datamodule, module):
         print("Write predictions and patient embeddings")
 
-        device = module.device
+        # device = module.device
+        device = torch.device('cuda')
 
         ckpt = torch.load(args.model.restore_from_ckpt)
         module.load_state_dict(ckpt["state_dict"])
         module.eval()
 
+        # todo make this nice
         module.to(device)
 
         # write the predictions, could be extended for all sets, just works if not shuffled
@@ -61,7 +63,6 @@ class WritePredictionsDataFrame(Callback):
         predictions_dfs = []
 
         for split in tqdm(["train", "valid", "test"]):
-            eids = datamodule.eids[split]
 
             if split == "train":
                 dataloader = datamodule.train_dataloader(shuffle=False, drop_last=False)
@@ -72,19 +73,32 @@ class WritePredictionsDataFrame(Callback):
 
             outputs = self.predict_dataloader(module, dataloader, device)
 
+            index = dataloader.dataset.retina_map['eid'].values
+            if split in ['valid', 'test'] and args.datamodule.img_n_testtime_views > 1:
+                # prepare tta index:
+                index = []
+                for i in dataloader.dataset.retina_map['eid'].values:
+                    index.extend([i]*args.datamodule.img_n_testtime_views)
+
             predictions_df = pd.DataFrame(
-                data=outputs["preds"], index=eids, columns=endpoints
+                data=outputs["preds"],
+                index=index,
+                columns=endpoints
             ).reset_index(drop=False)
             predictions_df = annotate_df(predictions_df, datamodule, module).assign(split=split)
             predictions_dfs.append(predictions_df)
 
-        predictions_df = pd.concat(predictions_dfs, axis=0).reset_index(drop=True)
+        predictions_dfs_cc = pd.concat(predictions_dfs, axis=0).reset_index(drop=True)
 
+        # write to disk
         outdir = os.path.join(Path(args.model.restore_from_ckpt).parent, "predictions")
         if not os.path.exists(outdir):
             os.mkdir(outdir)
-        predictions_df.to_feather(os.path.join(outdir, "predictions.feather"))
+        predictions_dfs_cc.to_feather(os.path.join(outdir, "predictions.feather"))
         print(f"Predictions saved {os.path.join(outdir, 'predictions.feather')}")
+
+        del predictions_df
+        del dataloader
 
     def on_fit_end(self, trainer, module):
         print("Write predictions and patient embeddings")
@@ -102,8 +116,9 @@ class WritePredictionsDataFrame(Callback):
         predictions_dfs = []
         embs_dfs = []
 
-        for split in tqdm(["train", "valid", "test"]):
-            eids = trainer.datamodule.eids[split]
+        for split in tqdm(["test", "valid", "train"]):
+            print(split)
+            # eids = trainer.datamodule.dataset.retina_map['eid'].values
 
             if split == "train":
                 dataloader = trainer.datamodule.train_dataloader(shuffle=False, drop_last=False)
@@ -115,13 +130,16 @@ class WritePredictionsDataFrame(Callback):
             outputs = self.predict_dataloader(module, dataloader, device)
 
             predictions_df = pd.DataFrame(
-                data=outputs["preds"], index=eids, columns=endpoints
+                data=outputs["preds"], index=dataloader.dataset.retina_map['eids'].values, columns=endpoints
             ).reset_index(drop=False)
             predictions_df = annotate_df(predictions_df, trainer.datamodule, module).assign(split=split)
-            predictions_dfs.append(predictions_df)
+            self.write_and_log_preds(trainer, predictions_df, split=split)
+            del predictions_df
+            del dataloader
+            # predictions_dfs.append(predictions_df)
 
-        predictions_dfs_cc = pd.concat(predictions_dfs, axis=0).reset_index(drop=True)
-        self.write_and_log_preds(trainer, predictions_dfs_cc)
+        # predictions_dfs_cc = pd.concat(predictions_dfs, axis=0).reset_index(drop=True)
+        # self.write_and_log_preds(trainer, predictions_dfs_cc)
 
     def predict_dataloader(self, model, dataloader, device):
         preds_list = []
@@ -135,6 +153,7 @@ class WritePredictionsDataFrame(Callback):
             del batch
 
             preds = head_outputs["logits"].detach().cpu()
+            del head_outputs
             preds_list.append(preds)
 
         return {"preds": torch.cat(preds_list, axis=0).numpy()}
@@ -147,12 +166,13 @@ class WritePredictionsDataFrame(Callback):
         embs_df.to_feather(os.path.join(outdir, "patient_embeddings.feather"))
         print(f"Patient embeddings saved {os.path.join(outdir, 'patient_embeddings.feather')}")
 
-    def write_and_log_preds(self, trainer, predictions_df):
+    def write_and_log_preds(self, trainer, predictions_df, split=None):
         # write the predictions.csv
         outdir = os.path.join(Path(trainer.checkpoint_callback.dirpath).parent, "predictions")
         if not os.path.exists(outdir):
             os.mkdir(outdir)
-        predictions_df.to_feather(os.path.join(outdir, "predictions.feather"))
+        predictions_df.to_feather(os.path.join(outdir,
+                                               "predictions.feather" if split is None else f"{split}_predictions.feather"))
         print(f"Predictions saved {os.path.join(outdir, 'predictions.feather')}")
 
 

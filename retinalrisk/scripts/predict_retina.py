@@ -11,7 +11,6 @@ from retinalrisk.training import setup_training
 from retinalrisk.utils.callbacks import WritePredictionsDataFrame
 
 
-
 @hydra.main("../../config", config_name="config")
 def main(args: DictConfig):
     seed_everything(0)
@@ -23,7 +22,7 @@ def main(args: DictConfig):
     output_root = f"{args.setup.root[cluster]}/{args.setup.output_path}"
 
     # setup training
-    datamodule, model, tags = setup_training(args)
+    datamodule, module, tags = setup_training(args)
 
     # wandb
     api = wandb.Api()
@@ -42,7 +41,7 @@ def main(args: DictConfig):
         args.model.restore_from_ckpt = f'{output_root}/retina/{args.setup.restore_id}/checkpoints/last.ckpt'
 
     cb = WritePredictionsDataFrame()
-    cb.manual(args, datamodule, model)
+    cb.manual(args, datamodule, module)
 
     #TODO: log to wandb
 
@@ -51,3 +50,5 @@ def main(args: DictConfig):
 
 if __name__ == '__main__':
     main()
+
+
