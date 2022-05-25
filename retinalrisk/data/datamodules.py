@@ -15,6 +15,7 @@ from torch.utils.data import DataLoader
 
 from retinalrisk.data.data import WandBBaselineData
 from retinalrisk.data.collate import ImgCollator
+from retinalrisk.data.sample import RepeatedSampler
 from retinalrisk.data.datasets import RetinalFundusDataset
 
 
@@ -36,6 +37,7 @@ class RetinaDataModule(LightningDataModule):
         img_crop_ratio: Optional[float] = 0.7,
         img_file_extension: Optional[str] = '.png',
         img_visit: Optional[int] = 0,
+        img_n_testtime_views: Optional[int] = 1,
 
         covariates: List[str] = [],
         **kwargs,
@@ -46,6 +48,8 @@ class RetinaDataModule(LightningDataModule):
         self.img_visit = img_visit
         self.img_size_to_gpu = img_size_to_gpu
         self.img_crop_ratio = img_crop_ratio
+        self.img_n_testtime_views = img_n_testtime_views
+
         self.collator = None
         self.augmentation_pipeline = None
 
@@ -222,7 +226,7 @@ class RetinaDataModule(LightningDataModule):
             covariates=covariates,
             censorings=censorings,
             eids=self.eids[set],
-            img_crop_ratio=self.img_crop_ratio,
+            img_crop_ratio=self.img_crop_ratio[set],
             img_size_to_gpu = self.img_size_to_gpu
         )
 
@@ -241,29 +245,47 @@ class RetinaDataModule(LightningDataModule):
             persistent_workers=self.num_workers > 0,
         )
 
-    def val_dataloader(self):
+    def val_dataloader(self, testtime=False):
+        sampler = None
+        batch_size = self.batch_size
+
+        if testtime and self.img_n_testtime_views > 1:
+            sampler = RepeatedSampler(n_times=self.img_n_testtime_views,
+                                      data_source=self.valid_dataset)
+            batch_size = int((batch_size // self.img_n_testtime_views) * self.img_n_testtime_views)
+
         return DataLoader(
             self.valid_dataset,
             num_workers=self.num_workers,
             pin_memory=False,
-            batch_size=self.batch_size,
+            batch_size=batch_size,
             drop_last=False,
             shuffle=False,
             collate_fn=self.collator,
             persistent_workers=self.num_workers > 0,
+            sampler=sampler
         )
 
-    def test_dataloader(self):
+    def test_dataloader(self, testtime=True):
         if self.test_dataset is None:
             print("Generating test dataset...")
-            self.test_dataset = self.get_retina_dataset(set="test")
+        self.test_dataset = self.get_retina_dataset(set="test")
+
+        sampler = None
+        batch_size = self.batch_size
+        if testtime and self.img_n_testtime_views > 1:
+            sampler = RepeatedSampler(n_times=self.img_n_testtime_views,
+                                      data_source=self.test_dataset)
+            batch_size = int((batch_size // self.img_n_testtime_views) * self.img_n_testtime_views)
+
         return DataLoader(
             self.test_dataset,
             num_workers=self.num_workers,
             pin_memory=False,
-            batch_size=self.batch_size,
+            batch_size=batch_size,
             drop_last=False,
             shuffle=False,
             collate_fn=self.collator,
             persistent_workers=self.num_workers > 0,
+            sampler=sampler
         )
