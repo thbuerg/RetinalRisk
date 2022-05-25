@@ -65,9 +65,9 @@ class WritePredictionsDataFrame(Callback):
             if split == "train":
                 dataloader = datamodule.train_dataloader(shuffle=False, drop_last=False)
             if split == "valid":
-                dataloader = datamodule.val_dataloader()
+                dataloader = datamodule.val_dataloader(testtime=True)
             if split == "test":
-                dataloader = datamodule.test_dataloader()
+                dataloader = datamodule.test_dataloader(testtime=True)
 
             outputs = self.predict_dataloader(module, dataloader, device)
 
