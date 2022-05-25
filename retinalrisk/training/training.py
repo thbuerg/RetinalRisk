@@ -8,6 +8,10 @@ import torch
 import torchvision as tv
 import torchmetrics
 from omegaconf import DictConfig
+from vit_pytorch.efficient import ViT
+from vit_pytorch import SimpleViT
+from vit_pytorch.cct import CCT
+from nystrom_attention import Nystromformer
 
 from retinalrisk.data.data import WandBBaselineData, get_or_load_wandbdataobj
 from retinalrisk.data.datamodules import RetinaDataModule
@@ -188,28 +192,55 @@ def setup_training(args: DictConfig):
 
 
         elif 'simple_vit' in args.model.encoder:
-            tags.append('simpleViT')
-            encoder = SimpleViT(**FLAGS.experiment.transformer_kwargs,
+            tags.append('simple_ViT')
+            encoder = SimpleViT(
+                            image_size=args.model.encoder.image_size,
+                            patch_size=args.model.encoder.patch_size,
+                            num_classes=args.model.encoder.num_classes,
                             dim=1024,
                             depth=6,
                             heads=16,
                             mlp_dim=2048,
                             )
+            outshape = 1024
+            setattr(encoder.linear_head, '1', torch.nn.Identity())
 
         elif 'efficient_vit' in args.model.encoder:
-            tags.append('efficientViT')
+            tags.append('efficient_ViT')
             efficient_transformer = Nystromformer(dim=512,
                                               depth=12,
                                               heads=8,
                                               num_landmarks=256)
             encoder = ViT(dim=512,
                       transformer=efficient_transformer,
-                      **FLAGS.experiment.transformer_kwargs
+                      image_size=args.model.encoder.image_size,
+                      patch_size=args.model.encoder.patch_size,
+                      num_classes=args.model.encoder.num_classes,
                       )
+            
+            outshape = 512
+            setattr(encoder.mlp_head, '1', torch.nn.Identity())
 
         elif 'cct_vit' in args.model.encoder:
-            tags.append('CCTViT')
-            raise NotImplementedError()
+            tags.append('CCT_ViT')
+            encoder = = CCT(
+                img_size = args.model.encoder.image_size,
+                embedding_dim = 512,
+                n_conv_layers = 2,
+                kernel_size = 7,
+                stride = 2,
+                padding = 3,
+                pooling_kernel_size = 3,
+                pooling_stride = 2,
+                pooling_padding = 1,
+                num_layers = 14,
+                num_heads = 6,
+                mlp_radio = 3.,
+                num_classes = args.model.encoder.num_classes,
+                positional_embedding = 'learnable', # ['sine', 'learnable', 'none']
+            )
+            outshape = encoder.classifier.fc.weight.shape[1]
+            encoder.classifier.fc = torch.nn.Identity()
 
         else:
             raise NotImplementedError()
