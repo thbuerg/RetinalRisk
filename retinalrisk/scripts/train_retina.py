@@ -58,17 +58,6 @@ def main(args: DictConfig):
     if args.training.write_predictions:
         callbacks.append(WritePredictionsDataFrame())
 
-    if args.training.write_embeddings:
-        callbacks.append(WriteRecordNodeEmbeddingsDataFrame())
-
-    if args.training.write_attributions:
-        callbacks.append(
-            WriteFeatureAttributions(
-                batch_size=args.datamodule.batch_size,
-                baseline_mode=args.training.attribution_baseline_mode,
-            )
-        )
-
     trainer = Trainer(
         default_root_dir=output_root,
         logger=wandb_logger,
