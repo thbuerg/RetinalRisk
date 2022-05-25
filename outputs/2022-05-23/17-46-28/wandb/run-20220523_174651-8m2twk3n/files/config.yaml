@@ -1,0 +1,77 @@
+wandb_version: 1
+
+_content:
+  desc: null
+  value:
+    datamodule: '{''covariates'': [''age_at_recruitment_f21022_0_0'', ''sex_f31_0_0''],
+      ''augmentation'': {''train'': [], ''valid'': [], ''test'': []}, ''batch_size'':
+      512, ''partition'': 0, ''num_workers'': 4, ''img_root'': ''/sc-projects/sc-proj-ukb-cvd/data/retina/preprocessed/preprocessed'',
+      ''img_visit'': 0, ''img_size_to_gpu'': 420, ''img_crop_ratio'': [0.6, 0.7, 0.8],
+      ''label_definition'': {''all_cause_death'': True, ''phecodes'': True, ''custom'':
+      ''/sc-projects/sc-proj-ukb-cvd/results/projects/22_medical_records/data/220413/frequent_endpoints.csv''},
+      ''use_top_n_phecodes'': 1000, ''filter_input_origins'': [], ''use_loss_weights'':
+      False, ''task'': ''tte'', ''task_kwargs'': {}}'
+    head: '{''model_type'': ''MLP'', ''dropout'': 0.0, ''kwargs'': {''num_hidden'':
+      256, ''num_layers'': 2, ''detach_clf'': False, ''initial_dropout'': 0.0}}'
+    model: '{''model_type'': ''covariates'', ''restore_from_ckpt'': False}'
+    setup: '{''entity'': ''cardiors'', ''project'': ''retina'', ''group'': None, ''name'':
+      ''agesex_baseline'', ''root'': {''charite-hpc'': ''/sc-projects/sc-proj-ukb-cvd'',
+      ''eils-hpc'': ''/data/analysis/ag-reils/ag-reils-shared/cardioRS''}, ''data_path'':
+      ''data/2_datasets_pre/211110_anewbeginning/artifacts'', ''output_path'': ''results/models'',
+      ''use_data_artifact_if_available'': False, ''data'': None, ''restore_id'': None,
+      ''data_identifier'': ''WandBBaselineData:latest'', ''tags'': [''baseline_data'']}'
+    trainer: '{''gpus'': [0], ''precision'': 16, ''max_epochs'': 10000, ''num_sanity_val_steps'':
+      -1, ''detect_anomaly'': False, ''amp_backend'': ''native'', ''accumulate_grad_batches'':
+      1}'
+    training: '{''exclusions_on_losses'': False, ''exclusions_on_metrics'': True,
+      ''gradient_checkpointing'': False, ''contrastive_loss_factor'': 0, ''endpoint_loss_factor'':
+      1, ''vicreg_loss_factor'': 0, ''node_dropout'': None, ''normalize_node_embeddings'':
+      True, ''binarize_records'': True, ''gradient_checkpoining'': True, ''write_predictions'':
+      True, ''write_embeddings'': False, ''write_attributions'': False, ''warmup_period'':
+      0, ''attribution_baseline_mode'': ''zeros'', ''use_endpoint_embeddings'': False,
+      ''patience'': 30, ''optimizer_kwargs'': {''weight_decay'': 0.05, ''lr'': 0.0001}}'
+_flags_cache:
+  desc: null
+  value:
+    struct: true
+_metadata:
+  desc: null
+  value: 'ContainerMetadata(ref_type=typing.Any, object_type=None, optional=True,
+    key=None, flags={''struct'': True}, flags_root=False, resolver_cache=defaultdict(<class
+    ''dict''>, {''now'': {(''%Y-%m-%d'',): ''2022-05-23'', (''%H-%M-%S'',): ''17-46-28''}}),
+    key_type=typing.Any, element_type=typing.Any)'
+_parent:
+  desc: null
+  value: null
+_wandb:
+  desc: null
+  value:
+    cli_version: 0.12.7
+    framework: lightning
+    is_jupyter_run: false
+    is_kaggle_kernel: false
+    m:
+    - 1: trainer/global_step
+      6:
+      - 3
+    python_version: 3.9.7
+    start_time: 1653320812
+    t:
+      1:
+      - 1
+      - 5
+      - 9
+      2:
+      - 1
+      - 5
+      - 9
+      3:
+      - 1
+      - 7
+      - 13
+      - 15
+      - 16
+      4: 3.9.7
+      5: 0.12.7
+      8:
+      - 5

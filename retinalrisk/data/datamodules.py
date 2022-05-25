@@ -191,8 +191,9 @@ class RetinaDataModule(LightningDataModule):
         if augmentation_pipeline:
             for split, pipeline in augmentation_pipeline.items():
                 self.augmentation_pipeline[split] = []
-                for aug_str, kwargs in pipeline.items():
-                    self.augmentation_pipeline[split].append(transforms.__dict__[aug_str](**kwargs))
+                if len(pipeline) > 0: # empty ListConfig would cause error on .items() call
+                    for aug_str, kwargs in pipeline.items():
+                        self.augmentation_pipeline[split].append(transforms.__dict__[aug_str](**kwargs))
 
     def get_retina_dataset(self, set="train"):
         exclusions = self.data.outcomes[[c for c in self.data.outcomes.columns if c.replace('_prev', '') in self.labels]].loc[self.eids[set]]

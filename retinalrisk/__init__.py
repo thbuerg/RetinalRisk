@@ -3,7 +3,6 @@ __email__ = "benjamin.wild@charite.de"
 __version__ = "0.0.23"
 
 import retinalrisk.data
-import retinalrisk.layers
 import retinalrisk.logging
 import retinalrisk.models
 import retinalrisk.modules

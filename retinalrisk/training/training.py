@@ -186,6 +186,31 @@ def setup_training(args: DictConfig):
                 print(f'No model named `{args.model.encoder}`.')
                 raise KeyError('Please check available torchvision models.')
 
+
+        elif 'simple_vit' in args.model.encoder:
+            tags.append('simpleViT')
+            encoder = SimpleViT(**FLAGS.experiment.transformer_kwargs,
+                            dim=1024,
+                            depth=6,
+                            heads=16,
+                            mlp_dim=2048,
+                            )
+
+        elif 'efficient_vit' in args.model.encoder:
+            tags.append('efficientViT')
+            efficient_transformer = Nystromformer(dim=512,
+                                              depth=12,
+                                              heads=8,
+                                              num_landmarks=256)
+            encoder = ViT(dim=512,
+                      transformer=efficient_transformer,
+                      **FLAGS.experiment.transformer_kwargs
+                      )
+
+        elif 'cct_vit' in args.model.encoder:
+            tags.append('CCTViT')
+            raise NotImplementedError()
+
         else:
             raise NotImplementedError()
 
@@ -206,11 +231,12 @@ def setup_training(args: DictConfig):
         num_head_features = num_covariates
         head = get_head(args.head, num_head_features)
 
-        model = CovariatesOnlyTraining(ncoder=None, head=head, **training_kwargs)
+        model = CovariatesOnlyTraining(encoder=None, head=head, **training_kwargs)
 
     elif args.model.model_type == "transformer":
 
         tags.append("transformer")
+
         raise NotImplementedError()
 
     else:
