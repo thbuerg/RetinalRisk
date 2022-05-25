@@ -115,6 +115,7 @@ class RetinalFundusDataset(torch.utils.data.Dataset):
         return img
 
     def __getitem__(self, idx):
+
         if torch.is_tensor(idx):
             idx = idx.tolist()
 
