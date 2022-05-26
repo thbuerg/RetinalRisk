@@ -63,7 +63,7 @@ class WritePredictionsDataFrame(Callback):
         for split in tqdm(["train", "valid", "test"]):
 
             if split == "train":
-                dataloader = datamodule.train_dataloader(shuffle=False, drop_last=False)
+                dataloader = datamodule.train_dataloader(shuffle=False, drop_last=False, testtime=True)
             if split == "valid":
                 dataloader = datamodule.val_dataloader(testtime=True)
             if split == "test":

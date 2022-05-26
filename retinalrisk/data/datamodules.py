@@ -233,16 +233,25 @@ class RetinaDataModule(LightningDataModule):
         return dataset
 
     # trainer_flag: reload_dataloaders_every_epoch=True
-    def train_dataloader(self, shuffle=True, drop_last=True):
+    def train_dataloader(self, shuffle=True, drop_last=True, testtime=False):
+        sampler = None
+        batch_size = self.batch_size
+
+        if testtime and self.img_n_testtime_views > 1:
+            sampler = RepeatedSampler(n_times=self.img_n_testtime_views,
+                                      data_source=self.train_dataset)
+            batch_size = int((batch_size // self.img_n_testtime_views) * self.img_n_testtime_views)
+
         return DataLoader(
             self.train_dataset,
             num_workers=self.num_workers,
             pin_memory=False,
-            batch_size=self.batch_size,
+            batch_size=batch_size,
             drop_last=drop_last,
             shuffle=shuffle,
             collate_fn=self.collator,
             persistent_workers=self.num_workers > 0,
+            sampler=sampler,
         )
 
     def val_dataloader(self, testtime=False):
