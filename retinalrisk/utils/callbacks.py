@@ -72,7 +72,7 @@ class WritePredictionsDataFrame(Callback):
             outputs = self.predict_dataloader(module, dataloader, device)
 
             index = dataloader.dataset.retina_map['eid'].values
-            if split in ['valid', 'test'] and args.datamodule.img_n_testtime_views > 1:
+            if args.datamodule.img_n_testtime_views > 1:
                 # prepare tta index:
                 index = []
                 for i in dataloader.dataset.retina_map['eid'].values:
@@ -115,9 +115,8 @@ class WritePredictionsDataFrame(Callback):
         predictions_dfs = []
 
         for split in tqdm(["train", "valid", "test"]):
-
             if split == "train":
-                dataloader = trainer.datamodule.train_dataloader(shuffle=False, drop_last=False)
+                dataloader = trainer.datamodule.train_dataloader(shuffle=False, drop_last=False, testtime=True)
             if split == "valid":
                 dataloader = trainer.datamodule.val_dataloader(testtime=True)
             if split == "test":
@@ -126,7 +125,7 @@ class WritePredictionsDataFrame(Callback):
             outputs = self.predict_dataloader(module, dataloader, device)
 
             index = dataloader.dataset.retina_map['eid'].values
-            if split in ['valid', 'test'] and trainer.datamodule.img_n_testtime_views > 1:
+            if trainer.datamodule.img_n_testtime_views > 1:
                 # prepare tta index:
                 index = []
                 for i in dataloader.dataset.retina_map['eid'].values:
