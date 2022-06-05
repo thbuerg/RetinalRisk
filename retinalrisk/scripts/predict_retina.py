@@ -41,7 +41,7 @@ def main(args: DictConfig):
         args.model.restore_from_ckpt = f'{output_root}/retina/{args.setup.restore_id}/checkpoints/last.ckpt'
 
     cb = WritePredictionsDataFrame()
-    cb.manual(args, datamodule, module)
+    cb.manual(args, datamodule, module, crop_ratios=args.img_testtime_crop_ratio)
 
     #TODO: log to wandb
 
