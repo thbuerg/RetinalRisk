@@ -162,7 +162,8 @@ def setup_training(args: DictConfig):
         alpha_scheduler=alpha_scheduler,
         optimizer_kwargs=args.training.optimizer_kwargs,
         binarize_records=args.training.binarize_records,
-        gradient_checkpointing=args.training.gradient_checkpointing
+        gradient_checkpointing=args.training.gradient_checkpointing,
+        #sync_dist=args.training.sync_dist
     )
 
     if args.model.model_type == "image":
@@ -194,9 +195,9 @@ def setup_training(args: DictConfig):
         elif 'simple_vit' in args.model.encoder:
             tags.append('simple_ViT')
             encoder = SimpleViT(
-                            image_size=args.model.encoder.image_size,
-                            patch_size=args.model.encoder.patch_size,
-                            num_classes=args.model.encoder.num_classes,
+                            image_size=args.model.encoder_image_size,
+                            patch_size=args.model.encoder_patch_size,
+                            num_classes=args.model.encoder_num_classes,
                             dim=1024,
                             depth=6,
                             heads=16,
@@ -213,9 +214,9 @@ def setup_training(args: DictConfig):
                                               num_landmarks=256)
             encoder = ViT(dim=512,
                       transformer=efficient_transformer,
-                      image_size=args.model.encoder.image_size,
-                      patch_size=args.model.encoder.patch_size,
-                      num_classes=args.model.encoder.num_classes,
+                      image_size=args.model.encoder_image_size,
+                      patch_size=args.model.encoder_patch_size,
+                      num_classes=args.model.encoder_num_classes,
                       )
             
             outshape = 512
@@ -223,8 +224,8 @@ def setup_training(args: DictConfig):
 
         elif 'cct_vit' in args.model.encoder:
             tags.append('CCT_ViT')
-            encoder = = CCT(
-                img_size = args.model.encoder.image_size,
+            encoder = CCT(
+                img_size = (args.model.encoder_image_size, args.model.encoder_image_size),
                 embedding_dim = 512,
                 n_conv_layers = 2,
                 kernel_size = 7,
@@ -236,13 +237,14 @@ def setup_training(args: DictConfig):
                 num_layers = 14,
                 num_heads = 6,
                 mlp_radio = 3.,
-                num_classes = args.model.encoder.num_classes,
+                num_classes = args.model.encoder_num_classes,
                 positional_embedding = 'learnable', # ['sine', 'learnable', 'none']
             )
             outshape = encoder.classifier.fc.weight.shape[1]
             encoder.classifier.fc = torch.nn.Identity()
 
         else:
+            print('args.model.encoder', args.model.encoder)
             raise NotImplementedError()
 
         if args.model.freeze_encoder:

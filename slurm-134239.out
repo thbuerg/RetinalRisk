@@ -1,0 +1,101 @@
+[I 2022-06-07 11:05:17.703 ServerApp] jupyterlab | extension was successfully linked.
+[I 2022-06-07 11:05:18.752 ServerApp] nbclassic | extension was successfully linked.
+[I 2022-06-07 11:05:18.857 ServerApp] nbclassic | extension was successfully loaded.
+[I 2022-06-07 11:05:18.858 LabApp] JupyterLab extension loaded from /home/loockl/miniconda3/envs/retina_risk/lib/python3.9/site-packages/jupyterlab
+[I 2022-06-07 11:05:18.858 LabApp] JupyterLab application directory is /home/loockl/miniconda3/envs/retina_risk/share/jupyter/lab
+[I 2022-06-07 11:05:18.863 ServerApp] jupyterlab | extension was successfully loaded.
+[I 2022-06-07 11:05:18.863 ServerApp] Serving notebooks from local directory: /home/loockl/RetinalRisk
+[I 2022-06-07 11:05:18.863 ServerApp] Jupyter Server 1.12.1 is running at:
+[I 2022-06-07 11:05:18.863 ServerApp] http://s-sc-node003:7171/lab?token=c026ba9ebbc550d037452e7f43f0ffc515fa9e40d70aef15
+[I 2022-06-07 11:05:18.863 ServerApp]  or http://127.0.0.1:7171/lab?token=c026ba9ebbc550d037452e7f43f0ffc515fa9e40d70aef15
+[I 2022-06-07 11:05:18.863 ServerApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+[C 2022-06-07 11:05:18.877 ServerApp] 
+    
+    To access the server, open this file in a browser:
+        file:///home/loockl/.local/share/jupyter/runtime/jpserver-672719-open.html
+    Or copy and paste one of these URLs:
+        http://s-sc-node003:7171/lab?token=c026ba9ebbc550d037452e7f43f0ffc515fa9e40d70aef15
+     or http://127.0.0.1:7171/lab?token=c026ba9ebbc550d037452e7f43f0ffc515fa9e40d70aef15
+[W 2022-06-07 11:05:30.275 LabApp] Could not determine jupyterlab build status without nodejs
+[I 2022-06-07 11:05:58.314 ServerApp] Creating new notebook in /22_retina_phewas_evaluation
+[I 2022-06-07 11:05:58.992 ServerApp] Kernel started: d0859a6e-87fb-49be-94f9-2e43a2a69c13
+[I 2022-06-07 11:06:01.824 ServerApp] Starting buffering for d0859a6e-87fb-49be-94f9-2e43a2a69c13:443ac65d-47cd-403b-8239-33469dac9c18
+[I 2022-06-07 11:07:59.167 ServerApp] Saving file at /22_retina_phewas_evaluation/Untitled.ipynb
+[I 2022-06-07 11:12:00.613 ServerApp] Saving file at /22_retina_phewas_evaluation/Untitled.ipynb
+[I 2022-06-07 11:14:00.762 ServerApp] Saving file at /22_retina_phewas_evaluation/Untitled.ipynb
+[I 2022-06-07 11:16:00.912 ServerApp] Saving file at /22_retina_phewas_evaluation/Untitled.ipynb
+[I 2022-06-07 11:18:01.152 ServerApp] Saving file at /22_retina_phewas_evaluation/Untitled.ipynb
+[I 2022-06-07 11:24:04.398 ServerApp] Saving file at /22_retina_phewas_evaluation/Untitled.ipynb
+[I 2022-06-07 11:28:06.368 ServerApp] Saving file at /22_retina_phewas_evaluation/Untitled.ipynb
+[I 2022-06-07 11:30:06.523 ServerApp] Saving file at /22_retina_phewas_evaluation/Untitled.ipynb
+[I 2022-06-07 11:32:07.156 ServerApp] Saving file at /22_retina_phewas_evaluation/Untitled.ipynb
+[I 2022-06-07 11:34:07.979 ServerApp] Saving file at /22_retina_phewas_evaluation/Untitled.ipynb
+[I 2022-06-07 11:38:08.429 ServerApp] Saving file at /22_retina_phewas_evaluation/Untitled.ipynb
+[I 2022-06-07 11:40:08.583 ServerApp] Saving file at /22_retina_phewas_evaluation/Untitled.ipynb
+[I 2022-06-07 11:42:09.272 ServerApp] Saving file at /22_retina_phewas_evaluation/Untitled.ipynb
+[I 2022-06-07 11:44:09.432 ServerApp] Saving file at /22_retina_phewas_evaluation/Untitled.ipynb
+[I 2022-06-07 11:46:09.597 ServerApp] Saving file at /22_retina_phewas_evaluation/Untitled.ipynb
+[I 2022-06-07 11:48:09.755 ServerApp] Saving file at /22_retina_phewas_evaluation/Untitled.ipynb
+[I 2022-06-07 11:50:09.911 ServerApp] Saving file at /22_retina_phewas_evaluation/Untitled.ipynb
+[I 2022-06-07 11:52:10.096 ServerApp] Saving file at /22_retina_phewas_evaluation/Untitled.ipynb
+[I 2022-06-07 11:54:10.783 ServerApp] Saving file at /22_retina_phewas_evaluation/Untitled.ipynb
+[I 2022-06-07 11:56:10.953 ServerApp] Saving file at /22_retina_phewas_evaluation/Untitled.ipynb
+[I 2022-06-07 11:58:11.160 ServerApp] Saving file at /22_retina_phewas_evaluation/Untitled.ipynb
+[I 2022-06-07 12:00:11.323 ServerApp] Saving file at /22_retina_phewas_evaluation/Untitled.ipynb
+[I 2022-06-07 12:02:11.483 ServerApp] Saving file at /22_retina_phewas_evaluation/Untitled.ipynb
+[I 2022-06-07 12:04:11.675 ServerApp] Saving file at /22_retina_phewas_evaluation/Untitled.ipynb
+[I 2022-06-07 12:06:11.829 ServerApp] Saving file at /22_retina_phewas_evaluation/Untitled.ipynb
+[I 2022-06-07 12:12:12.162 ServerApp] Saving file at /22_retina_phewas_evaluation/Untitled.ipynb
+[I 2022-06-07 12:16:13.256 ServerApp] Saving file at /22_retina_phewas_evaluation/Untitled.ipynb
+[I 2022-06-07 12:18:13.407 ServerApp] Saving file at /22_retina_phewas_evaluation/Untitled.ipynb
+[I 2022-06-07 12:22:14.506 ServerApp] Saving file at /22_retina_phewas_evaluation/Untitled.ipynb
+[I 2022-06-07 12:24:14.684 ServerApp] Saving file at /22_retina_phewas_evaluation/Untitled.ipynb
+[I 2022-06-07 12:25:28.646 ServerApp] Kernel restarted: d0859a6e-87fb-49be-94f9-2e43a2a69c13
+[I 2022-06-07 12:26:14.858 ServerApp] Saving file at /22_retina_phewas_evaluation/Untitled.ipynb
+[I 2022-06-07 12:32:15.032 ServerApp] Saving file at /22_retina_phewas_evaluation/Untitled.ipynb
+[I 2022-06-07 12:34:15.274 ServerApp] Saving file at /22_retina_phewas_evaluation/Untitled.ipynb
+[I 2022-06-07 12:36:15.436 ServerApp] Saving file at /22_retina_phewas_evaluation/Untitled.ipynb
+[I 2022-06-07 12:38:15.613 ServerApp] Saving file at /22_retina_phewas_evaluation/Untitled.ipynb
+[I 2022-06-07 12:38:48.941 ServerApp] Kernel interrupted: d0859a6e-87fb-49be-94f9-2e43a2a69c13
+[I 2022-06-07 12:38:52.464 ServerApp] Kernel interrupted: d0859a6e-87fb-49be-94f9-2e43a2a69c13
+[I 2022-06-07 12:38:53.197 ServerApp] Kernel interrupted: d0859a6e-87fb-49be-94f9-2e43a2a69c13
+[I 2022-06-07 12:38:53.397 ServerApp] Kernel interrupted: d0859a6e-87fb-49be-94f9-2e43a2a69c13
+[I 2022-06-07 12:38:53.561 ServerApp] Kernel interrupted: d0859a6e-87fb-49be-94f9-2e43a2a69c13
+[I 2022-06-07 12:38:53.763 ServerApp] Kernel interrupted: d0859a6e-87fb-49be-94f9-2e43a2a69c13
+[I 2022-06-07 12:39:10.535 ServerApp] Kernel interrupted: d0859a6e-87fb-49be-94f9-2e43a2a69c13
+[I 2022-06-07 12:39:10.727 ServerApp] Kernel interrupted: d0859a6e-87fb-49be-94f9-2e43a2a69c13
+[I 2022-06-07 12:39:10.891 ServerApp] Kernel interrupted: d0859a6e-87fb-49be-94f9-2e43a2a69c13
+[I 2022-06-07 12:39:11.058 ServerApp] Kernel interrupted: d0859a6e-87fb-49be-94f9-2e43a2a69c13
+[I 2022-06-07 12:39:11.209 ServerApp] Kernel interrupted: d0859a6e-87fb-49be-94f9-2e43a2a69c13
+[I 2022-06-07 12:39:11.377 ServerApp] Kernel interrupted: d0859a6e-87fb-49be-94f9-2e43a2a69c13
+[I 2022-06-07 12:39:11.545 ServerApp] Kernel interrupted: d0859a6e-87fb-49be-94f9-2e43a2a69c13
+[I 2022-06-07 12:39:11.694 ServerApp] Kernel interrupted: d0859a6e-87fb-49be-94f9-2e43a2a69c13
+[I 2022-06-07 12:39:11.860 ServerApp] Kernel interrupted: d0859a6e-87fb-49be-94f9-2e43a2a69c13
+[I 2022-06-07 12:39:12.026 ServerApp] Kernel interrupted: d0859a6e-87fb-49be-94f9-2e43a2a69c13
+[I 2022-06-07 12:39:12.160 ServerApp] Kernel interrupted: d0859a6e-87fb-49be-94f9-2e43a2a69c13
+[I 2022-06-07 12:39:12.327 ServerApp] Kernel interrupted: d0859a6e-87fb-49be-94f9-2e43a2a69c13
+[I 2022-06-07 12:39:12.493 ServerApp] Kernel interrupted: d0859a6e-87fb-49be-94f9-2e43a2a69c13
+[I 2022-06-07 12:39:12.695 ServerApp] Kernel interrupted: d0859a6e-87fb-49be-94f9-2e43a2a69c13
+[I 2022-06-07 12:39:12.976 ServerApp] Kernel interrupted: d0859a6e-87fb-49be-94f9-2e43a2a69c13
+[I 2022-06-07 12:39:13.146 ServerApp] Kernel interrupted: d0859a6e-87fb-49be-94f9-2e43a2a69c13
+[I 2022-06-07 12:39:13.296 ServerApp] Kernel interrupted: d0859a6e-87fb-49be-94f9-2e43a2a69c13
+[I 2022-06-07 12:39:13.428 ServerApp] Kernel interrupted: d0859a6e-87fb-49be-94f9-2e43a2a69c13
+[I 2022-06-07 12:39:13.676 ServerApp] Kernel interrupted: d0859a6e-87fb-49be-94f9-2e43a2a69c13
+[I 2022-06-07 12:39:13.845 ServerApp] Kernel interrupted: d0859a6e-87fb-49be-94f9-2e43a2a69c13
+[I 2022-06-07 12:39:13.976 ServerApp] Kernel interrupted: d0859a6e-87fb-49be-94f9-2e43a2a69c13
+[I 2022-06-07 12:39:14.128 ServerApp] Kernel interrupted: d0859a6e-87fb-49be-94f9-2e43a2a69c13
+[I 2022-06-07 12:39:14.345 ServerApp] Kernel interrupted: d0859a6e-87fb-49be-94f9-2e43a2a69c13
+[I 2022-06-07 12:39:14.611 ServerApp] Kernel interrupted: d0859a6e-87fb-49be-94f9-2e43a2a69c13
+[I 2022-06-07 12:39:14.828 ServerApp] Kernel interrupted: d0859a6e-87fb-49be-94f9-2e43a2a69c13
+[I 2022-06-07 12:39:14.995 ServerApp] Kernel interrupted: d0859a6e-87fb-49be-94f9-2e43a2a69c13
+[I 2022-06-07 12:39:15.161 ServerApp] Kernel interrupted: d0859a6e-87fb-49be-94f9-2e43a2a69c13
+[I 2022-06-07 12:40:15.787 ServerApp] Saving file at /22_retina_phewas_evaluation/Untitled.ipynb
+[I 2022-06-07 12:43:12.508 ServerApp] Kernel shutdown: d0859a6e-87fb-49be-94f9-2e43a2a69c13
+[W 2022-06-07 13:10:23.580 ServerApp] 404 GET /api/contents/riskiano/riskiano/experiments/lukas/phewas?content=1&1654600223480 (10.32.43.20): No such file or directory: riskiano/riskiano/experiments/lukas/phewas
+[W 2022-06-07 13:10:23.581 ServerApp] No such file or directory: riskiano/riskiano/experiments/lukas/phewas
+[W 2022-06-07 13:10:23.581 ServerApp] 404 GET /api/contents/riskiano/riskiano/experiments/lukas/phewas?content=1&1654600223480 (10.32.43.20) 3.09ms referer=http://localhost:7171/lab/tree/riskiano/riskiano/experiments/lukas/phewas/22_retina_phewas_notebooks/1_processing/04_load_predictions.ipynb
+slurmstepd: error: *** JOB 134239 ON s-sc-node003 CANCELLED AT 2022-06-07T14:05:41 DUE TO TIME LIMIT ***
+[C 2022-06-07 14:05:41.161 ServerApp] received signal 15, stopping
+[I 2022-06-07 14:05:41.172 ServerApp] Shutting down 2 extensions
+[I 2022-06-07 14:05:41.172 ServerApp] Shutting down 0 kernels
+[I 2022-06-07 14:05:41.172 ServerApp] Shutting down 0 terminals

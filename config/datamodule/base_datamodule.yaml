@@ -18,7 +18,7 @@ img_n_testtime_views: 10
 label_definition:
   all_cause_death: True
   phecodes: True
-  custom: "/sc-projects/sc-proj-ukb-cvd/results/projects/22_medical_records/data/220413/frequent_endpoints.csv"
+  custom: "/sc-projects/sc-proj-ukb-cvd/results/projects/22_retinal_risk/data/220602/endpoints.csv" #"/sc-projects/sc-proj-ukb-cvd/results/projects/22_medical_records/data/220531/endpoints.csv"
 use_top_n_phecodes: 1000
 filter_input_origins: []
 use_loss_weights: False

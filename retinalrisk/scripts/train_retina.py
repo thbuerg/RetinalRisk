@@ -19,6 +19,13 @@ from retinalrisk.utils.callbacks import (
 
 from retinalrisk.utils.helpers import extract_metadata
 
+import pandas as pd
+import warnings
+warnings.filterwarnings("ignore", category=RuntimeWarning)
+warnings.filterwarnings("ignore", category=UserWarning)
+warnings.filterwarnings("ignore", category=DeprecationWarning)
+warnings.simplefilter(action='ignore', category=pd.errors.PerformanceWarning)
+
 @hydra.main("../../config", config_name="config")
 def main(args: DictConfig):
     seed_everything(0)

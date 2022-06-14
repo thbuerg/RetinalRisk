@@ -60,7 +60,7 @@ def cindex(events, event_times, predictions):
 
 
 class CIndex(torchmetrics.Metric):
-    def __init__(self, dist_sync_on_step=False):
+    def __init__(self, dist_sync_on_step=True):
         super().__init__(dist_sync_on_step=dist_sync_on_step)
 
         self.add_state("logits", default=[], dist_reduce_fx="cat")

@@ -38,7 +38,7 @@ def main(args: DictConfig):
     if 'best_checkpoint' in run.config.keys():
         args.model.restore_from_ckpt = run.config.best_checkpoint
     else:
-        args.model.restore_from_ckpt = f'{output_root}/retina/{args.setup.restore_id}/checkpoints/last.ckpt'
+        args.model.restore_from_ckpt = '/sc-projects/sc-proj-ukb-cvd/results/models/retina/2af9tvdp/checkpoints/epoch=40-step=27962.ckpt'
 
     cb = WritePredictionsDataFrame()
     cb.manual(args, datamodule, module)

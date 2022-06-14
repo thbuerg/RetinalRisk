@@ -1,0 +1,29 @@
+[I 2022-06-08 00:15:49.071 ServerApp] jupyterlab | extension was successfully linked.
+[I 2022-06-08 00:15:50.355 ServerApp] nbclassic | extension was successfully linked.
+[I 2022-06-08 00:15:50.487 ServerApp] nbclassic | extension was successfully loaded.
+[I 2022-06-08 00:15:50.487 LabApp] JupyterLab extension loaded from /home/loockl/miniconda3/envs/retina_risk/lib/python3.9/site-packages/jupyterlab
+[I 2022-06-08 00:15:50.488 LabApp] JupyterLab application directory is /home/loockl/miniconda3/envs/retina_risk/share/jupyter/lab
+[I 2022-06-08 00:15:50.493 ServerApp] jupyterlab | extension was successfully loaded.
+[I 2022-06-08 00:15:50.493 ServerApp] Serving notebooks from local directory: /home/loockl/RetinalRisk
+[I 2022-06-08 00:15:50.493 ServerApp] Jupyter Server 1.12.1 is running at:
+[I 2022-06-08 00:15:50.493 ServerApp] http://s-sc-node002:7171/lab?token=5c0083381bc205de37151b4a82fbb7bf0bdb88c09cfd730c
+[I 2022-06-08 00:15:50.493 ServerApp]  or http://127.0.0.1:7171/lab?token=5c0083381bc205de37151b4a82fbb7bf0bdb88c09cfd730c
+[I 2022-06-08 00:15:50.493 ServerApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+[C 2022-06-08 00:15:50.510 ServerApp] 
+    
+    To access the server, open this file in a browser:
+        file:///home/loockl/.local/share/jupyter/runtime/jpserver-2016916-open.html
+    Or copy and paste one of these URLs:
+        http://s-sc-node002:7171/lab?token=5c0083381bc205de37151b4a82fbb7bf0bdb88c09cfd730c
+     or http://127.0.0.1:7171/lab?token=5c0083381bc205de37151b4a82fbb7bf0bdb88c09cfd730c
+[I 2022-06-08 00:16:09.238 ServerApp] 302 GET / (10.32.43.20) 0.66ms
+[W 2022-06-08 00:16:14.279 LabApp] Could not determine jupyterlab build status without nodejs
+[W 2022-06-08 00:16:51.549 ServerApp] Notebook 22_retina_phewas_evaluation/1_processing/04_verify_loghs.ipynb is not trusted
+[I 2022-06-08 00:16:52.243 ServerApp] Kernel started: 7d795baa-0921-4888-85c0-85e6bffe6b81
+[I 2022-06-08 00:16:55.173 ServerApp] Starting buffering for 7d795baa-0921-4888-85c0-85e6bffe6b81:450da64d-db1f-4315-abea-07c859f556bc
+slurmstepd: error: *** JOB 134675 ON s-sc-node002 CANCELLED AT 2022-06-08T00:17:29 ***
+[C 2022-06-08 00:17:29.912 ServerApp] received signal 15, stopping
+[I 2022-06-08 00:17:29.918 ServerApp] Shutting down 2 extensions
+[I 2022-06-08 00:17:29.918 ServerApp] Shutting down 1 kernel
+[I 2022-06-08 00:17:29.918 ServerApp] Kernel shutdown: 7d795baa-0921-4888-85c0-85e6bffe6b81
+[I 2022-06-08 00:17:30.122 ServerApp] Shutting down 0 terminals
