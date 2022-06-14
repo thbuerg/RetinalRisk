@@ -48,7 +48,7 @@ class WritePredictionsDataFrame(Callback):
     # def on_exception(self, trainer, module):
     #    self.on_fit_end(trainer, module)
 
-    def manual(self, args, datamodule, module, crop_ratios=None):
+    def manual(self, args, datamodule, module, testtime_crop_ratios=None):
         print("Write predictions and patient embeddings")
 
         ckpt = torch.load(args.model.restore_from_ckpt)
@@ -63,16 +63,16 @@ class WritePredictionsDataFrame(Callback):
 
         predictions_dfs = []
 
-        if crop_ratios is None:
-            crop_ratios = [None]
+        if testtime_crop_ratios is None:
+            testtime_crop_ratios = [None]
 
         # add the functionality of running multiple predictions w/ different TTA settings!
-        for crop_ratio in crop_ratios:
+        for crop_ratio in testtime_crop_ratios:
 
             for split in tqdm(["train", "valid", "test"]):
                 # overwrite transforms in  train/test/valid according to the TTA settings!
                 if crop_ratio is not None:
-                    transforms = transforms.Compose([
+                    t = transforms.Compose([
                         AdaptiveRandomCropTransform(crop_ratio=crop_ratio,
                                                     out_size=datamodule.img_size_to_gpu,
                                                     interpolation=PIL.Image.BICUBIC),
@@ -83,16 +83,16 @@ class WritePredictionsDataFrame(Callback):
 
                 if split == "train":
                     if crop_ratio is not None:
-                        datamodule.train_dataset.transforms = transforms
+                        datamodule.train_dataset.transforms = t
                     dataloader = datamodule.train_dataloader(shuffle=False, drop_last=False, testtime=True)
                 if split == "valid":
                     if crop_ratio is not None:
-                        datamodule.val_dataset.transforms = transforms
+                        datamodule.valid_dataset.transforms = t
                     dataloader = datamodule.val_dataloader(testtime=True)
                 if split == "test":
                     datamodule.test_dataset = datamodule.get_retina_dataset(set="test")
                     if crop_ratio is not None:
-                        datamodule.test_dataset.transforms = transforms
+                        datamodule.test_dataset.transforms = t
                     dataloader = datamodule.test_dataloader(testtime=True)
 
                 outputs = self.predict_dataloader(module, dataloader, device)
@@ -121,7 +121,7 @@ class WritePredictionsDataFrame(Callback):
 
             tag = f"_cropratio{str(crop_ratio)}" if crop_ratio is not None else ''
             predictions_dfs_cc.to_feather(os.path.join(outdir, f"predictions{tag}.feather"))
-            print(f"Predictions saved {os.path.join(outdir, 'predictions{tag}.feather')}")
+            print(f"Predictions saved {os.path.join(outdir, f'predictions{tag}.feather')}")
 
             del predictions_df
             del dataloader
