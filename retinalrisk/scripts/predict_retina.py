@@ -41,7 +41,7 @@ def main(args: DictConfig):
         args.model.restore_from_ckpt = '/sc-projects/sc-proj-ukb-cvd/results/models/retina/2af9tvdp/checkpoints/epoch=40-step=27962.ckpt'
 
     cb = WritePredictionsDataFrame()
-    cb.manual(args, datamodule, module)
+    cb.manual(args, datamodule, module, testtime_crop_ratios=args.datamodule.img_testtime_crop_ratio)
 
     #TODO: log to wandb
 
