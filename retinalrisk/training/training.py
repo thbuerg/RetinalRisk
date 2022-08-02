@@ -181,6 +181,15 @@ def setup_training(args: DictConfig):
                 print(f'No model named `{args.model.encoder}`.')
                 raise KeyError('Please check available torchvision models.')
 
+        elif 'efficientnet' in args.model.encoder:
+            #encoder = tv.models.__dict__[args.model.encoder](pretrained=args.model.pretrained) # weights='DEFAULT'
+            encoder = tv.models.__dict__[args.model.encoder](weights='DEFAULT') 
+            
+            # encoder.classifier = torch.nn.Identity()
+            encoder.classifier = torch.nn.Linear(1280,512)
+
+            outshape = encoder.classifier[1].weight.shape[1]
+
 
         elif 'resnet' in args.model.encoder:
             try:
@@ -253,8 +262,13 @@ def setup_training(args: DictConfig):
             for name, param in encoder.named_parameters():
                 if param.requires_grad:
                     param.requires_grad = False
-
-        head = get_head(args.head, outshape+len(args.datamodule.covariates))
+        
+        # todo: make this more pretty
+        if args.datamodule.covariates == ['age_at_recruitment_f21022_0_0', 'sex_f31_0_0']:
+            head_outdim = outshape+len(args.datamodule.covariates)+1
+        else:
+            head_outdim = outshape+len(args.datamodule.covariates)
+        head = get_head(args.head, head_outdim)
 
         model = ImageTraining(encoder=encoder, head=head, **training_kwargs)
 

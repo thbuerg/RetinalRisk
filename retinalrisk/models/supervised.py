@@ -259,10 +259,17 @@ class ImageEncoderMixin:
     def get_data_embeddings(self, batch: Batch):
 
         if self.gradient_checkpointing:
-            # THIS ONLY WORKS FOR CONVNEXT!!
-            x = torch.utils.checkpoint.checkpoint_sequential(self.encoder.features, 5, batch.data)
-            x = self.encoder.avgpool(x)
-            embeddings = self.encoder.classifier(x)
+            if self.encoder.__class__.__name__ in ['ConvNeXt'] :
+                # THIS ONLY WORKS FOR CONVNEXT!!
+                x = torch.utils.checkpoint.checkpoint_sequential(self.encoder.features, 5, batch.data)
+                x = self.encoder.avgpool(x)
+                embeddings = self.encoder.classifier(x)
+            elif self.encoder.__class__.__name__ in ['EfficientNet'] :
+                # EFFICIENTNET ADDS TWO DIMENSIONS TO OUTPUT!
+                #    e.g.: expected 128,1280 -> observed 128,1280,1,1
+                x = torch.utils.checkpoint.checkpoint_sequential(self.encoder.features, 9, batch.data)
+                x = self.encoder.avgpool(x)
+                embeddings = self.encoder.classifier(x).squeeze()
         else:
             embeddings = self.encoder(batch.data)
 
