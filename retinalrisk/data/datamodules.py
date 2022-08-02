@@ -209,8 +209,8 @@ class RetinaDataModule(LightningDataModule):
         labels_times = self.data.outcomes[[c for c in self.data.outcomes.columns if 'time' in c]].loc[self.eids[set]]
 
         # select correct labels:
-        labels_events = labels_events[[c for c in labels_events.columns if c.replace('_event', '') in self.labels]]
-        labels_times = labels_times[[c for c in labels_times.columns if c.replace('_time', '') in self.labels]]
+        labels_events = labels_events[[f"{c}_event" for c in self.labels]]
+        labels_times = labels_times[[f"{c}_time" for c in self.labels]]
 
         labels_times = labels_times.where(labels_events.values != 0, 0)
 
