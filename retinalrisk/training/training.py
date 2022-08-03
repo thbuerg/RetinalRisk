@@ -185,10 +185,8 @@ def setup_training(args: DictConfig):
             #encoder = tv.models.__dict__[args.model.encoder](pretrained=args.model.pretrained) # weights='DEFAULT'
             encoder = tv.models.__dict__[args.model.encoder](weights='DEFAULT') 
             
-            # encoder.classifier = torch.nn.Identity()
-            encoder.classifier = torch.nn.Linear(1280,512)
-
             outshape = encoder.classifier[1].weight.shape[1]
+            encoder.classifier = torch.nn.Identity()
 
 
         elif 'resnet' in args.model.encoder:
