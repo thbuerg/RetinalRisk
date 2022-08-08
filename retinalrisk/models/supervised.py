@@ -275,10 +275,20 @@ class ImageEncoderMixin:
 
         return embeddings
 
+class ImagePerceiverMixin:
+    def get_data_embeddings(self, batch: Batch):
+        permuted_data = torch.permute(batch.data, (0, 2, 3, 1)) # (B, C, W, H) -> (B, W, H, C)
+
+        embeddings = self.encoder(permuted_data)
+
+        return embeddings
+
 
 class ImageTraining(ImageEncoderMixin, SupervisedTraining):
     pass
 
+class ImagePerceiverTraining(ImagePerceiverMixin, SupervisedTraining):
+    pass
 
 class CovariatesOnlyMixin:
     def get_data_embeddings(self, batch: Batch):

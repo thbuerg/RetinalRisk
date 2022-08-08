@@ -11,6 +11,7 @@ from omegaconf import DictConfig
 from vit_pytorch.efficient import ViT
 from vit_pytorch import SimpleViT
 from vit_pytorch.cct import CCT
+from perceiver_pytorch import Perceiver
 from nystrom_attention import Nystromformer
 
 from retinalrisk.data.data import WandBBaselineData, get_or_load_wandbdataobj
@@ -23,9 +24,10 @@ from retinalrisk.models.loss_wrapper import (
 )
 from retinalrisk.models.supervised import (
     CovariatesOnlyTraining,
-    ImageTraining
+    ImageTraining,
+    ImagePerceiverTraining
 )
-from retinalrisk.modules.head import AlphaHead, IndependentMLPHeads, LinearHead, MLPHead, ResMLPHead
+from retinalrisk.modules.head import AlphaHead, IndependentMLPHeads, LinearHead, MLPHead, ResMLPHead, IdentityHead
 
 
 def setup_training(args: DictConfig):
@@ -76,6 +78,8 @@ def setup_training(args: DictConfig):
             head1 = get_head(head_config.head1, num_head_features)
             head2 = get_head(head_config.head2, num_head_features)
             return AlphaHead(head1, head2, alpha=head_config.alpha)
+        elif head_config.model_type == "Identity":
+            return IdentityHead()
         else:
             assert False
 
@@ -198,6 +202,14 @@ def setup_training(args: DictConfig):
                 print(f'No model named `{args.model.encoder}`.')
                 raise KeyError('Please check available torchvision models.')
 
+        elif 'perceiver' in args.model.encoder:
+            print('using perceiver with following kwargs:\n', args.model.perceiver)
+            encoder = Perceiver(
+                num_classes = len(datamodule.labels),
+                **args.model.perceiver
+            )
+            outshape = len(datamodule.labels)
+
 
         elif 'simple_vit' in args.model.encoder:
             tags.append('simple_ViT')
@@ -268,7 +280,11 @@ def setup_training(args: DictConfig):
             head_outdim = outshape+len(args.datamodule.covariates)
         head = get_head(args.head, head_outdim)
 
-        model = ImageTraining(encoder=encoder, head=head, **training_kwargs)
+        if 'perceiver' in args.model.encoder:
+            tags.append('perceiver')
+            model = ImagePerceiverTraining(encoder=encoder, head=head, **training_kwargs)
+        else:
+            model = ImageTraining(encoder=encoder, head=head, **training_kwargs)
 
     elif args.model.model_type == "covariates":
         tags.append("covariates_baseline")

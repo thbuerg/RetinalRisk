@@ -3,6 +3,16 @@ import torch
 
 GEGLU = None # recover activations should this be needed!
 
+class IdentityHead(torch.nn.Module):
+    def __init__(self):
+        super().__init__()
+
+        self.identity = torch.nn.Identity()
+
+    def forward(self, x):
+        x = self.identity(x)
+
+        return dict(pre_logits=None, logits=x)
 
 class LinearHead(torch.nn.Module):
     def __init__(
