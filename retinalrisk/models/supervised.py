@@ -265,11 +265,11 @@ class ImageEncoderMixin:
                 x = self.encoder.avgpool(x)
                 embeddings = self.encoder.classifier(x)
             elif self.encoder.__class__.__name__ in ['EfficientNet'] :
-                # EFFICIENTNET ADDS TWO DIMENSIONS TO OUTPUT!
-                #    e.g.: expected 128,1280 -> observed 128,1280,1,1
+                # EFFICIENTNET has flatten operation between avgpool and classifier
                 x = torch.utils.checkpoint.checkpoint_sequential(self.encoder.features, 9, batch.data)
                 x = self.encoder.avgpool(x)
-                embeddings = self.encoder.classifier(x).squeeze()
+                x = torch.flatten(x, 1)
+                embeddings = self.encoder.classifier(x)
         else:
             embeddings = self.encoder(batch.data)
 
