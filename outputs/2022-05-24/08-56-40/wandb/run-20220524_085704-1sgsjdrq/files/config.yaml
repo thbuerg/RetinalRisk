@@ -250,6 +250,2043 @@ _wandb:
       5: 1
       6:
       - 1
+    - 1: valid/CoxPH
+      5: 1
+      6:
+      - 1
+    - 1: valid/CoxPH_scaled
+      5: 1
+      6:
+      - 1
+    - 1: valid/loss
+      5: 1
+      6:
+      - 1
+    - 1: valid/OMOP_4306655_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_052 - Herpesvirus_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_052-1 - Herpes simplex_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_052-3 - Varicella zoster virus_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_052-32 - Herpes zoster_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_056 - Human papillomavirus_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_056-1 - Plantar wart_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_070 - Candidiasis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_089 - Infections_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_089-1 - Bacterial infections_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_089-2 - Viral infections_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_089-3 - Fungal infections_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_099 - Lab findings related to infections_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_101 - Malignant neoplasm of the digestive organs_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_101-4 - Malignant neoplasm of the colon and rectum_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_103 - Malignant neoplasm of the skin_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_103-2 - Keratinocyte carcinoma_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_103-21 - Basal cell carcinoma_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_105 - Malignant neoplasm of the breast_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_105-1 - Malignant neoplasm of the breast, female_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_106 - Gynecological malignant neoplasms_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_107 - Malignant neoplasm of male genitalia_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_107-2 - Malignant neoplasm of the prostate_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_112 - Malignant neoplasm of other and ill-defined sites_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_130 - Cancer (solid tumor, excluding BCC)_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_136 - Benign neoplasm of the digestive organs_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_136-4 - Benign neoplasm of colon, rectum, anus and anal canal_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_136-41 - Benign neoplasm of the colon_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_136-42 - Benign neoplasm of rectum and anus_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_138 - Benign neoplasm of the skin_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_138-2 - Melanocytic nevi*_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_139 - Benign sarcoma-related cancers_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_139-5 - Lipoma_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_142 - Lump or mass in breast or nonspecific abnormal breast
+        exam_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_142-1 - Lump or mass in breast_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_144 - Gynecological benign neoplasms_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_144-2 - Benign neoplasms of the uterus_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_144-21 - Leiomyoma of uterus_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_146 - Benign neoplasm of the genitourinary system_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_146-2 - Benign neoplasm of the prostate_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_160 - Nutritional anemias_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_160-1 - Iron deficiency anemia_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_164 - Anemia_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_164-1 - Microcytic anemia_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_168 - Coagulation defects, purpura and other hemorrhagic conditions_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_170 - Decreased white blood cell count_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_170-1 - Neutropenia_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_177 - Abnormality of the lymph nodes_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_177-2 - Enlargement of lymph nodes [Lymphadenopathy]_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_181 - Autoimmune disease_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_200 - Disorders of thyroid gland_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_200-1 - Hypothyroidism_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_200-14 - Hypothyroidism, not specified as secondary_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_202 - Diabetes mellitus_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_202-2 - Type 2 diabetes_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_202-4 - Other specified diabetes*_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_204 - Elevated blood glucose level_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_204-1 - Impaired fasting glucose_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_204-2 - Impaired glucose tolerance (oral)_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_230 - Malnutrition and underweight_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_230-2 - Abnormal loss of weight and underweight_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_230-21 - Abnormal weight loss_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_232 - Vitamin deficiencies_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_232-2 - Vitamin B group deficiency_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_232-4 - Vitamin D deficiency_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_236 - Overweight and obesity_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_236-1 - Obesity_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_239 - Hyperlipidemia_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_239-1 - Hypercholesterolemia_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_239-11 - Pure hypercholesterolemia_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_247 - Disorders of mineral metabolism and mineral deficiencies_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_247-7 - Disorders of iron metabolism_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_247-72 - Iron deficiency_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_256 - Disorders of fluid, electrolyte and acid-base balance_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_256-2 - Hyposmolality and-or hyponatremia_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_256-7 - Volume depletion_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_280 - Substance related disorders_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_280-1 - Alcohol use disorders_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_280-11 - Alcohol abuse_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_281 - Substance abuse, dependence, and withdrawl_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_281-1 - Substance abuse_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_281-2 - Substance dependence_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_282-1 - Current tobacco use and nicotine dependence_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_283 - Other behavioral problems_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_283-4 - Patient's noncompliance with medical treatment and
+        regimen_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_283-8 - Other problems related to lifestyle_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_286 - Mood [affective] disorders_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_286-2 - Major depressive disorder_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_288 - Anxiety disorders_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_288-3 - Generalized anxiety disorder_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_290 - Reaction to severe stress, and adjustment disorders_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_294 - Sexual dysfunction and disorders_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_308 - Signs and symptoms involving emotional state_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_324 - Extrapyramidal and movement disorders_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_324-3 - Dystonia_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_324-4 - Tremor_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_325 - Symptoms and signs related to movement disorders_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_325-2 - Abnormality of gait and mobility_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_328 - Dementias and cerebral degeneration_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_328-9 - Dementia NOS_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_329 - Symptoms and signs involving cognitive functions and
+        awareness_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_329-1 - Memory loss_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_331 - Headache_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_331-1 - Tension headache_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_331-6 - Migraine_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_331-8 - Headache NOS_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_333 - Sleep disorders_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_333-1 - Sleep apnea_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_333-11 - Obstructive sleep apnea_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_333-2 - Insomnia_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_334 - Disorders of other cranial nerves_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_336 - Mononeuropathies_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_336-1 - Carpal tunnel syndrome_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_336-5 - Mononeuritis of lower limb_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_337 - Polyneuropathies_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_350 - Other symptoms involving nervous system_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_350-5 - Repeated falls*_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_351 - Disturbances of skin sensation_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_351-1 - Anesthesia of skin*_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_351-3 - Paresthesia of skin*_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_353 - Symptoms and signs involving general sensations and perceptions_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_354 - Dizziness and giddiness_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_360 - Inflammation of eyelids_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_360-1 - Hordeolum_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_360-11 - Hordeolum externum_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_360-2 - Chalazion_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_360-4 - Blepharitis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_362 - Other disorders of the eyelids_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_363 - Disorders of lacrimal system_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_363-2 - Dry eye syndrome [Tear film insufficiency]_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_367 - Inflammation of the eye_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_367-1 - Conjunctivitis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_371 - Cataract_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_374 - Disorders of the retina_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_374-3 - Retinal vascular changes and occlusions_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_374-4 - Retinal disorders in diseases classified elsewhere_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_374-42 - Diabetic retinopathy_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_374-5 - Macular degeneration_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_374-51 - Age-related macular degeneration_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_375 - Abnormal intraocular pressure_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_375-1 - Glaucoma_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_375-6 - Ocular hypertension_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_376 - Disorders of vitreous body_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_376-1 - Vitreous degeneration_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_376-2 - Vitreous opacities_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_376-21 - Crystalline deposits in vitreous body_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_377 - Hemorrhage of the eye_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_377-2 - Conjunctival hemorrhage_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_386 - Visual disturbances_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_389 - Other disorders of eye_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_390 - Disorders of external ear_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_390-1 - Otitis externa_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_390-4 - Impacted cerumen_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_391 - Disorders of the middle ear_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_391-1 - Otitis media_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_391-2 - Eustachian tube disorders_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_392 - Otalgia and effusion of ear_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_394 - Disorders of vestibular function_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_394-2 - Vertigo_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_394-21 - Paroxysmal vertigo_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_395 - Other diseases of inner ear_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_395-1 - Labyrinthitis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_396 - Hearing impairment_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_396-2 - Sensorineural hearing loss_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_397 - Other hearing abnormality_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_397-1 - Tinnitus_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_398 - Other disorders of ear_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_401 - Hypertension_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_401-1 - Essential hypertension_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_402 - Elevated blood pressure reading without diagnosis of
+        hypertension_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_403 - Angina pectoris_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_404 - Ischemic heart disease_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_404-1 - Myocardial infarction [Heart attack]_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_404-11 - Acute myocardial infarction_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_404-2 - Coronary atherosclerosis [Atherosclerotic heart disease]_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_413 - Heart valve disorders_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_413-1 - Mitral valve disorders_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_413-2 - Aortic valve disorders_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_416 - Cardiac arrhythmia and conduction disorders_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_416-2 - Atrial fibrillation and flutter_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_416-21 - Atrial fibrillation_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_416-211 - Paroxysmal atrial fibrillation*_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_416-4 - Heart block_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_416-5 - Premature depolarization [Premature beats]_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_417 - Abnormalities of heart beat_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_417-1 - Palpitations_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_417-3 - Bradycardia*_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_418 - Abnormal results of cardiovascular function studies_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_418-1 - Abnormal electrocardiogram [ECG] [EKG]_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_424 - Heart failure_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_431 - Stroke and transient cerebral ischemic attacks_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_431-1 - Stroke_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_431-11 - Cerebral infarction [Ischemic stroke]_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_431-2 - Transient cerebral ischemic attacks_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_436 - Atherosclerosis [ASCVD]_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_439 - Hemorrhoids_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_440 - Embolism and thrombosis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_440-1 - Venous thromboembolism_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_440-11 - Deep vein thrombosis [DVT]_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_440-13 - Phlebitis and thrombophlebitis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_440-3 - Pulmonary embolism_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_443 - Other specified disorders of arteries and arterioles_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_444 - Venous insufficiency_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_444-1 - Varicose veins_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_444-11 - Varicose veins of lower extremities_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_444-5 - Venous insufficiency (chronic) (peripheral)_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_446 - Hypotension_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_446-2 - Orthostatic hypotension_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_448 - Peripheral vascular disease_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_460 - Acute respiratory infection_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_460-1 - Acute upper respiratory infection_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_460-2 - Acute lower respiratory infection_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_462 - Sinusitis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_462-1 - Acute sinusitis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_462-2 - Chronic sinusitis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_463 - Rhinitis and nasal congestion_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_463-1 - Chronic rhinitis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_463-2 - Allergic rhinitis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_463-21 - Seasonal allergic rhinitis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_463-4 - Nasal congestion*_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_463-5 - Postnasal drip_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_464 - Nasopharyngitis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_464-1 - Acute nasopharyngitis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_465 - Pharyngitis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_465-1 - Acute Pharyngitis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_465-2 - Chronic Pharyngitis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_466 - Tonsillitis and adenoiditis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_466-1 - Acute tonsillitis and adenoiditis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_467 - Laryngitis and tracheitis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_467-1 - Acute laryngitis and tracheitis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_468 - Pneumonia_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_469 - Bronchitis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_471 - Other disorders of nose and nasal sinuses_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_473 - Other diseases of upper respiratory tract_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_474 - Chronic obstructive pulmonary disease [COPD]_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_475 - Asthma_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_476 - Bronchiectasis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_483 - Pleural effusion_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_486 - Other respiratory disorders_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_486-5 - Abnormal sputum_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_487 - Hemorrhage from respiratory passages_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_487-1 - Epistaxis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_488 - Abnormalities of breathing_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_488-1 - Dyspnea [Shortness of breath]_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_488-6 - Wheezing_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_488-8 - Mouth breathing*_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_494 - Voice disturbance_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_495 - Abnormal findings on diagnostic imaging of lung_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_496 - Abnormal results of pulmonary function studies_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_502 - Other diseases of teeth and supporting structures_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_503 - Diseases of pulp and periapical tissues_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_503-5 - Periapical abscess_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_506 - Diseases of salivary glands_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_507 - Lesions of mouth_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_507-1 - Stomatitis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_509 - Diseases of tongue_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_510 - Diseases of esophagus_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_510-2 - Esophagitis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_511 - Gastro-esophageal reflux disease_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_512 - Dysphagia_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_515 - Heartburn and epigastric pain_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_520 - Hernia_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_520-1 - Hernia of the abdominal wall_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_520-11 - Inguinal hernia_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_520-2 - Diaphragmatic hernia [Hiatal hernia]_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_522 - Gastrointestinal inflammation_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_522-9 - Gastritis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_523 - Diverticular disease [Bowel diverticulosis]_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_523-4 - Diverticulitis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_526 - Intestinal infection_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_526-1 - Bacterial enteritis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_527 - Abdominal pain_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_528 - Nausea and vomiting_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_528-1 - Nausea_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_528-2 - Vomiting_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_529 - Symptoms involving digestive system_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_529-1 - Diarrhea_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_529-2 - Abdominal distension and flatulence_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_529-3 - Fecal incontinence_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_529-5 - Constipation_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_530 - Disease of anus and rectum_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_530-1 - Anal fissure_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_542 - Chronic liver disease and sequelae_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_542-2 - Fatty liver disease (FLD)_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_545 - Nonspecific abnormal results of function study of liver_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_550 - Disorders of the gallbladder_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_550-1 - Gallstones [Cholelithiasis]_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_556 - Other symptoms involving the digestive system and abdomen_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_556-3 - Abdominal or pelvic swelling, mass, or lump_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_556-8 - Nonspecific abnormal findings in stool contents_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_557 - Gastrointestinal hemorrhage_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_557-8 - Hemorrhage of rectum and anus_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_558 - Abnormal findings on diagnostic imaging of the digestive
+        tract_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_581 - Renal tubulo-interstitial diseases_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_583 - Chronic kidney disease_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_585 - Kidney stone disease_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_586 - Other disorders of the kidney and ureters_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_591 - Urinary tract infection_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_592 - Cystitis and urethritis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_592-1 - Cystitis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_593 - Hematuria_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_593-2 - Microscopic hematuria_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_594 - Abnormality of urination_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_594-1 - Retention of urine_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_594-2 - Dysuria_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_594-3 - Urinary incontinence_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_594-31 - Urge incontinence_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_594-32 - Stress incontinence_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_594-4 - Frequency of urination and polyuria_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_594-41 - Nocturia_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_594-6 - Urinary urgency_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_596 - Other disorders of bladder_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_596-2 - Overactive bladder_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_599 - Other symptoms-disorders or the urinary system_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_600 - Benign prostatic hyperplasia_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_601 - Inflammatory diseases of prostate_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_601-1 - Prostatitis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_602 - Other disorders of prostate_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_602-4 - Elevated prostate specific antigen [PSA]_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_603 - Disorders and symptoms of testis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_603-2 - Spermatocele_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_603-5 - Orchitis and epididymitis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_604 - Disorders of penis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_604-5 - Balanoposthitis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_605 - Male sexual dysfuction_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_605-1 - Male erectile dysfunction_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_608 - Other disorders of male genital organs_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_608-1 - Abnormal findings in semen_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_610 - Benign mammary dysplasias_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_613 - Other nonmalignant breast conditions_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_613-5 - Mastodynia_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_613-7 - Other signs and symptoms in breast_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_614 - Inflammatory diseases of female pelvic organs_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_614-5 - Inflammatory disease of cervix, vagina, and vulva_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_614-52 - Vaginitis and vulvovaginitis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_614-55 - Candidiasis of vulva and vagina_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_618 - Genital prolapse_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_618-1 - Prolapse of vaginal walls_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_618-11 - Cystocele_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_618-12 - Rectocele_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_618-2 - Uterine-Uterovaginal prolapse_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_619 - Noninflammatory female genital disorders_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_619-4 - Noninflammatory disorders of vagina_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_619-5 - Noninflammatory disorders of vulva and perineum_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_623 - Hypertrophy of female genital organs_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_625 - Pain and other symptoms associated with female genital
+        organs_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_625-1 - Dyspareunia_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_626 - Disorders of menstruation and other abnormal bleeding
+        from female genital tract_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_626-1 - Irregular menstrual cycle-bleeding_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_626-13 - Irregular menstrual cycle_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_627 - Menopausal and postmenopausal disorders_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_627-1 - Postmenopausal bleeding_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_627-2 - Symptomatic menopause_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_627-3 - Postmenopausal atrophic vaginitis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_627-4 - Menorrhagia-Excessive and frequent menstruation_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_628 - Ovarian cyst_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_628-2 - Corpus luteum cyst or hematoma_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_660 - Infection of the skin_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_660-1 - Fungal infection of the skin_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_660-12 - Dermatophytosis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_660-4 - Carbuncle and furuncle_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_660-6 - Cellulitis and abscess_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_662 - Rosacea_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_664 - Papulosquamous disorders_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_665 - Psoriasis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_666 - Urticaria_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_668 - Dermatitis [eczema]_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_668-1 - Atopic dermatitis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_668-2 - Seborrheic dermatitis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_668-3 - Contact dermatitis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_670 - Seborrheic keratosis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_673 - Skin changes due to chronic exposure to nonionizing radiation_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_673-1 - Actinic keratosis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_674 - Disorders of pigmentation_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_675 - Atrophic conditions of skin_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_675-1 - Circumscribed scleroderma_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_676 - Hypertrophic conditions of skin_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_678 - Other skin and connective tissue disorders_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_679 - Skin symptoms_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_679-1 - Rash and other nonspecific skin eruption_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_679-3 - Changes in skin texture_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_679-4 - Pruritus_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_680 - Epidermal thickening_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_680-1 - Corns and callosities_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_680-3 - Xerosis cutis*_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_681 - Localized swelling, mass and lump of skin and subcutaneous
+        tissue_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_682 - Other follicular disorders_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_682-1 - Cutaneous cyst_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_682-11 - Sebaceous cyst [Epidermal cyst]_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_682-12 - Pilar and trichodermal cyst_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_683 - Nail disorders_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_683-1 - Ingrowing nail_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_684 - Diseases of hair and hair follicles_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_684-1 - Alopecia_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_685 - Disorders of sweat glands_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_685-8 - Hyperhidrosis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_685-82 - Generalized hyperhidrosis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_686 - Chronic ulcer of skin_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_686-2 - Non-pressure chronic ulcer_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_703 - Chrystal arthropathies_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_703-1 - Hyperuricemia_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_703-11 - Gout_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_705 - Rheumatoid arthritis and other inflammatory polyarthropathies_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_705-3 - Polymyalgia rheumatica_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_707 - Other arthropathies_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_708 - Osteoarthritis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_708-1 - Primary osteoarthritis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_708-13 - Primary osteoarthritis of the hand_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_708-16 - Primary osteoarthritis ankle and foot_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_708-7 - Generalized osteoarthritis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_709 - Acquired deformities of fingers and toes_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_709-2 - Acquired deformities of toe_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_709-21 - Hallux valgus (Bunion)_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_710 - Acquired deformities of limbs_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_713 - Symptoms related to joints_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_713-2 - Effusion of joint_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_713-3 - Pain in joint_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_715 - Non-inflammatory spondylopathy_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_715-1 - Spondylosis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_715-4 - Spinal stenosis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_716 - Intervertebral disc disorder_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_716-3 - Spinal disc displacement (herniation)_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_717 - Other and unspecified dorsopathies_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_718 - Back pain_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_718-1 - Radiculopathy_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_718-2 - Cervicalgia_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_718-3 - Mid back pain_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_718-4 - Low back pain_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_718-5 - Sciatica_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_719 - Disorders of muscle_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_719-1 - Cramp and spasm_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_721 - Synoviopathy and bursopathy_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_721-1 - Synovitis and tenosynovitis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_721-11 - Trigger finger_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_721-2 - Ganglion cyst_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_721-5 - Bursitis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_721-6 - Baker's cyst [popliteal cyst]_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_722 - Fasciopathy_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_722-1 - Plantar fascial fibromatosis [Plantar fasciitis]_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_722-4 - Palmar fascial fibromatosis [Dupuytren]_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_723 - Enthesopathy-Enthesitis-Tendinopathy_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_723-1 - Adhesive capsulitis of shoulder_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_723-2 - Rotator cuff tear or rupture_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_723-3 - Medial epicondylitis (Golfer's elbow)_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_723-4 - Lateral epicondylitis (Tennis elbow)_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_723-5 - Tendinitis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_723-51 - Achilles tendinitis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_723-6 - Impingement syndrome of shoulder*_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_724 - Other symptoms and disorders of the soft tissue_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_724-1 - Myalgia_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_726 - Osteoporosis and low bone density_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_726-1 - Osteoporosis_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_727 - Other disorders of bone_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_728 - Chondropathies_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_728-3 - Costochondritis (Tietze's disease)_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_731 - Symptoms involving musculoskeletal systems_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_732 - Nonspecific abnormal findings on radiological and other
+        examination of musculoskeletal system_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_733 - Dentofacial anomalies, including malocclusion_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_733-6 - Temporomandibular joint disorders_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_800 - Chest pain_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_800-1 - Chest pain on breathing_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_800-11 - Pleurodynia*_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_801 - Cough_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_802 - Throat pain_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_804 - Other symptoms and signs involving the circulatory and
+        respiratory system_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_805 - Fever of unknown origin_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_807 - Malaise and fatigue_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_807-1 - Chronic fatigue syndrome_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_808 - Syncope and collapse_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_809 - Pain_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_809-3 - Pain in limb_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_812 - Edema_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_819 - General symptoms and other findings_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_823 - Abnormal serum enzyme levels_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_823-2 - Abnormal levels of other serum enzymes_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_829 - Nonspecific findings on examination of blood_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_829-2 - Abnormal level of blood mineral*_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_830 - Proteinuria_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_831 - Glycosuria_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_832 - Other abnormal findings in urine_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_832-5 - Acetonuria_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_832-6 - Pyuria*_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_835 - Cytology and pathology findings_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_840 - Allergy_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_840-2 - Allergy to insects_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_840-8 - Allergies related to other diseases-symptoms_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_841 - Drug and medical agent allergy_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_841-1 - Allergy to other anti-infective agents_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_848 - Nonspecific abnormal findings of other body structures_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_848-2 - Nonspecific abnormal findings on radiological and other
+        examination of other intrathoracic organs (echo)_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_969 - Adverse effects of agents primarily affecting gastrointestinal
+        system_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_977 - Long term (current) drug therapy_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_977-4 - Long term (current) use of steroids_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_977-41 - Long term (current) use of inhaled steroids*_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_977-5 - Long term (current) use of agents affecting hormones_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_977-52 - Hormone replacement therapy (postmenopausal)_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_977-7 - Long term (current) use of insulin or oral hypoglycemic
+        drugs_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/phecode_977-72 - Long term (current) use of oral hypoglycemic drugs_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/mean_CIndex
+      5: 1
+      6:
+      - 1
+    - 1: valid/mean_CIndex_max
+      5: 1
+      6:
+      - 1
+    - 1: valid/mean_>1:100
+      5: 1
+      6:
+      - 1
+    - 1: valid/mean_>1:10
+      5: 1
+      6:
+      - 1
+    - 1: valid/mean_>1:1000
+      5: 1
+      6:
+      - 1
     python_version: 3.9.7
     start_time: 1653375424
     t:
@@ -257,7 +2294,13 @@ _wandb:
       - 1
       - 5
       - 9
+      2:
+      - 1
+      - 5
+      - 9
       3:
+      - 1
+      - 7
       - 13
       - 15
       - 16

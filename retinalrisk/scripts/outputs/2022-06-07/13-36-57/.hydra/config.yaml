@@ -1,0 +1,93 @@
+setup:
+  entity: cardiors
+  project: retina
+  group: null
+  name: null
+  root:
+    charite-hpc: /sc-projects/sc-proj-ukb-cvd
+    eils-hpc: /data/analysis/ag-reils/ag-reils-shared/cardioRS
+  data_path: data/2_datasets_pre/211110_anewbeginning/artifacts
+  output_path: results/models
+  use_data_artifact_if_available: false
+  data: null
+  restore_id: 2af9tvdp
+  data_identifier: WandBBaselineData:latest
+  tags:
+  - baseline_data
+head:
+  model_type: MLP
+  dropout: 0.5
+  kwargs:
+    num_hidden: 1024
+    num_layers: 1
+    detach_clf: false
+    initial_dropout: 0.0
+datamodule:
+  covariates: []
+  augmentation:
+    train:
+      RandomHorizontalFlip:
+        p: 0.5
+      RandomRotation:
+        degrees: 25
+    valid: []
+    test: []
+  batch_size: 16
+  partition: 0
+  num_workers: 16
+  img_root: /sc-projects/sc-proj-ukb-cvd/data/retina/preprocessed/preprocessed
+  img_visit: 0
+  img_size_to_gpu: 1024
+  img_crop_ratio:
+    train:
+    - 1.0
+    test: 1.0
+    valid: 1.0
+  img_n_testtime_views: 1
+  label_definition:
+    all_cause_death: true
+    phecodes: true
+    custom: /sc-projects/sc-proj-ukb-cvd/results/projects/22_medical_records/data/220531/endpoints.csv
+  use_top_n_phecodes: 1000
+  filter_input_origins: []
+  use_loss_weights: false
+  task: tte
+  task_kwargs: {}
+model:
+  model_type: image
+  encoder: simple_vit
+  freeze_encoder: false
+  pretrained: false
+  restore_from_ckpt: false
+  encoder_image_size: 1024
+  encoder_patch_size: 32
+  encoder_num_classes: 1000
+training:
+  exclusions_on_losses: false
+  exclusions_on_metrics: true
+  gradient_checkpointing: false
+  contrastive_loss_factor: 0
+  endpoint_loss_factor: 1
+  vicreg_loss_factor: 0
+  node_dropout: null
+  normalize_node_embeddings: true
+  binarize_records: true
+  gradient_checkpoining: true
+  write_predictions: true
+  write_embeddings: false
+  write_attributions: false
+  warmup_period: 0
+  attribution_baseline_mode: zeros
+  use_endpoint_embeddings: false
+  patience: 30
+  optimizer_kwargs:
+    weight_decay: 0.001
+    lr: 0.0001
+trainer:
+  gpus: 1
+  precision: 32
+  max_epochs: 10000
+  num_sanity_val_steps: -1
+  detect_anomaly: false
+  amp_backend: native
+  accumulate_grad_batches: 1

@@ -259,12 +259,29 @@ class ImageEncoderMixin:
     def get_data_embeddings(self, batch: Batch):
 
         if self.gradient_checkpointing:
-            # THIS ONLY WORKS FOR CONVNEXT!!
-            x = torch.utils.checkpoint.checkpoint_sequential(self.encoder.features, 5, batch.data)
-            x = self.encoder.avgpool(x)
-            embeddings = self.encoder.classifier(x)
+            if self.encoder.__class__.__name__ in ['ConvNeXt'] :
+                n_segments = 7
+                # THIS ONLY WORKS FOR CONVNEXT!!
+                x = torch.utils.checkpoint.checkpoint_sequential(self.encoder.features, n_segments, batch.data)
+                x = self.encoder.avgpool(x)
+                embeddings = self.encoder.classifier(x)
+            elif self.encoder.__class__.__name__ in ['EfficientNet'] :
+                n_segments = 9
+                # efficientnet has flatten operation between avgpool and classifier
+                x = torch.utils.checkpoint.checkpoint_sequential(self.encoder.features, n_segments, batch.data)
+                x = self.encoder.avgpool(x)
+                x = torch.flatten(x, 1)
+                embeddings = self.encoder.classifier(x)
         else:
             embeddings = self.encoder(batch.data)
+
+        return embeddings
+
+class ImagePerceiverMixin:
+    def get_data_embeddings(self, batch: Batch):
+        permuted_data = torch.permute(batch.data, (0, 2, 3, 1)) # (B, C, W, H) -> (B, W, H, C)
+
+        embeddings = self.encoder(permuted_data)
 
         return embeddings
 
@@ -272,6 +289,8 @@ class ImageEncoderMixin:
 class ImageTraining(ImageEncoderMixin, SupervisedTraining):
     pass
 
+class ImagePerceiverTraining(ImagePerceiverMixin, SupervisedTraining):
+    pass
 
 class CovariatesOnlyMixin:
     def get_data_embeddings(self, batch: Batch):

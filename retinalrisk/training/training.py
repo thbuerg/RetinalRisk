@@ -8,6 +8,11 @@ import torch
 import torchvision as tv
 import torchmetrics
 from omegaconf import DictConfig
+from vit_pytorch.efficient import ViT
+from vit_pytorch import SimpleViT
+from vit_pytorch.cct import CCT
+from perceiver_pytorch import Perceiver
+from nystrom_attention import Nystromformer
 
 from retinalrisk.data.data import WandBBaselineData, get_or_load_wandbdataobj
 from retinalrisk.data.datamodules import RetinaDataModule
@@ -19,9 +24,10 @@ from retinalrisk.models.loss_wrapper import (
 )
 from retinalrisk.models.supervised import (
     CovariatesOnlyTraining,
-    ImageTraining
+    ImageTraining,
+    ImagePerceiverTraining
 )
-from retinalrisk.modules.head import AlphaHead, IndependentMLPHeads, LinearHead, MLPHead, ResMLPHead
+from retinalrisk.modules.head import AlphaHead, IndependentMLPHeads, LinearHead, MLPHead, ResMLPHead, IdentityHead
 
 
 def setup_training(args: DictConfig):
@@ -72,6 +78,8 @@ def setup_training(args: DictConfig):
             head1 = get_head(head_config.head1, num_head_features)
             head2 = get_head(head_config.head2, num_head_features)
             return AlphaHead(head1, head2, alpha=head_config.alpha)
+        elif head_config.model_type == "Identity":
+            return IdentityHead()
         else:
             assert False
 
@@ -158,7 +166,8 @@ def setup_training(args: DictConfig):
         alpha_scheduler=alpha_scheduler,
         optimizer_kwargs=args.training.optimizer_kwargs,
         binarize_records=args.training.binarize_records,
-        gradient_checkpointing=args.training.gradient_checkpointing
+        gradient_checkpointing=args.training.gradient_checkpointing,
+        #sync_dist=args.training.sync_dist
     )
 
     if args.model.model_type == "image":
@@ -166,7 +175,9 @@ def setup_training(args: DictConfig):
 
         if 'convnext' in args.model.encoder:
             try:
-                encoder = tv.models.__dict__[args.model.encoder](pretrained=args.model.pretrained)
+                #encoder = tv.models.__dict__[args.model.encoder](pretrained=args.model.pretrained)
+                weights = 'DEFAULT' if args.model.pretrained else None
+                encoder = tv.models.__dict__[args.model.encoder](weights=weights) 
 
                 outshape = 768 if any(['small' in args.model.encoder,
                                        'tiny' in args.model.encoder]) else 1024
@@ -175,6 +186,14 @@ def setup_training(args: DictConfig):
             except KeyError:
                 print(f'No model named `{args.model.encoder}`.')
                 raise KeyError('Please check available torchvision models.')
+
+        elif 'efficientnet' in args.model.encoder:
+            #encoder = tv.models.__dict__[args.model.encoder](pretrained=args.model.pretrained) 
+            weights = 'DEFAULT' if args.model.pretrained else None
+            encoder = tv.models.__dict__[args.model.encoder](weights=weights) 
+            
+            outshape = encoder.classifier[1].weight.shape[1]
+            encoder.classifier = torch.nn.Identity()
 
 
         elif 'resnet' in args.model.encoder:
@@ -186,32 +205,68 @@ def setup_training(args: DictConfig):
                 print(f'No model named `{args.model.encoder}`.')
                 raise KeyError('Please check available torchvision models.')
 
+        elif 'perceiver' in args.model.encoder:
+            print('using perceiver with following kwargs:\n', args.model.perceiver)
+            encoder = Perceiver(
+                num_classes = len(datamodule.labels),
+                **args.model.perceiver
+            )
+            outshape = len(datamodule.labels)
+
 
         elif 'simple_vit' in args.model.encoder:
-            tags.append('simpleViT')
-            encoder = SimpleViT(**FLAGS.experiment.transformer_kwargs,
+            tags.append('simple_ViT')
+            encoder = SimpleViT(
+                            image_size=args.model.encoder_image_size,
+                            patch_size=args.model.encoder_patch_size,
+                            num_classes=args.model.encoder_num_classes,
                             dim=1024,
                             depth=6,
                             heads=16,
                             mlp_dim=2048,
                             )
+            outshape = 1024
+            setattr(encoder.linear_head, '1', torch.nn.Identity())
 
         elif 'efficient_vit' in args.model.encoder:
-            tags.append('efficientViT')
+            tags.append('efficient_ViT')
             efficient_transformer = Nystromformer(dim=512,
                                               depth=12,
                                               heads=8,
                                               num_landmarks=256)
             encoder = ViT(dim=512,
                       transformer=efficient_transformer,
-                      **FLAGS.experiment.transformer_kwargs
+                      image_size=args.model.encoder_image_size,
+                      patch_size=args.model.encoder_patch_size,
+                      num_classes=args.model.encoder_num_classes,
                       )
+            
+            outshape = 512
+            setattr(encoder.mlp_head, '1', torch.nn.Identity())
 
         elif 'cct_vit' in args.model.encoder:
-            tags.append('CCTViT')
-            raise NotImplementedError()
+            tags.append('CCT_ViT')
+            encoder = CCT(
+                img_size = (args.model.encoder_image_size, args.model.encoder_image_size),
+                embedding_dim = 512,
+                n_conv_layers = 2,
+                kernel_size = 7,
+                stride = 2,
+                padding = 3,
+                pooling_kernel_size = 3,
+                pooling_stride = 2,
+                pooling_padding = 1,
+                num_layers = 14,
+                num_heads = 6,
+                mlp_radio = 3.,
+                num_classes = args.model.encoder_num_classes,
+                positional_embedding = 'learnable', # ['sine', 'learnable', 'none']
+            )
+            outshape = encoder.classifier.fc.weight.shape[1]
+            encoder.classifier.fc = torch.nn.Identity()
 
         else:
+            print('args.model.encoder', args.model.encoder)
             raise NotImplementedError()
 
         if args.model.freeze_encoder:
@@ -220,10 +275,19 @@ def setup_training(args: DictConfig):
             for name, param in encoder.named_parameters():
                 if param.requires_grad:
                     param.requires_grad = False
+        
+        # todo: make this more pretty
+        if args.datamodule.covariates == ['age_at_recruitment_f21022_0_0', 'sex_f31_0_0']:
+            head_outdim = outshape+len(args.datamodule.covariates)+1
+        else:
+            head_outdim = outshape+len(args.datamodule.covariates)
+        head = get_head(args.head, head_outdim)
 
-        head = get_head(args.head, outshape+len(args.datamodule.covariates))
-
-        model = ImageTraining(encoder=encoder, head=head, **training_kwargs)
+        if 'perceiver' in args.model.encoder:
+            tags.append('perceiver')
+            model = ImagePerceiverTraining(encoder=encoder, head=head, **training_kwargs)
+        else:
+            model = ImageTraining(encoder=encoder, head=head, **training_kwargs)
 
     elif args.model.model_type == "covariates":
         tags.append("covariates_baseline")

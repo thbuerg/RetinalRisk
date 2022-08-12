@@ -50,12 +50,16 @@ class WritePredictionsDataFrame(Callback):
 
     def manual(self, args, datamodule, module, testtime_crop_ratios=None):
         print("Write predictions and patient embeddings")
-
-        ckpt = torch.load(args.model.restore_from_ckpt)
+        if torch.cuda.is_available():
+            device = torch.device('cuda')
+        else:
+            device = torch.device('cpu')
+        
+        ckpt = torch.load(args.model.restore_from_ckpt, map_location=device)
+        #ckpt = torch.load(args.model.restore_from_ckpt)
         module.load_state_dict(ckpt["state_dict"])
         module.eval()
 
-        device = torch.device('cuda')
         module.to(device)
 
         # write the predictions, could be extended for all sets, just works if not shuffled

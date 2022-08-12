@@ -1,0 +1,17 @@
+train:
+  RandomRotation:
+    degrees: 25
+  RandomHorizontalFlip:
+    p: 0.5
+  RandomGrayscale:
+    p: 0.1
+  RandomPosterize:
+    bits: 4
+    p: 0.2
+  RandomAdjustSharpness:
+    sharpness_factor: 2
+    p: 0.3
+  RandomAutocontrast:
+    p: 0.3
+valid: []
+test: []
