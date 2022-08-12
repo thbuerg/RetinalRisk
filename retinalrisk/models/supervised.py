@@ -260,13 +260,15 @@ class ImageEncoderMixin:
 
         if self.gradient_checkpointing:
             if self.encoder.__class__.__name__ in ['ConvNeXt'] :
+                n_segments = 7
                 # THIS ONLY WORKS FOR CONVNEXT!!
-                x = torch.utils.checkpoint.checkpoint_sequential(self.encoder.features, 5, batch.data)
+                x = torch.utils.checkpoint.checkpoint_sequential(self.encoder.features, n_segments, batch.data)
                 x = self.encoder.avgpool(x)
                 embeddings = self.encoder.classifier(x)
             elif self.encoder.__class__.__name__ in ['EfficientNet'] :
-                # EFFICIENTNET has flatten operation between avgpool and classifier
-                x = torch.utils.checkpoint.checkpoint_sequential(self.encoder.features, 9, batch.data)
+                n_segments = 9
+                # efficientnet has flatten operation between avgpool and classifier
+                x = torch.utils.checkpoint.checkpoint_sequential(self.encoder.features, n_segments, batch.data)
                 x = self.encoder.avgpool(x)
                 x = torch.flatten(x, 1)
                 embeddings = self.encoder.classifier(x)

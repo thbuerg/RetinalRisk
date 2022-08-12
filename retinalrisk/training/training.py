@@ -175,7 +175,9 @@ def setup_training(args: DictConfig):
 
         if 'convnext' in args.model.encoder:
             try:
-                encoder = tv.models.__dict__[args.model.encoder](pretrained=args.model.pretrained)
+                #encoder = tv.models.__dict__[args.model.encoder](pretrained=args.model.pretrained)
+                weights = 'DEFAULT' if args.model.pretrained else None
+                encoder = tv.models.__dict__[args.model.encoder](weights=weights) 
 
                 outshape = 768 if any(['small' in args.model.encoder,
                                        'tiny' in args.model.encoder]) else 1024
@@ -186,8 +188,9 @@ def setup_training(args: DictConfig):
                 raise KeyError('Please check available torchvision models.')
 
         elif 'efficientnet' in args.model.encoder:
-            #encoder = tv.models.__dict__[args.model.encoder](pretrained=args.model.pretrained) # weights='DEFAULT'
-            encoder = tv.models.__dict__[args.model.encoder](weights='DEFAULT') 
+            #encoder = tv.models.__dict__[args.model.encoder](pretrained=args.model.pretrained) 
+            weights = 'DEFAULT' if args.model.pretrained else None
+            encoder = tv.models.__dict__[args.model.encoder](weights=weights) 
             
             outshape = encoder.classifier[1].weight.shape[1]
             encoder.classifier = torch.nn.Identity()
