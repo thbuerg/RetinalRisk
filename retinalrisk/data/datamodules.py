@@ -159,11 +159,11 @@ class RetinaDataModule(LightningDataModule):
         self.img_map_by_split = dict()
         for split in ("train", "valid", "test"):
             # select eids by outcomes and split:
-            idxs = np.where(np.in1d(self.eids[split].astype('int32'),
+            idxs = np.where(np.in1d(np.array(self.eids[split]).astype('int32'),
                                     self.data.outcomes.reset_index().eid.unique(), assume_unique=True))[0]
-            idxs = np.where(np.in1d(self.eids[split].astype('int32')[idxs],
+            idxs = np.where(np.in1d(np.array(self.eids[split]).astype('int32')[idxs],
                                     img_eid_map.eid.unique(), assume_unique = True))[0]
-            split_eids = self.eids[split][idxs]
+            split_eids = np.array(self.eids[split])[idxs]
             self.eids[split] = split_eids
             subsplit_img_eid_map = img_eid_map.query('eid in @split_eids')
             self.img_map_by_split[split] = subsplit_img_eid_map
