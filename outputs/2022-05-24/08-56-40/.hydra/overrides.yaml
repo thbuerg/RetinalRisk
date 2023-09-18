@@ -1,8 +1,0 @@
-- training.gradient_checkpointing=False
-- setup.name=agesex_baseline
-- datamodule.covariates=["age_at_recruitment_f21022_0_0", "sex_f31_0_0"]
-- datamodule.batch_size=128
-- setup.use_data_artifact_if_available=False
-- model.model_type=covariates
-- model=covariates
-- head=mlp
