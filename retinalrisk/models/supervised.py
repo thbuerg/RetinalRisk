@@ -7,13 +7,16 @@ import numpy as np
 import torch
 import torchmetrics
 import wandb
-from deepspeed.ops.adam import FusedAdam
+
+# from deepspeed.ops.adam import FusedAdam
 from pytorch_lightning import LightningModule
 
 from retinalrisk.data.collate import Batch
 from retinalrisk.models.loss_wrapper import LossWrapper
 from retinalrisk.modules.head import AlphaHead
+from retinalrisk.modules.nadamw import NAdamW
 from retinalrisk.schedulers.alpha_schedulers import AlphaScheduler
+from retinalrisk.models.retfound import param_groups_lrd
 
 
 class SupervisedTraining(LightningModule):
@@ -25,7 +28,7 @@ class SupervisedTraining(LightningModule):
         label_mapping: Dict,
         incidence_mapping: Dict,
         # projector: Optional[torch.nn.Module],
-        optimizer: Optional[torch.optim.Optimizer] = FusedAdam,
+        optimizer: Optional[torch.optim.Optimizer] = NAdamW,
         optimizer_kwargs: Optional[Dict] = {"weight_decay": 5e-4},
         metrics_list: Optional[List[torchmetrics.Metric]] = [torchmetrics.AUROC],
         metrics_kwargs: Optional[List[Dict]] = None,
@@ -34,6 +37,7 @@ class SupervisedTraining(LightningModule):
         node_dropout: Optional[float] = None,
         binarize_records: bool = False,
         gradient_checkpointing: bool = False,
+        layerwise_lr_decay: bool = True,
         **kwargs,
     ):
         super().__init__()
@@ -64,6 +68,7 @@ class SupervisedTraining(LightningModule):
         self.executor = ThreadPoolExecutor(max_workers=32)
         self.alpha_scheduler = alpha_scheduler
         self.gradient_checkpointing = gradient_checkpointing
+        self.layerwise_lr_decay = layerwise_lr_decay
 
         self.node_dropout = node_dropout
         self.binarize_records = binarize_records
@@ -99,7 +104,7 @@ class SupervisedTraining(LightningModule):
         times[no_event_idxs] = batch.censorings.repeat(1, times.shape[1])[no_event_idxs]
 
         for idx, (_, m_list) in enumerate(metrics.items()):
-            p_i = outputs["head_outputs"]["logits"][:, idx].detach().float()
+            p_i = outputs["head_outputs"]["logits"][:, idx].detach().cpu().float()
             l_i = batch.events[:, idx]
             t_i = times[:, idx]
 
@@ -249,26 +254,54 @@ class SupervisedTraining(LightningModule):
         return loss_dict
 
     def configure_optimizers(self) -> torch.optim.Optimizer:
-        optimizer = self.optimizer(
-            filter(lambda p: p.requires_grad, self.parameters()),
-            **self.optimizer_kwargs)
+        if self.layerwise_lr_decay:
+            param_groups = param_groups_lrd(
+                self.encoder,
+                self.optimizer_kwargs["weight_decay"],
+                no_weight_decay_list=self.encoder.no_weight_decay(),
+                layer_decay=0.75,
+            )
+
+            param_groups["head"] = {
+                "lr_scale": 1,
+                "weight_decay": self.optimizer_kwargs["weight_decay"],
+                "params": [],
+            }
+
+            for n, p in self.head.named_parameters():
+                if not p.requires_grad:
+                    continue
+
+                param_groups["head"]["params"].append(p)
+
+            param_groups = list(param_groups.values())
+
+            optimizer = self.optimizer(param_groups, lr=self.optimizer_kwargs["lr"])
+        else:
+            optimizer = self.optimizer(
+                filter(lambda p: p.requires_grad, self.parameters()), **self.optimizer_kwargs
+            )
+
         return optimizer
 
 
 class ImageEncoderMixin:
     def get_data_embeddings(self, batch: Batch):
-
         if self.gradient_checkpointing:
-            if self.encoder.__class__.__name__ in ['ConvNeXt'] :
+            if self.encoder.__class__.__name__ in ["ConvNeXt"]:
                 n_segments = 7
                 # THIS ONLY WORKS FOR CONVNEXT!!
-                x = torch.utils.checkpoint.checkpoint_sequential(self.encoder.features, n_segments, batch.data)
+                x = torch.utils.checkpoint.checkpoint_sequential(
+                    self.encoder.features, n_segments, batch.data
+                )
                 x = self.encoder.avgpool(x)
                 embeddings = self.encoder.classifier(x)
-            elif self.encoder.__class__.__name__ in ['EfficientNet'] :
+            elif self.encoder.__class__.__name__ in ["EfficientNet"]:
                 n_segments = 9
                 # efficientnet has flatten operation between avgpool and classifier
-                x = torch.utils.checkpoint.checkpoint_sequential(self.encoder.features, n_segments, batch.data)
+                x = torch.utils.checkpoint.checkpoint_sequential(
+                    self.encoder.features, n_segments, batch.data
+                )
                 x = self.encoder.avgpool(x)
                 x = torch.flatten(x, 1)
                 embeddings = self.encoder.classifier(x)
@@ -277,9 +310,10 @@ class ImageEncoderMixin:
 
         return embeddings
 
+
 class ImagePerceiverMixin:
     def get_data_embeddings(self, batch: Batch):
-        permuted_data = torch.permute(batch.data, (0, 2, 3, 1)) # (B, C, W, H) -> (B, W, H, C)
+        permuted_data = torch.permute(batch.data, (0, 2, 3, 1))  # (B, C, W, H) -> (B, W, H, C)
 
         embeddings = self.encoder(permuted_data)
 
@@ -289,8 +323,10 @@ class ImagePerceiverMixin:
 class ImageTraining(ImageEncoderMixin, SupervisedTraining):
     pass
 
+
 class ImagePerceiverTraining(ImagePerceiverMixin, SupervisedTraining):
     pass
+
 
 class CovariatesOnlyMixin:
     def get_data_embeddings(self, batch: Batch):

@@ -8,8 +8,11 @@ import torch
 import PIL
 import zstandard
 from torchvision import transforms
-from pytorch_lightning.callbacks.base import Callback
-from pytorch_lightning.callbacks.finetuning import BaseFinetuning
+# from pytorch_lightning.callbacks.base import Callback
+from pytorch_lightning import Callback
+from pytorch_lightning.callbacks import BaseFinetuning
+
+#from pytorch_lightning.callbacks.finetuning import BaseFinetuning
 from tqdm import tqdm
 
 from retinalrisk.transforms.transforms import AdaptiveRandomCropTransform

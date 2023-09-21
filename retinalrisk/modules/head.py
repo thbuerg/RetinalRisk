@@ -1,7 +1,9 @@
 import numpy as np
 import torch
+from torch import nn
 
-GEGLU = None # recover activations should this be needed!
+GEGLU = None  # recover activations should this be needed!
+
 
 class IdentityHead(torch.nn.Module):
     def __init__(self):
@@ -13,6 +15,7 @@ class IdentityHead(torch.nn.Module):
         x = self.identity(x)
 
         return dict(pre_logits=None, logits=x)
+
 
 class LinearHead(torch.nn.Module):
     def __init__(
@@ -30,6 +33,27 @@ class LinearHead(torch.nn.Module):
         x = self.linear(self.dropout(x))
 
         return dict(pre_logits=None, logits=x)
+
+
+def init_weights(module, initializer_range=0.02):
+    """
+    Initializes the weights of the given module with a normal distribution
+    with mean 0 and standard deviation `initializer_range`.
+    """
+    if isinstance(module, (nn.Linear, nn.Embedding, nn.Conv1d)):
+        module.weight.data.normal_(mean=0.0, std=initializer_range)
+        if isinstance(module, (nn.Linear, nn.Conv1d)) and module.bias is not None:
+            module.bias.data.zero_()
+
+            # Normalize output weights for Linear layers
+            if module.bias.dim() > 0:
+                num_output_features = module.bias.size(0)
+                module.weight.data /= torch.sqrt(
+                    torch.tensor(num_output_features, dtype=torch.float)
+                )
+    elif isinstance(module, nn.LayerNorm):
+        module.bias.data.zero_()
+        module.weight.data.fill_(1.0)
 
 
 class MLPHead(torch.nn.Module):
@@ -54,6 +78,8 @@ class MLPHead(torch.nn.Module):
         layers = []
         if initial_dropout > 0:
             layers.append(torch.nn.Dropout(initial_dropout))
+        if norm is not None:
+            layers.append(norm(num_features))
         layers.append(torch.nn.Linear(num_features, num_hidden))
         layers.append(nonlin())
         if norm is not None:
@@ -66,9 +92,7 @@ class MLPHead(torch.nn.Module):
             if norm is not None:
                 layers.append(norm(num_hidden))
 
-        layers.append(torch.nn.Dropout(dropout))
-
-        self.out = torch.nn.Linear(num_hidden, num_endpoints)
+        self.out = torch.nn.Linear(num_hidden, num_endpoints, bias=False)
 
         if incidence is not None:
             self.out.bias.data = torch.logit(torch.from_numpy(incidence.astype(np.float32)))
@@ -77,6 +101,8 @@ class MLPHead(torch.nn.Module):
         self.detach_clf = detach_clf
 
         self.gradient_checkpointing = gradient_checkpointing
+
+        self.apply(init_weights)
 
     def forward(self, x):
         if self.gradient_checkpointing:

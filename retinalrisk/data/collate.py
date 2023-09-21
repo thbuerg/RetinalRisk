@@ -2,7 +2,7 @@ from collections import abc as container_abcs
 from dataclasses import dataclass
 
 import torch
-from torch._six import string_classes
+#from torch._six import string_classes
 
 
 @dataclass

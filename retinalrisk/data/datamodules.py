@@ -139,6 +139,10 @@ class RetinaDataModule(LightningDataModule):
         self.label_mapping = {fix_str(l): fix_str(map_label(l)) for l in self.labels}
 
     def prepare_data(self):
+        if self.train_dataset is not None:
+            print('Data already prepared.')
+            return
+        
         self.eids = self.data.eid_dict[self.partition]
 
         # now get eid->img_path map

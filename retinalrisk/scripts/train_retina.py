@@ -69,6 +69,8 @@ def main(args: DictConfig):
         default_root_dir=output_root,
         logger=wandb_logger,
         callbacks=callbacks,
+        #gpus=4, 
+        #distributed_backend='dp',
         **args.trainer,
     )
 
