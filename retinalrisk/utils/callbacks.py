@@ -8,11 +8,15 @@ import torch
 import PIL
 import zstandard
 from torchvision import transforms
+from timm.data.transforms import RandomResizedCropAndInterpolation
+import torchvision.transforms.functional as TF
+import PIL
+
 # from pytorch_lightning.callbacks.base import Callback
 from pytorch_lightning import Callback
 from pytorch_lightning.callbacks import BaseFinetuning
 
-#from pytorch_lightning.callbacks.finetuning import BaseFinetuning
+# from pytorch_lightning.callbacks.finetuning import BaseFinetuning
 from tqdm import tqdm
 
 from retinalrisk.transforms.transforms import AdaptiveRandomCropTransform
@@ -54,12 +58,12 @@ class WritePredictionsDataFrame(Callback):
     def manual(self, args, datamodule, module, testtime_crop_ratios=None):
         print("Write predictions and patient embeddings")
         if torch.cuda.is_available():
-            device = torch.device('cuda')
+            device = torch.device("cuda")
         else:
-            device = torch.device('cpu')
-        
+            device = torch.device("cpu")
+
         ckpt = torch.load(args.model.restore_from_ckpt, map_location=device)
-        #ckpt = torch.load(args.model.restore_from_ckpt)
+        # ckpt = torch.load(args.model.restore_from_ckpt)
         module.load_state_dict(ckpt["state_dict"])
         module.eval()
 
@@ -73,48 +77,72 @@ class WritePredictionsDataFrame(Callback):
         if testtime_crop_ratios is None:
             testtime_crop_ratios = [None]
 
+        testtime_crop_ratios = [None]
+
         # add the functionality of running multiple predictions w/ different TTA settings!
         for crop_ratio in testtime_crop_ratios:
-
             for split in tqdm(["train", "valid", "test"]):
+                """
                 # overwrite transforms in  train/test/valid according to the TTA settings!
                 if crop_ratio is not None:
-                    t = transforms.Compose([
-                        AdaptiveRandomCropTransform(crop_ratio=crop_ratio,
-                                                    out_size=datamodule.img_size_to_gpu,
-                                                    interpolation=PIL.Image.BICUBIC),
+                    t = transforms.Compose(
+                        [
+                            AdaptiveRandomCropTransform(
+                                crop_ratio=crop_ratio,
+                                out_size=datamodule.img_size_to_gpu,
+                                interpolation=PIL.Image.BICUBIC,
+                            ),
+                            transforms.ToTensor(),
+                            transforms.Normalize(
+                                mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]
+                            ),
+                        ]
+                    )
+                """
+
+                t = transforms.Compose(
+                    [
+                        RandomResizedCropAndInterpolation(
+                            size=(datamodule.img_size_to_gpu, datamodule.img_size_to_gpu),
+                            scale=(0.08, 1.0),
+                            ratio=(1, 1),
+                            interpolation="bicubic",
+                        ),
+                        transforms.RandomHorizontalFlip(p=0.5),
                         transforms.ToTensor(),
-                        transforms.Normalize(mean=[0.485, 0.456, 0.406],
-                                             std=[0.229, 0.224, 0.225]),
-                    ])
+                        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+                    ]
+                )
+
+                print(t)
 
                 if split == "train":
-                    if crop_ratio is not None:
-                        datamodule.train_dataset.transforms = t
-                    dataloader = datamodule.train_dataloader(shuffle=False, drop_last=False, testtime=True)
+                    # if crop_ratio is not None:
+                    datamodule.train_dataset.transforms = t
+                    dataloader = datamodule.train_dataloader(
+                        shuffle=False, drop_last=False, testtime=True
+                    )
                 if split == "valid":
-                    if crop_ratio is not None:
-                        datamodule.valid_dataset.transforms = t
+                    # if crop_ratio is not None:
+                    datamodule.valid_dataset.transforms = t
                     dataloader = datamodule.val_dataloader(testtime=True)
                 if split == "test":
                     datamodule.test_dataset = datamodule.get_retina_dataset(set="test")
-                    if crop_ratio is not None:
-                        datamodule.test_dataset.transforms = t
+                    # if crop_ratio is not None:
+                    datamodule.test_dataset.transforms = t
                     dataloader = datamodule.test_dataloader(testtime=True)
 
                 outputs = self.predict_dataloader(module, dataloader, device)
 
-                index = dataloader.dataset.retina_map['eid'].values
+                index = dataloader.dataset.retina_map["eid"].values
                 if args.datamodule.img_n_testtime_views > 1:
                     # prepare tta index:
                     index = []
-                    for i in dataloader.dataset.retina_map['eid'].values:
-                        index.extend([i]*args.datamodule.img_n_testtime_views)
+                    for i in dataloader.dataset.retina_map["eid"].values:
+                        index.extend([i] * args.datamodule.img_n_testtime_views)
 
                 predictions_df = pd.DataFrame(
-                    data=outputs["preds"],
-                    index=index,
-                    columns=endpoints
+                    data=outputs["preds"], index=index, columns=endpoints
                 ).reset_index(drop=False)
                 predictions_df = annotate_df(predictions_df, datamodule, module).assign(split=split)
                 predictions_dfs.append(predictions_df)
@@ -126,7 +154,7 @@ class WritePredictionsDataFrame(Callback):
             if not os.path.exists(outdir):
                 os.mkdir(outdir)
 
-            tag = f"_cropratio{str(crop_ratio)}" if crop_ratio is not None else ''
+            tag = f"_cropratio{str(crop_ratio)}" if crop_ratio is not None else ""
             predictions_dfs_cc.to_feather(os.path.join(outdir, f"predictions{tag}.feather"))
             print(f"Predictions saved {os.path.join(outdir, f'predictions{tag}.feather')}")
 
@@ -136,7 +164,7 @@ class WritePredictionsDataFrame(Callback):
     def on_fit_end(self, trainer, module):
         print("Write predictions and patient embeddings")
 
-        device = torch.device('cuda')
+        device = torch.device("cuda")
         module.to(device)
 
         ckpt = torch.load(trainer.checkpoint_callback.best_model_path)
@@ -151,7 +179,9 @@ class WritePredictionsDataFrame(Callback):
 
         for split in tqdm(["train", "valid", "test"]):
             if split == "train":
-                dataloader = trainer.datamodule.train_dataloader(shuffle=False, drop_last=False, testtime=True)
+                dataloader = trainer.datamodule.train_dataloader(
+                    shuffle=False, drop_last=False, testtime=True
+                )
             if split == "valid":
                 dataloader = trainer.datamodule.val_dataloader(testtime=True)
             if split == "test":
@@ -159,19 +189,19 @@ class WritePredictionsDataFrame(Callback):
 
             outputs = self.predict_dataloader(module, dataloader, device)
 
-            index = dataloader.dataset.retina_map['eid'].values
+            index = dataloader.dataset.retina_map["eid"].values
             if trainer.datamodule.img_n_testtime_views > 1:
                 # prepare tta index:
                 index = []
-                for i in dataloader.dataset.retina_map['eid'].values:
-                    index.extend([i]*trainer.datamodule.img_n_testtime_views)
+                for i in dataloader.dataset.retina_map["eid"].values:
+                    index.extend([i] * trainer.datamodule.img_n_testtime_views)
 
             predictions_df = pd.DataFrame(
-                data=outputs["preds"],
-                index=index,
-                columns=endpoints
+                data=outputs["preds"], index=index, columns=endpoints
             ).reset_index(drop=False)
-            predictions_df = annotate_df(predictions_df, trainer.datamodule, module).assign(split=split)
+            predictions_df = annotate_df(predictions_df, trainer.datamodule, module).assign(
+                split=split
+            )
             predictions_dfs.append(predictions_df)
 
         predictions_dfs_cc = pd.concat(predictions_dfs, axis=0).reset_index(drop=True)
@@ -180,17 +210,17 @@ class WritePredictionsDataFrame(Callback):
     def predict_dataloader(self, model, dataloader, device):
         preds_list = []
 
-        for batch in tqdm(dataloader):
+        with torch.no_grad():
+            for batch in tqdm(dataloader):
+                batch.data = batch.data.to(device)
+                batch.covariates = batch.covariates.to(device)
 
-            batch.data = batch.data.to(device)
-            batch.covariates = batch.covariates.to(device)
+                head_outputs = model(batch)["head_outputs"]
+                del batch
 
-            head_outputs = model(batch)["head_outputs"]
-            del batch
-
-            preds = head_outputs["logits"].detach().cpu()
-            del head_outputs
-            preds_list.append(preds)
+                preds = head_outputs["logits"].detach().cpu()
+                del head_outputs
+                preds_list.append(preds)
 
         return {"preds": torch.cat(preds_list, axis=0).numpy()}
 
@@ -207,9 +237,17 @@ class WritePredictionsDataFrame(Callback):
         outdir = os.path.join(Path(trainer.checkpoint_callback.dirpath).parent, "predictions")
         if not os.path.exists(outdir):
             os.mkdir(outdir)
-        predictions_df.to_feather(os.path.join(outdir,
-                                               "predictions.feather" if split is None else f"{split}_predictions.feather"))
-        print(f"Predictions saved {os.path.join(outdir, 'predictions.feather')}")
+        predictions_df.to_feather(
+            os.path.join(
+                outdir,
+                (
+                    "predictions_augmented.feather"
+                    if split is None
+                    else f"{split}_predictions_augmented.feather"
+                ),
+            )
+        )
+        print(f"Predictions saved {os.path.join(outdir, 'predictions_augmented.feather')}")
 
 
 @ray.remote
@@ -235,7 +273,6 @@ class WriteFeatureAttributions(Callback):
     #   self.on_fit_end(trainer, module)
 
     def on_fit_end(self, trainer, module):
-
         # prepare ray for async pickling
         ray.init(num_cpus=10)
 
@@ -282,7 +319,6 @@ class WriteFeatureAttributions(Callback):
         test_splits = torch.split(test_data, self.batch_size)
 
         for endpoint_idx in tqdm(range(len(endpoints))):
-
             endpoint_label = endpoints[endpoint_idx]
 
             temp_shap = torch.cat(

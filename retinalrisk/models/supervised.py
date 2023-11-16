@@ -105,11 +105,11 @@ class SupervisedTraining(LightningModule):
 
         for idx, (_, m_list) in enumerate(metrics.items()):
             p_i = outputs["head_outputs"]["logits"][:, idx].detach().cpu().float()
-            l_i = batch.events[:, idx]
-            t_i = times[:, idx]
+            l_i = batch.events[:, idx].cpu()
+            t_i = times[:, idx].cpu()
 
             if self.exclusions_on_metrics:
-                mask = batch.exclusions[:, idx] == 0
+                mask = (batch.exclusions[:, idx] == 0).cpu()
                 p_i = p_i[mask]
                 l_i = l_i[mask]
                 t_i = t_i[mask]

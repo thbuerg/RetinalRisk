@@ -223,32 +223,34 @@ def setup_training(args: DictConfig):
                 img_size=image_size,
             )
 
-            # load RETFound weights
-            checkpoint = torch.load(checkpoint_path, map_location="cpu")
-            checkpoint_model = checkpoint["model"]
-            state_dict = model.state_dict()
-            for k in ["head.weight", "head.bias"]:
-                if k in checkpoint_model and checkpoint_model[k].shape != state_dict[k].shape:
-                    print(f"Removing key {k} from pretrained checkpoint")
-                    del checkpoint_model[k]
+            if args.model.pretrained:
+                # load RETFound weights
+                checkpoint = torch.load(checkpoint_path, map_location="cpu")
+                checkpoint_model = checkpoint["model"]
+                state_dict = model.state_dict()
+                for k in ["head.weight", "head.bias"]:
+                    if k in checkpoint_model and checkpoint_model[k].shape != state_dict[k].shape:
+                        print(f"Removing key {k} from pretrained checkpoint")
+                        del checkpoint_model[k]
 
-            # interpolate position embedding
-            interpolate_pos_embed(model, checkpoint_model)
+                # interpolate position embedding
+                interpolate_pos_embed(model, checkpoint_model)
 
-            # load pre-trained model
-            msg = model.load_state_dict(checkpoint_model, strict=False)
+                # load pre-trained model
+                msg = model.load_state_dict(checkpoint_model, strict=False)
 
-            assert set(msg.missing_keys) == {
-                "head.weight",
-                "head.bias",
-                "fc_norm.weight",
-                "fc_norm.bias",
-            }
+                assert set(msg.missing_keys) == {
+                    "head.weight",
+                    "head.bias",
+                    "fc_norm.weight",
+                    "fc_norm.bias",
+                }
 
             # manually initialize fc layer
             trunc_normal_(model.head.weight, std=2e-5)
 
             encoder = model
+            encoder.head = torch.nn.Identity()
 
             outshape = 1024
 

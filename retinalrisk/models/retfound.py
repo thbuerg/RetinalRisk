@@ -1,4 +1,5 @@
 # Adapted from retfound and timm
+# https://github.com/rmaphoh/RETFound_MAE
 
 import argparse
 from functools import partial
