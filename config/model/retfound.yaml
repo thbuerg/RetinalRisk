@@ -1,7 +1,7 @@
 model_type: 'image'
 encoder: 'retfound'
 freeze_encoder: False
-pretrained: False
+pretrained: True
 restore_from_ckpt: False
 checkpoint_path: '/sc-projects/sc-proj-ukb-cvd/data/models/retfound/RETFound_cfp_weights.pth'
 drop_path_rate: 0.2
