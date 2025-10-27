@@ -1,0 +1,7 @@
+train:
+  RandomHorizontalFlip:
+    p: 0.5
+  RandomRotation:
+    degrees: 25
+valid: []
+test: []

@@ -1,0 +1,182 @@
+hydra:
+  run:
+    dir: outputs/${now:%Y-%m-%d}/${now:%H-%M-%S}
+  sweep:
+    dir: multirun/${now:%Y-%m-%d}/${now:%H-%M-%S}
+    subdir: ${hydra.job.num}
+  launcher:
+    _target_: hydra._internal.core_plugins.basic_launcher.BasicLauncher
+  sweeper:
+    _target_: hydra._internal.core_plugins.basic_sweeper.BasicSweeper
+    max_batch_size: null
+  help:
+    app_name: ${hydra.job.name}
+    header: '${hydra.help.app_name} is powered by Hydra.
+
+      '
+    footer: 'Powered by Hydra (https://hydra.cc)
+
+      Use --hydra-help to view Hydra specific help
+
+      '
+    template: '${hydra.help.header}
+
+      == Configuration groups ==
+
+      Compose your configuration from those groups (group=option)
+
+
+      $APP_CONFIG_GROUPS
+
+
+      == Config ==
+
+      Override anything in the config (foo.bar=value)
+
+
+      $CONFIG
+
+
+      ${hydra.help.footer}
+
+      '
+  hydra_help:
+    template: 'Hydra (${hydra.runtime.version})
+
+      See https://hydra.cc for more info.
+
+
+      == Flags ==
+
+      $FLAGS_HELP
+
+
+      == Configuration groups ==
+
+      Compose your configuration from those groups (For example, append hydra/job_logging=disabled
+      to command line)
+
+
+      $HYDRA_CONFIG_GROUPS
+
+
+      Use ''--cfg hydra'' to Show the Hydra config.
+
+      '
+    hydra_help: ???
+  hydra_logging:
+    version: 1
+    formatters:
+      simple:
+        format: '[%(asctime)s][HYDRA] %(message)s'
+    handlers:
+      console:
+        class: logging.StreamHandler
+        formatter: simple
+        stream: ext://sys.stdout
+    root:
+      level: INFO
+      handlers:
+      - console
+    loggers:
+      logging_example:
+        level: DEBUG
+    disable_existing_loggers: false
+  job_logging:
+    version: 1
+    formatters:
+      simple:
+        format: '[%(asctime)s][%(name)s][%(levelname)s] - %(message)s'
+    handlers:
+      console:
+        class: logging.StreamHandler
+        formatter: simple
+        stream: ext://sys.stdout
+      file:
+        class: logging.FileHandler
+        formatter: simple
+        filename: ${hydra.job.name}.log
+    root:
+      level: INFO
+      handlers:
+      - console
+      - file
+    disable_existing_loggers: false
+  env: {}
+  searchpath: []
+  callbacks: {}
+  output_subdir: .hydra
+  overrides:
+    hydra: []
+    task:
+    - training.gradient_checkpointing=False
+    - datamodule.batch_size=16
+    - setup.use_data_artifact_if_available=False
+    - model.model_type=image
+    - model.encoder=simple_vit
+    - +model.encoder_image_size=1024
+    - +model.encoder_patch_size=32
+    - +model.encoder_num_classes=1000
+    - head=mlp
+    - head.kwargs.num_hidden=1024
+    - head.kwargs.num_layers=1
+    - head.dropout=0.5
+    - training.optimizer_kwargs.weight_decay=0.001
+    - training.optimizer_kwargs.lr=0.0001
+    - datamodule/covariates=no_covariates
+    - datamodule/augmentation=transformer_basic
+    - datamodule.img_size_to_gpu=1024
+    - datamodule.img_crop_ratio.train=[1.0]
+    - datamodule.img_crop_ratio.valid=1.0
+    - datamodule.img_crop_ratio.test=1.0
+    - datamodule.num_workers=16
+    - trainer.gpus=1
+    - trainer.precision=32
+    - +setup.restore_id=2af9tvdp
+    - datamodule.label_definition.custom=/sc-projects/sc-proj-ukb-cvd/results/projects/22_medical_records/data/220531/endpoints.csv
+    - datamodule.img_n_testtime_views=1
+  job:
+    name: predict_retina
+    override_dirname: +model.encoder_image_size=1024,+model.encoder_num_classes=1000,+model.encoder_patch_size=32,+setup.restore_id=2af9tvdp,datamodule.batch_size=16,datamodule.img_crop_ratio.test=1.0,datamodule.img_crop_ratio.train=[1.0],datamodule.img_crop_ratio.valid=1.0,datamodule.img_n_testtime_views=1,datamodule.img_size_to_gpu=1024,datamodule.label_definition.custom=/sc-projects/sc-proj-ukb-cvd/results/projects/22_medical_records/data/220531/endpoints.csv,datamodule.num_workers=16,datamodule/augmentation=transformer_basic,datamodule/covariates=no_covariates,head.dropout=0.5,head.kwargs.num_hidden=1024,head.kwargs.num_layers=1,head=mlp,model.encoder=simple_vit,model.model_type=image,setup.use_data_artifact_if_available=False,trainer.gpus=1,trainer.precision=32,training.gradient_checkpointing=False,training.optimizer_kwargs.lr=0.0001,training.optimizer_kwargs.weight_decay=0.001
+    id: ???
+    num: ???
+    config_name: config
+    env_set: {}
+    env_copy: []
+    config:
+      override_dirname:
+        kv_sep: '='
+        item_sep: ','
+        exclude_keys: []
+  runtime:
+    version: 1.1.1
+    cwd: /home/loockl/RetinalRisk/retinalrisk/scripts
+    config_sources:
+    - path: hydra.conf
+      schema: pkg
+      provider: hydra
+    - path: /home/loockl/RetinalRisk/config
+      schema: file
+      provider: main
+    - path: ''
+      schema: structured
+      provider: schema
+    choices:
+      training: default
+      training/alpha_scheduler: null
+      model: image
+      datamodule: tte
+      datamodule/augmentation: transformer_basic
+      datamodule/covariates: no_covariates
+      head: mlp
+      setup: basic
+      hydra/env: default
+      hydra/callbacks: null
+      hydra/job_logging: default
+      hydra/hydra_logging: default
+      hydra/hydra_help: default
+      hydra/help: default
+      hydra/sweeper: basic
+      hydra/launcher: basic
+      hydra/output: default
+  verbose: false

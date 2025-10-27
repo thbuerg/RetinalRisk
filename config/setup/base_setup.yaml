@@ -1,0 +1,12 @@
+entity: cardiors
+project: retina
+group: null
+name: null
+root:
+  charite-hpc: ${BASE_PATH}
+  eils-hpc: /data/analysis/ag-reils/ag-reils-shared/cardioRS
+data_path: data/2_datasets_pre/211110_anewbeginning/artifacts
+output_path: results/models
+use_data_artifact_if_available: False
+data: null
+restore_id: null

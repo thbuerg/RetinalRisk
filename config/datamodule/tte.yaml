@@ -1,0 +1,6 @@
+defaults:
+  - base_datamodule
+  - _self_
+
+task: "tte"
+task_kwargs: {}

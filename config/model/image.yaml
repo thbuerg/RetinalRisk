@@ -1,0 +1,8 @@
+model_type: 'image'
+encoder: 'resnet18'
+freeze_encoder: False
+pretrained: False
+restore_from_ckpt: False
+checkpoint_path: "${BASE_PATH}/data/models/retfound/RETFound_cfp_weights.pth"
+drop_path_rate: 0.2
+retfound_augment: False

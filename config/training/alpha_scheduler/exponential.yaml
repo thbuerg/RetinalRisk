@@ -1,0 +1,4 @@
+_target_: retinalrisk.schedulers.alpha_schedulers.ExponentialAlpha
+alpha: 1.0
+gamma: 0.999
+last_step: -1

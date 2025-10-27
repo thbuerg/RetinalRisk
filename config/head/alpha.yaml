@@ -1,0 +1,7 @@
+defaults:
+  - head1: ../linear
+  - head2: ../mlp
+  - _self_
+
+model_type: 'AlphaHead'
+alpha: 1.0

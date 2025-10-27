@@ -1,0 +1,23 @@
+defaults:
+  - alpha_scheduler: null
+
+exclusions_on_losses: False
+exclusions_on_metrics: True
+gradient_checkpointing: False
+contrastive_loss_factor: 0
+endpoint_loss_factor: 1
+vicreg_loss_factor: 0
+node_dropout: null
+normalize_node_embeddings: True
+binarize_records: True
+gradient_checkpoining: True
+write_predictions: True
+write_embeddings: False
+write_attributions: False
+warmup_period: 0
+attribution_baseline_mode: 'zeros'
+use_endpoint_embeddings: False
+patience: 30
+optimizer_kwargs:
+  weight_decay: 0.05
+  lr: 0.0001

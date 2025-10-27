@@ -1,0 +1,2 @@
+model_type: 'Covariates'
+restore_from_ckpt: False

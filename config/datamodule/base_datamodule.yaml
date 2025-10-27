@@ -1,0 +1,26 @@
+defaults:
+  - covariates: no_covariates
+  - augmentation: none
+  - _self_
+
+batch_size: 420
+partition: 0
+num_workers: 4
+img_root: '${BASE_PATH}/data/retina/preprocessed/preprocessed'
+img_visit: 0
+img_size_to_gpu: 420
+img_crop_ratio:
+  train: [0.3, 0.4, 0.5, 0.6, 0.7, 0.8]
+  test: 0.5
+  valid: 0.8
+img_testtime_crop_ratio: [0.3, 0.5, 0.8]
+img_n_testtime_views: 10
+
+label_definition:
+  all_cause_death: True
+  phecodes: True
+  custom: "${BASE_PATH}/results/projects/22_retinal_risk/data/230905/min100_endpoints.csv" # "${BASE_PATH}/results/projects/22_retinal_risk/data/MD_AMD_endpoints.csv", "${BASE_PATH}/results/projects/22_retinal_risk/data/220602/endpoints.csv"
+use_top_n_phecodes: 1000
+filter_input_origins: []
+use_loss_weights: False
+

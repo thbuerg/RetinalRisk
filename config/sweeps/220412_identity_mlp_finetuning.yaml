@@ -1,0 +1,52 @@
+#program: /home/wildb/dev/projects/retinalrisk/retinalrisk/scripts/train_recordgraphs.py
+program: train_recordgraphs.py
+name: 220412_identity_mlp_finetuning
+method: bayes
+project: RecordGraphs
+
+metric:
+  goal: maximize
+  name: "valid/mean_CIndex_max"
+
+parameters:
+  head.dropout:
+    min: 0.0
+    max: 0.9
+  head.kwargs.initial_dropout:
+    min: 0.0
+    max: 0.9
+  training.optimizer_kwargs.weight_decay:
+    min: 0.0
+    max: 1.0
+  training.optimizer_kwargs.lr:
+    min: 0.0001
+    max: 0.001
+  training.binarize_records:
+    values: [False, True]
+
+command:
+  - ${env}
+  - srun
+  - "-N"
+  - "1-1"
+  - "--cpus-per-gpu=32"
+  - "-T"
+  - "32"
+  - "-p"
+  - "gpu"
+  - "--gres=gpu:1"
+  - "--mem=128G"
+  - "--time"
+  - "48:00:0"
+  - ${program}
+  - "datamodule.batch_size=1024"
+  - "training.gradient_checkpointing=False"
+  - "head.kwargs.num_hidden=1024"
+  - "head.kwargs.num_layers=1"
+  - "setup.data.min_record_counts=100"
+  - "datamodule.t0_mode=recruitment"
+  - "datamodule/covariates='no_covariates'"
+  - "model=identity"
+  - "setup.use_data_artifact_if_available=True"
+  - "datamodule.use_top_n_phecodes=1683"
+  - ${args_no_hyphens}
